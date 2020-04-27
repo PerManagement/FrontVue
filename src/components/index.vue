@@ -131,6 +131,7 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import Nopermission from '@/components/Nopermission'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -139,7 +140,7 @@ export default {
     },
     components: {
       welcome
-    ,createTask
+    ,createTask,Nopermission
     },
     methods: { 
        createTask(){
