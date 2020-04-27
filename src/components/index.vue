@@ -202,7 +202,6 @@ export default {
     background-color: white;
     color: #333;
     text-align: center;
-    line-height: 405px;
   }
   
   
@@ -211,5 +210,4 @@ export default {
     margin-bottom: 40px;
   }
   
-
 </style>
