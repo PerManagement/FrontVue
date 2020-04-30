@@ -65,7 +65,8 @@
           <i class="el-icon-location"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="2-1">发放工资</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
+          <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
           <el-menu-item index="2-2">员工福利</el-menu-item>
           <el-menu-item index="2-3">工资图</el-menu-item>
       </el-submenu> 
@@ -131,17 +132,29 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import findWage from '@/components/wageModule/findWage'
+import issueWage from '@/components/wageModule/issueWage'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
     data() {
         return {}
     },
+
     components: {
       welcome
     ,createTask
+    ,findWage
+    ,issueWage
     },
+
     methods: { 
+       issueWage(){
+       this.$store.dispatch("issueWage");
+      },
+       findWage(){
+       this.$store.dispatch("findWage");
+      },
        createTask(){
        this.$store.dispatch("createTask");
       },

@@ -1,22 +1,5 @@
 <template>
     <div>
-        <div class="block">
-          <el-date-picker
-            v-model="beginDate"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>
-          &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-          <el-date-picker
-            v-model="endDate"
-            align="right"
-            type="date"
-            placeholder="选择日期">
-          </el-date-picker>&nbsp;&nbsp;&nbsp;
-          <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
-        </div>
-
         <el-table :data="pageInfo.list" border style="width: 100%" stripe
         :default-sort = "{prop: 'wageId', order: 'descending'}" ref="multipleTable">
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
@@ -42,8 +25,6 @@ export default {
       return {
         page:1,
         pageInfo:{},
-        beginDate:null,
-        endDate:null,
         props:[
           {prop:"wageId",label:"编号",width:"100"},
           {prop:"userName",label:"姓名",width:"100"},
@@ -77,9 +58,6 @@ export default {
         handleSizeChange(pageSize){
             this.find(this.pageInfo.pageNum,pageSise);
         },
-        search(){
-          console.log('搜索');
-        }
     },
     mounted(){
       this.find();

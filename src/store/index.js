@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex);
+//人可光军
 import login from './login'
 import task from './task'
+import wage from './wage'
 import getters from './getters'
 import axios from 'axios'
 import ElementUI from 'element-ui';
@@ -18,7 +20,8 @@ state:{
 },
 modules:{
 'login':login,
-'task':task
+'task':task,
+'wage':wage
 },
 
 })
