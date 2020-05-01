@@ -88,7 +88,7 @@
           <i class="el-icon-location"></i>
           <span>任务中心</span>
         </template>
-          <el-menu-item index="/saveTask" @click="createTask">创建任务</el-menu-item>
+          <el-menu-item index="/createTask" @click="createTask">创建任务</el-menu-item>
           <el-menu-item index="4-2">分配任务</el-menu-item>
           <el-menu-item index="4-3">查询任务</el-menu-item>
           <el-menu-item index="4-4">任务交接</el-menu-item>

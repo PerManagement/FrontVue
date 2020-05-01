@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from '@/components/login'
 import index from '@/components/index'
 import welcome from '@/components/welcome'
+import createTask from '@/components/taskModule/createTask'
 import findPlans from '@/components/planModule/findPlans'
 
 Vue.use(Router)
