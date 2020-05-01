@@ -70,19 +70,6 @@
           <el-menu-item index="2-3">工资图</el-menu-item>
       </el-submenu> 
 
- <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>项目管理</span>
-        </template>
-          <el-menu-item index="3-1">项目立项申请</el-menu-item>
-          <el-menu-item index="3-2">项目立项审批</el-menu-item>
-          <el-menu-item index="3-3">查询项目</el-menu-item>
-          <el-menu-item index="3-4">项目跟踪</el-menu-item>
-          <el-menu-item index="3-5">项目奖金</el-menu-item>
-          <el-menu-item index="3-6">项目经费报表</el-menu-item>
-      </el-submenu> 
-
  <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-location"></i>

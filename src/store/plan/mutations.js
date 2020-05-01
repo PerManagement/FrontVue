@@ -1,5 +1,5 @@
 export default{
-    findPlans(plan){
+    findPlans(state){
         
     },
     
