@@ -4,7 +4,7 @@ Vue.use(Vuex);
 import login from './login'
 //谢海鸿 任务管理
 import task from './task'
-import task from './plan'
+import plan from './plan'
 import getters from './getters'
 import axios from 'axios'
 import ElementUI from 'element-ui';
