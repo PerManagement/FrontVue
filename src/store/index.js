@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex);
 import login from './login'
+//谢海鸿 任务管理
 import task from './task'
+import task from './plan'
 import getters from './getters'
 import axios from 'axios'
 import ElementUI from 'element-ui';
@@ -18,7 +20,8 @@ state:{
 },
 modules:{
 'login':login,
-'task':task
+'task':task,
+'plan':plan,
 },
 
 })
