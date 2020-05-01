@@ -1,7 +1,7 @@
 <template>
     <div>
-        <el-table :data="pageInfo.list" border style="width: 100%" stripe
-        :default-sort = "{prop: 'wageId', order: 'descending'}" ref="multipleTable">
+        <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
+        :default-sort = "{prop:'wageId',order:'descending'}" ref="multipleTable">
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
           :width="item.width"> 
           </el-table-column>
@@ -9,12 +9,13 @@
 
         <!-- 分页 -->
         <el-pagination
+            layout="total, sizes, prev, pager, next, jumper"
             :page-sizes="[3, 5, 8, 10]"
             :page-size="3"
-            @current-change="handleCurrentChange"
-            @size-change="handleSizeChange"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="pageInfo.total">
+            :total="pageInfo.total"
+            @current-change="handleChangePage"
+            @size-change="handleChangePageSize"
+            >
         </el-pagination>
     </div>
 </template>
@@ -26,37 +27,48 @@ export default {
         page:1,
         pageInfo:{},
         props:[
-          {prop:"wageId",label:"编号",width:"100"},
-          {prop:"userName",label:"姓名",width:"100"},
-          {prop:"deptId ",label:"部门",width:"100"},
-          {prop:"baseWage",label:"基本工资",width:"100"},
-          {prop:"subsidy",label:"餐补",width:"100"},
-          {prop:"carAllowance",label:"车补",width:"100"},
-          {prop:"housingSubsidy",label:"房补",width:"100"},
-          {prop:"medicalInsurance",label:"医保",width:"100"},
-          {prop:"socialSecurity",label:"社保",width:"100"},
+          {prop:"wageid",label:"编号",width:"100"},
+          {prop:"user.username",label:"姓名",width:"100"},
+          {prop:"deptid ",label:"部门",width:"100"},
+          {prop:"basewage",label:"基本工资",width:"100"},
+          {prop:"welfare.subsidy",label:"餐补",width:"100"},
+          {prop:"welfare.carallwance",label:"车补",width:"100"},
+          {prop:"welfare.housingsubsidy",label:"房补",width:"100"},
+          {prop:"welfare.medicalinsurance",label:"医疗保险",width:"100"},
+          {prop:"welfare.endowmentinsurance",label:"养老保险",width:"100"},
+          {prop:"welfare.unemploymentinsurance",label:"生育保险",width:"100"},
+          {prop:"welfare.birthinsurance",label:"工伤保险",width:"100"},
+          {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
+          {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
-          {prop:"netPayroll",label:"实发工资",width:"100"},
-          {prop:"netPay",label:"应发工资",width:"100"},
+          {prop:"netpayroll",label:"实发工资",width:"100"},
+          {prop:"netpay",label:"应发工资",width:"100"},
         ],
       };
         
     },
     methods:{
         //分页
-        find(page=1,pageSize=3){
-          let url="http://localhost:8088/wage/pageInfo?page="+page+"&pageSize="+pageSize;
+        find(page=1,pageSize=5){
+          let url="wage/pageInfo?page="+page+"&pageSize="+pageSize;
           this.$axios.get(url).then(resp=>{
-            this.list=resp.data;
+            console.log(resp.data.data);
+            this.pageInfo=resp.data.data;
           }).catch((ex)=>{
             console.log(ex);
           });
         },
-        handleCurrentChange(page){
-            this.find(page,this.pageInfo.pageSize);
+        handleChangePage(page){
+             this.find(page,this.pageInfo.pageSize);
         },
-        handleSizeChange(pageSize){
-            this.find(this.pageInfo.pageNum,pageSise);
+        handleChangePageSize(pageSize){
+          this.find(this.pageInfo.pageNum,pageSize);
+        },
+
+        changeSort({ column, prop, order }){
+             console.group(column);
+             console.log(prop);
+             console.log(order); 
         },
     },
     mounted(){
