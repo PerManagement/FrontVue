@@ -11,7 +11,7 @@
         <el-pagination
             layout="total, sizes, prev, pager, next, jumper"
             :page-sizes="[3, 5, 8, 10]"
-            :page-size="3"
+            :page-size="5"
             :total="pageInfo.total"
             @current-change="handleChangePage"
             @size-change="handleChangePageSize"
@@ -52,7 +52,7 @@ export default {
         find(page=1,pageSize=5){
           let url="wage/pageInfo?page="+page+"&pageSize="+pageSize;
           this.$axios.get(url).then(resp=>{
-            console.log(resp.data.data);
+            console.log(resp.data);
             this.pageInfo=resp.data.data;
           }).catch((ex)=>{
             console.log(ex);

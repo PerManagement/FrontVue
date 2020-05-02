@@ -14,7 +14,7 @@
             type="date"
             placeholder="选择日期">
           </el-date-picker>&nbsp;&nbsp;&nbsp;
-          <el-button type="primary" icon="el-icon-search" @click="search">搜索</el-button>
+          <el-button type="primary" icon="el-icon-search" @click="find()">搜索</el-button>
         </div>
 
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
@@ -28,7 +28,7 @@
         <el-pagination
             layout="total, sizes, prev, pager, next, jumper"
             :page-sizes="[3, 5, 8, 10]"
-            :page-size="3"
+            :page-size="5"
             :total="pageInfo.total"
             @current-change="handleChangePage"
             @size-change="handleChangePageSize"
@@ -42,19 +42,27 @@ export default {
     data() {
       return {
         page:1,
+        pageSize:5,
+        paramp:{
+
+        },
         pageInfo:{},
         beginDate:null,
         endDate:null,
         props:[
           {prop:"wageid",label:"编号",width:"100"},
-          {prop:"userid",label:"姓名",width:"100"},
-          {prop:"DEPTID ",label:"部门",width:"100"},
-          {prop:"baseWage",label:"基本工资",width:"100"},
-          {prop:"subsidy",label:"餐补",width:"100"},
-          {prop:"carAllowance",label:"车补",width:"100"},
-          {prop:"housingSubsidy",label:"房补",width:"100"},
-          {prop:"medicalInsurance",label:"医保",width:"100"},
-          {prop:"socialSecurity",label:"社保",width:"100"},
+          {prop:"user.username",label:"姓名",width:"100"},
+          {prop:"deptid ",label:"部门",width:"100"},
+          {prop:"basewage",label:"基本工资",width:"100"},
+          {prop:"welfare.subsidy",label:"餐补",width:"100"},
+          {prop:"welfare.carallwance",label:"车补",width:"100"},
+          {prop:"welfare.housingsubsidy",label:"房补",width:"100"},
+          {prop:"welfare.medicalinsurance",label:"医疗保险",width:"100"},
+          {prop:"welfare.endowmentinsurance",label:"养老保险",width:"100"},
+          {prop:"welfare.unemploymentinsurance",label:"生育保险",width:"100"},
+          {prop:"welfare.birthinsurance",label:"工伤保险",width:"100"},
+          {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
+          {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
@@ -64,8 +72,9 @@ export default {
     },
     methods:{
         //分页
-        find(page=1,pageSize=5){
-          let url="http://localhost:8088/wage/pageInfo?page="+page+"&pageSize="+pageSize;
+        find(){
+          console.log(this.endDate);
+          let url="wage/pageInfo?page="+this.page+"&pageSize="+this.pageSize+"&beginDate="+this.beginDate+"&endDate="+this.endDate;
           this.$axios.get(url).then(resp=>{
             this.pageInfo=resp.data.data;
           }).catch((ex)=>{
