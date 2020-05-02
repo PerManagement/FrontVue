@@ -1,5 +1,5 @@
 export default{
-    createTask({commit},obj){
+    findPlans({commit},obj){
         this.state.elMain='findPlans';
     },
 }

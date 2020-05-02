@@ -1,5 +1,5 @@
 export default{
-    getTask(plan){
+    getTask(state){
         return state.plan;
     },
 }
