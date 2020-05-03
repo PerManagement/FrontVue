@@ -75,10 +75,10 @@
           <i class="el-icon-location"></i>
           <span>任务中心</span>
         </template>
-          <el-menu-item index="/createTask" @click="createTask">创建任务</el-menu-item>
+          <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
           <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
+          <el-menu-item index="/createTask" @click="createTask">创建任务</el-menu-item>
           <el-menu-item index="4-2">分配任务</el-menu-item>
-          <el-menu-item index="4-3">查询任务</el-menu-item>
           <el-menu-item index="4-4">任务交接</el-menu-item>
           <el-menu-item index="4-5">进度跟踪</el-menu-item>
           <el-menu-item index="4-6">任务奖金</el-menu-item>
@@ -119,6 +119,7 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import findTask from '@/components/taskModule/findTask'
 import findPlans from '@/components/planModule/findPlans'
 import {mapActions,mapMutations} from 'vuex';
 export default {
@@ -130,6 +131,7 @@ export default {
       welcome
     ,createTask,
     findPlans,
+    findTask,
     },
     methods: { 
        createTask(){
@@ -137,6 +139,9 @@ export default {
       },
       findPlans(){
         this.$store.dispatch("findPlans");
+      },
+      findTask(){
+        this.$store.dispatch("findTask");
       },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);
