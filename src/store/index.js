@@ -6,6 +6,8 @@ import task from './task'
 import getters from './getters'
 import axios from 'axios'
 import ElementUI from 'element-ui';
+//陈良吉 2020-05-03
+import affiche from './affiche'
 
 export default new Vuex.Store({
     getters,
@@ -18,7 +20,8 @@ state:{
 },
 modules:{
 'login':login,
-'task':task
+'task':task,
+'affiche':affiche
 },
 
 })

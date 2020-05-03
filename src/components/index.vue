@@ -110,8 +110,8 @@
           <i class="el-icon-location"></i>
           <span>公告通知</span>
         </template>
-          <el-menu-item index="6-1">公告拟稿</el-menu-item>
-          <el-menu-item index="6-2">查看公告</el-menu-item>
+          <el-menu-item index="/saveAffiche" @click="saveAffiche">公告拟稿</el-menu-item>
+          <el-menu-item index="/findAffiches" @click="findAffiches">查看公告</el-menu-item>
       </el-submenu> 
     </el-menu>
      </el-aside>
@@ -131,6 +131,8 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import findAffiches from '@/components/affiche/findAffiches'
+import saveAffiche from '@/components/affiche/saveAffiche'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -139,9 +141,17 @@ export default {
     },
     components: {
       welcome
-    ,createTask
+    ,createTask,
+    findAffiches,
+    saveAffiche
     },
     methods: { 
+       saveAffiche(){
+       this.$store.dispatch("saveAffiche");
+      },
+       findAffiches(){
+       this.$store.dispatch("findAffiches");
+      },
        createTask(){
        this.$store.dispatch("createTask");
       },
