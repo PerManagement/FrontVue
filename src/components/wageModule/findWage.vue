@@ -2,6 +2,7 @@
     <div>
         <div class="block">
           <el-date-picker
+            value-format="yyyy-MM-dd"  
             v-model="beginDate"
             align="right"
             type="date"
@@ -9,6 +10,7 @@
           </el-date-picker>
           &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
           <el-date-picker
+            value-format="yyyy-MM-dd"  
             v-model="endDate"
             align="right"
             type="date"
@@ -42,17 +44,13 @@ export default {
     data() {
       return {
         page:1,
-        pageSize:5,
-        paramp:{
-
-        },
         pageInfo:{},
-        beginDate:null,
-        endDate:null,
+        beginDate:'',
+        endDate:'',
         props:[
           {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
-          {prop:"deptid ",label:"部门",width:"100"},
+          {prop:"deptid",label:"部门",width:"100"},
           {prop:"basewage",label:"基本工资",width:"100"},
           {prop:"welfare.subsidy",label:"餐补",width:"100"},
           {prop:"welfare.carallwance",label:"车补",width:"100"},
@@ -66,17 +64,22 @@ export default {
           {prop:"taxes",label:"税金",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
+          {prop:"wagedate",label:"发放时间",width:"180"},
+          {prop:"issuer",label:"发放人",width:"100"}
         ],
       };
         
     },
     methods:{
         //分页
-        find(){
+        find(page=1,pageSize=5){
+          console.log(this.beginDate);
           console.log(this.endDate);
-          let url="wage/pageInfo?page="+this.page+"&pageSize="+this.pageSize+"&beginDate="+this.beginDate+"&endDate="+this.endDate;
+          let url="wage/pageInfoByDate?page="+page+"&pageSize="+pageSize+"&beginDate="+this.beginDate+"&endDate="+this.endDate;
           this.$axios.get(url).then(resp=>{
+           
             this.pageInfo=resp.data.data;
+            console.log(this.pageInfo);
           }).catch((ex)=>{
             console.log(ex);
           });

@@ -5,6 +5,14 @@
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
           :width="item.width"> 
           </el-table-column>
+
+          <!--操作列-->
+          <el-table-column  label="操作" width="150px">
+          <template slot-scope="scope">
+              <el-button  @click="update(scope.row)" type="text" size="small" width="190px" v-if="tag">发放工资(未审批)</el-button>
+              <el-button @click="update(scope.row)" type="text" size="small" width="190px" v-if="!tag">发放工资(已审批)</el-button>
+          </template>
+          </el-table-column>
         </el-table>
 
         <!-- 分页 -->
@@ -24,12 +32,13 @@
 export default {
     data() {
       return {
+        tag:true,
         page:1,
         pageInfo:{},
         props:[
           {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
-          {prop:"deptid ",label:"部门",width:"100"},
+          {prop:"deptid",label:"部门",width:"100"},
           {prop:"basewage",label:"基本工资",width:"100"},
           {prop:"welfare.subsidy",label:"餐补",width:"100"},
           {prop:"welfare.carallwance",label:"车补",width:"100"},
