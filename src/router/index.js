@@ -5,6 +5,9 @@ import index from '@/components/index'
 import createTask from '@/components/taskModule/createTask'
 import welcome from '@/components/welcome'
 import findWage from '@/components/wageModule/findWage'
+import issueWage from '@/components/wageModule/issueWage'
+import findWageState from '@/components/wageModule/findWageState'
+import findWageByUserId from '@/components/wageModule/findWageByUserId'
 
 Vue.use(Router)
 
@@ -34,6 +37,21 @@ export default new Router({
       path: '/findWage',
       name: 'findWage',
       component: findWage
+    },
+    {
+      path: '/issueWage',
+      name: 'issueWage',
+      component: issueWage
+    },
+    {
+      path: '/findWageState',
+      name: 'findWageState',
+      component: findWageState
+    },
+    {
+      path: '/findWageByUserId',
+      name: 'findWageByUserId',
+      component: findWageByUserId
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},
