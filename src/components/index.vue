@@ -113,6 +113,15 @@
           <el-menu-item index="6-1">公告拟稿</el-menu-item>
           <el-menu-item index="6-2">查看公告</el-menu-item>
       </el-submenu> 
+
+      <el-submenu index="7">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>管理员操作</span>
+        </template>
+          <el-menu-item index="7-1" @click="createUser">添加员工</el-menu-item>
+      </el-submenu> 
+
     </el-menu>
      </el-aside>
  
@@ -131,6 +140,7 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import createUser from '@/components/adminModule/createUser'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -139,11 +149,15 @@ export default {
     },
     components: {
       welcome
-    ,createTask
+    ,createTask,createUser
     },
     methods: { 
        createTask(){
        this.$store.dispatch("createTask");
+      },
+      createUser(){
+        //this.$store.state.elMain='createUser';
+        this.$store.dispatch("createUser");
       },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);

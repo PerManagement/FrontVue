@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import login from '@/components/login'
 import index from '@/components/index'
 import createTask from '@/components/taskModule/createTask'
+import createUser from '@/components/adminModule/createUser'
 import welcome from '@/components/welcome'
 
 Vue.use(Router)
@@ -28,6 +29,11 @@ export default new Router({
       path: '/createTask',
       name: 'createTask',
       component: createTask
+    },
+    {
+      path: '/createUser',
+      name: 'createUser',
+      component: createUser
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},
