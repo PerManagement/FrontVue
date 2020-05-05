@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login'
 import index from '@/components/index'
+import createUser from '@/components/adminModule/createUser'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import findPlans from '@/components/planModule/findPlans'
@@ -64,6 +65,11 @@ export default new Router({
       path: '/findWageByUserId',
       name: 'findWageByUserId',
       component: findWageByUserId
+    },
+    {
+      path: '/createUser',
+      name: 'createUser',
+      component: createUser
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},
