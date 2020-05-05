@@ -12,6 +12,8 @@ import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
+import findAffiches from '@/components/affiche/findAffiches'
+import saveAffiche from '@/components/affiche/saveAffiche'
 
 Vue.use(Router)
 
@@ -76,6 +78,16 @@ export default new Router({
       path: '/seleteAttendance',
       name: 'seleteAttendance',
       component: seleteAttendance
+    },
+    {
+      path: '/saveAffiche',
+      name: 'saveAffiche',
+      component: saveAffiche
+    },
+    {
+      path: '/findAffiches',
+      name: 'findAffiches',
+      component: findAffiches
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},

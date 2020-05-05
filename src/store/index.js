@@ -19,6 +19,8 @@ import getters from './getters'
 import axios from 'axios'
 
 import ElementUI from 'element-ui';
+//陈良吉 2020-05-03
+import affiche from './affiche'
 
 export default new Vuex.Store({
     getters,
@@ -35,6 +37,8 @@ modules:{
 'plan':plan,
 'wage':wage,
 'attendance':attendance,
+//陈良吉 2020-05-04
+'affiche':affiche
 },
 
 })

@@ -52,9 +52,9 @@ export default {
         
     },
     methods:{
-        //分页
+        //分页 this.$store.state.login.users.userid;
         find(page=1,pageSize=5){
-          let userId=this.$store.state.login.users.userRoles[0].userid;
+          let userId=this.$store.state.login.users.userRoles[0].id;
           let url="wage/findByUserId?page="+page+"&pageSize="+pageSize+"&userId="+userId;
           this.$axios.get(url).then(resp=>{
             console.log(resp.data);

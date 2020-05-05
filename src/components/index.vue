@@ -84,7 +84,7 @@
           <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
       </el-submenu> 
 
-       <el-submenu index="5">
+       <!--<el-submenu index="5">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>人事管理</span>
@@ -92,14 +92,14 @@
           <el-menu-item index="5-1">员工部门</el-menu-item>
           <el-menu-item index="5-2">用户管理</el-menu-item>
           <el-menu-item index="5-3">权限管理</el-menu-item>
-      </el-submenu> 
+      </el-submenu> -->
            <el-submenu index="6">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>公告通知</span>
         </template>
-          <el-menu-item index="6-1">公告拟稿</el-menu-item>
-          <el-menu-item index="6-2">查看公告</el-menu-item>
+          <el-menu-item index="/saveAffiche" @click="saveAffiche">公告拟稿</el-menu-item>
+          <el-menu-item index="/findAffiches" @click="findAffiches">查看公告</el-menu-item>
       </el-submenu> 
 
       <el-submenu index="7">
@@ -107,7 +107,7 @@
           <i class="el-icon-location"></i>
           <span>管理员操作</span>
         </template>
-          <el-menu-item index="7-1" @click="createUser">添加员工</el-menu-item>
+          <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
       </el-submenu> 
 
     </el-menu>
@@ -136,6 +136,8 @@ import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
+import findAffiches from '@/components/affiche/findAffiches'
+import saveAffiche from '@/components/affiche/saveAffiche'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -154,8 +156,10 @@ export default {
       ,findWageByUserId
       ,welcome
       ,createUser
-      ,selectAttendance
-      ,welcome
+      ,selectAttendance,
+      welcome,
+      findAffiches,
+      saveAffiche,
     },
 
     methods: { 
@@ -170,6 +174,12 @@ export default {
       },
        findWageByUserId(){
        this.$store.dispatch("findWageByUserId");
+       },
+       saveAffiche(){
+       this.$store.dispatch("saveAffiche");
+      },
+       findAffiches(){
+       this.$store.dispatch("findAffiches");
       },
        createTask(){
        this.$store.dispatch("createTask");
@@ -187,7 +197,7 @@ export default {
        selectAttendance(){
        this.$store.dispatch("selectAttendance");
       },
-        handleOpen(key, keyPath) {
+      handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {

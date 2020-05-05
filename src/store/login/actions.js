@@ -13,6 +13,8 @@ export default{
             sessionStorage.setItem("users",JSON.stringify(response.data.data));
             sessionStorage.setItem("app_view","index");
             this.state.app_view='index';
+            console.log(response.data.data);
+            
         }).catch((ex)=>{
             console.log(ex);
         });
@@ -24,8 +26,8 @@ export default{
            commit('logOut',obj);
     },
 
-    //切换管理员界面
+    //切换管理员界面 let url="";
     createUser({commit},obj){
-        let url="";
+        this.state.elMain='createUser';
     }
 }
