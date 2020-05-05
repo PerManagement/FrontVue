@@ -5,10 +5,10 @@ export default{
             if(response.data.data==null){
                 alert(response.data.message);
                 this.state.returnMessage=response.data.message;
-                console.log("1");           
+                          
             return this.state.app_view='login';
                
-            }
+            } 
             this.state.returnMessage="";
             commit('login',response.data.data);
             sessionStorage.setItem("users",JSON.stringify(response.data.data));

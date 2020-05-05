@@ -70,30 +70,15 @@
           <el-menu-item index="2-3">工资图</el-menu-item>
       </el-submenu> 
 
- <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>项目管理</span>
-        </template>
-          <el-menu-item index="3-1">项目立项申请</el-menu-item>
-          <el-menu-item index="3-2">项目立项审批</el-menu-item>
-          <el-menu-item index="3-3">查询项目</el-menu-item>
-          <el-menu-item index="3-4">项目跟踪</el-menu-item>
-          <el-menu-item index="3-5">项目奖金</el-menu-item>
-          <el-menu-item index="3-6">项目经费报表</el-menu-item>
-      </el-submenu> 
-
  <el-submenu index="4">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>任务中心</span>
         </template>
-          <el-menu-item index="/saveTask" @click="createTask">创建任务</el-menu-item>
-          <el-menu-item index="4-2">分配任务</el-menu-item>
-          <el-menu-item index="4-3">查询任务</el-menu-item>
-          <el-menu-item index="4-4">任务交接</el-menu-item>
-          <el-menu-item index="4-5">进度跟踪</el-menu-item>
-          <el-menu-item index="4-6">任务奖金</el-menu-item>
+          <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
+          <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
+          <el-menu-item index="/createTask" @click="createTask">分配任务</el-menu-item>
+          <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
       </el-submenu> 
 
        <el-submenu index="5">
@@ -131,6 +116,8 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import findTask from '@/components/taskModule/findTask'
+import findPlans from '@/components/planModule/findPlans'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -139,11 +126,19 @@ export default {
     },
     components: {
       welcome
-    ,createTask
+    ,createTask,
+    findPlans,
+    findTask,
     },
     methods: { 
        createTask(){
        this.$store.dispatch("createTask");
+      },
+      findPlans(){
+        this.$store.dispatch("findPlans");
+      },
+      findTask(){
+        this.$store.dispatch("findTask");
       },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);
