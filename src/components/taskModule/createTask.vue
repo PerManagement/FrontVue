@@ -2,49 +2,23 @@
     <div class="">
         <form>
         <el-row>
-          <el-col :span="3" class="font1">头像:</el-col>
+          <el-col :span="3" class="font1">任务名称</el-col>
           <el-col :span="10">
-            <el-upload
-            class="avatar-uploader"
-            :action="host+'/upload/upload'"
-            name="img"
-            :show-file-list="false"
-            :on-success="handleSuccess"
-            :before-upload="handleBeforeUpload">
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            </el-upload>
+            <el-input v-model="task.taskname" ></el-input>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="font1">姓名</el-col>
+          <el-col :span="3" class="font1">任务描述</el-col>
           <el-col :span="10">
-            <el-input v-model="user.uname" ></el-input>
+            <el-input v-model="task.taskdesc" ></el-input>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="font1">密码</el-col>
-          <el-col :span="10">
-            <el-input v-model="user.upwd" show-password ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" style="text-align:right;padding-right:10px">性别</el-col>
-          <el-col :span="10">
-          <el-col :span="10">
-            <el-radio-group v-model="user.sex">
-                <el-radio label="男">男</el-radio>
-                <el-radio label="女">女</el-radio>
-            </el-radio-group>
-          </el-col>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">出生日期</el-col>
+          <el-col :span="3" class="font1">开始时间</el-col>
           <el-col :span="10">
           <el-col :span="10">
             <el-date-picker
-            v-model="user.birthday"
+            v-model="task.begindate"
             type="date"
             placeholder="选择日期"
             value-format="yyyy-MM-dd">
@@ -52,11 +26,43 @@
           </el-col>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">完成时间</el-col>
+          <el-col :span="10">
+          <el-col :span="10">
+            <el-date-picker
+            v-model="task.enddate"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd">
+            </el-date-picker>
+          </el-col>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">实施人</el-col>
+          <el-col :span="10" style="text-align:left;padding-top:10px;">
+            <el-select v-model="task.userid" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.userid"
+                :label="item.realname"
+                :value="item.userid">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">任务状态</el-col>
+          <el-col :span="10" style="text-align:left;padding-top:10px;">
+            未实施
+          </el-col>
+        </el-row>
         </form>
         <el-row>
           <el-col :span="10" :offset="6">
             <el-button>取 消</el-button>
-            <el-button type="primary">确 定</el-button>
+            <el-button type="primary" @click="save">确 定</el-button>
           </el-col>
         </el-row>
     </div>
@@ -70,6 +76,7 @@ export default {
             task:{},
             user:{},
             imageUrl:'',
+            options: [],
         }
     },
     computed:{
@@ -108,7 +115,27 @@ export default {
                 return false;
             }
         },
-    }
+        findExecutor(){
+          let url="task/findExecutor";
+          this.$axios.get(url).then(resp=>{
+            console.log(resp.data.data);
+            this.options=resp.data.data;
+            
+          }).catch((ex)=>{
+            console.log(ex);
+          });
+        },
+        save(){
+          let url="task/save";
+            this.$axios.post(url,this.task).then(resp=>{
+                this.$message.success(resp.data.message);
+                this.task={};
+            }).catch(ex=>{console.log(ex);});
+        },
+    },
+    mounted() {
+      this.findExecutor();
+    },
 }
 </script>
 
