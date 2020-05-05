@@ -118,15 +118,12 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
-<<<<<<< HEAD
 import findTask from '@/components/taskModule/findTask'
 import findPlans from '@/components/planModule/findPlans'
-=======
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
->>>>>>> longshan
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -135,18 +132,14 @@ export default {
     },
 
     components: {
-      welcome
-<<<<<<< HEAD
-    ,createTask,
-    findPlans,
-    findTask,
-=======
-    ,createTask
-    ,findWage
-    ,issueWage
-    ,findWageState
-    ,findWageByUserId
->>>>>>> longshan
+      welcome,
+      createTask,
+      findPlans,
+      findTask,
+      findWage
+      ,issueWage
+      ,findWageState
+      ,findWageByUserId
     },
 
     methods: { 
