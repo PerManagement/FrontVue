@@ -45,7 +45,7 @@
         </el-row>
         <el-row>
           <el-col :span="3" class="font1">状态</el-col>
-          <el-col :span="10">
+          <el-col :span="10" style="text-align:left;">
             <el-select v-model="row.state" placeholder="请选择">
               <el-option
                 v-for="item in options"

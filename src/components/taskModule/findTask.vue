@@ -41,9 +41,10 @@ export default {
         props:[
           {prop:"taskid",label:"编号",width:"100"},
           {prop:"taskname",label:"任务名称",width:"120"},
-          {prop:"begindateString",label:"计划名称",width:"120"},
-          {prop:"enddateString",label:"开始日期",width:"200"},
-          {prop:"status",label:"结束日期",width:"200"},
+          {prop:"user.realname",label:"实施人",width:"120"},
+          {prop:"begindateString",label:"开始日期",width:"120"},
+          {prop:"enddateString",label:"结束日期",width:"200"},
+          {prop:"status",label:"状态",width:"200"},
         ],
         updateTag:false,
       };

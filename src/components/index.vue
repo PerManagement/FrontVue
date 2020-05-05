@@ -77,11 +77,8 @@
         </template>
           <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
           <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
-          <el-menu-item index="/createTask" @click="createTask">创建任务</el-menu-item>
-          <el-menu-item index="4-2">分配任务</el-menu-item>
-          <el-menu-item index="4-4">任务交接</el-menu-item>
-          <el-menu-item index="4-5">进度跟踪</el-menu-item>
-          <el-menu-item index="4-6">任务奖金</el-menu-item>
+          <el-menu-item index="/createTask" @click="createTask">分配任务</el-menu-item>
+          <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
       </el-submenu> 
 
        <el-submenu index="5">
