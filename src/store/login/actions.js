@@ -14,7 +14,7 @@ export default{
             sessionStorage.setItem("users",JSON.stringify(response.data.data));
             sessionStorage.setItem("app_view","index");
             this.state.app_view='index';
-            console.log("ok");
+            console.log(response.data.data);
             
         }).catch((ex)=>{
             console.log(ex);

@@ -13,6 +13,8 @@ import store from './store'
 import axios from 'axios'
 axios.defaults.baseURL='http://localhost:8088/'
 Vue.prototype.$axios = axios
+axios.defaults.withCredentials=true
+
 
 
 import VueResource from 'vue-resource';

@@ -4,8 +4,8 @@ import login from '@/components/login'
 import index from '@/components/index'
 import createTask from '@/components/taskModule/createTask'
 import welcome from '@/components/welcome'
-import findAffiches from '@/components/afficheVue/findAffiches'
-import saveAffiche from '@/components/afficheVue/saveAffiche'
+import findAffiches from '@/components/affiche/findAffiches'
+import saveAffiche from '@/components/affiche/saveAffiche'
 
 Vue.use(Router)
 

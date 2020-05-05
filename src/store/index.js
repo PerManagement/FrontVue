@@ -21,6 +21,7 @@ state:{
 modules:{
 'login':login,
 'task':task,
+//陈良吉 2020-05-04
 'affiche':affiche
 },
 
