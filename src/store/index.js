@@ -5,6 +5,7 @@ import login from './login'
 import task from './task'
 import getters from './getters'
 import axios from 'axios'
+import attendance from './attendance'
 import ElementUI from 'element-ui';
 
 export default new Vuex.Store({
@@ -18,7 +19,8 @@ state:{
 },
 modules:{
 'login':login,
-'task':task
+'task':task,
+'attendance':attendance,
 },
 
 })

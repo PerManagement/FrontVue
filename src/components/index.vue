@@ -48,15 +48,16 @@
         </template>
         <!-- <el-menu-item-group> -->
           <!-- <template slot="title">分组一</template> -->
-          <el-menu-item index="1-1">请假审批</el-menu-item>
-          <el-menu-item index="1-2">加班详情</el-menu-item>
+          <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
+           <el-menu-item index="1-2">请假审批</el-menu-item>
+          <el-menu-item index="1-3">加班详情</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
-          <el-menu-item index="1-3">考勤统计</el-menu-item>
+          <el-menu-item index="1-4">出差信息</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-submenu index="1-4"> -->
           <!-- <template slot="title">出差信息</template> -->
-          <el-menu-item index="1-4-1">出差信息</el-menu-item>
+          <el-menu-item index="1-5">出差详细信息</el-menu-item>
         <!-- </el-submenu>-->
       </el-submenu> 
 
@@ -129,6 +130,7 @@
 </template>
 
 <script>
+import selectAttendance from '@/components/attendanceModule/selectAttendance'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import {mapActions,mapMutations} from 'vuex';
@@ -138,12 +140,16 @@ export default {
         return {}
     },
     components: {
-      welcome
+      selectAttendance
+      ,welcome
     ,createTask
     },
     methods: { 
        createTask(){
        this.$store.dispatch("createTask");
+      },
+       selectAttendance(){
+       this.$store.dispatch("selectAttendance");
       },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);
