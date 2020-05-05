@@ -10,12 +10,14 @@ import plan from './plan'
 //龙珊 薪资管理
 import wage from './wage'
 //周怡珊 考勤管理
+import attendance from './attendance'
 //陈良吉 公告管理
 
 
 
 import getters from './getters'
 import axios from 'axios'
+
 import ElementUI from 'element-ui';
 
 export default new Vuex.Store({
@@ -31,7 +33,8 @@ modules:{
 'login':login,
 'task':task,
 'plan':plan,
-'wage':wage
+'wage':wage,
+'attendance':attendance,
 },
 
 })

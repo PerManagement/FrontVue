@@ -11,6 +11,7 @@ import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
+import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 
 Vue.use(Router)
 
@@ -70,6 +71,11 @@ export default new Router({
       path: '/createUser',
       name: 'createUser',
       component: createUser
+    },
+    {
+      path: '/seleteAttendance',
+      name: 'seleteAttendance',
+      component: seleteAttendance
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},
