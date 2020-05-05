@@ -65,9 +65,11 @@
           <i class="el-icon-location"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="2-1">发放工资</el-menu-item>
-          <el-menu-item index="2-2">员工福利</el-menu-item>
-          <el-menu-item index="2-3">工资图</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
+          <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
+          <el-menu-item index="2-3">添加工资条</el-menu-item>
+          <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
+          <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
 
  <el-submenu index="4">
@@ -116,21 +118,50 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+<<<<<<< HEAD
 import findTask from '@/components/taskModule/findTask'
 import findPlans from '@/components/planModule/findPlans'
+=======
+import findWage from '@/components/wageModule/findWage'
+import issueWage from '@/components/wageModule/issueWage'
+import findWageState from '@/components/wageModule/findWageState'
+import findWageByUserId from '@/components/wageModule/findWageByUserId'
+>>>>>>> longshan
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
     data() {
         return {}
     },
+
     components: {
       welcome
+<<<<<<< HEAD
     ,createTask,
     findPlans,
     findTask,
+=======
+    ,createTask
+    ,findWage
+    ,issueWage
+    ,findWageState
+    ,findWageByUserId
+>>>>>>> longshan
     },
+
     methods: { 
+       issueWage(){
+       this.$store.dispatch("issueWage");
+      },
+       findWage(){
+       this.$store.dispatch("findWage");
+      },
+       findWageState(){
+       this.$store.dispatch("findWageState");
+      },
+       findWageByUserId(){
+       this.$store.dispatch("findWageByUserId");
+      },
        createTask(){
        this.$store.dispatch("createTask");
       },
