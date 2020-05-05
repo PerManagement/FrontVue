@@ -127,16 +127,13 @@
 <script>
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
-<<<<<<< HEAD
 import findTask from '@/components/taskModule/findTask'
 import findPlans from '@/components/planModule/findPlans'
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
-=======
 import createUser from '@/components/adminModule/createUser'
->>>>>>> hehui
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -145,7 +142,6 @@ export default {
     },
 
     components: {
-<<<<<<< HEAD
       welcome,
       createTask,
       findPlans,
@@ -154,10 +150,8 @@ export default {
       ,issueWage
       ,findWageState
       ,findWageByUserId
-=======
-      welcome
-    ,createTask,createUser
->>>>>>> hehui
+      ,welcome
+      ,createUser
     },
 
     methods: { 
@@ -176,17 +170,15 @@ export default {
        createTask(){
        this.$store.dispatch("createTask");
       },
-<<<<<<< HEAD
       findPlans(){
         this.$store.dispatch("findPlans");
       },
       findTask(){
         this.$store.dispatch("findTask");
-=======
+      },
       createUser(){
         //this.$store.state.elMain='createUser';
         this.$store.dispatch("createUser");
->>>>>>> hehui
       },
         handleOpen(key, keyPath) {
         console.log(key, keyPath);
