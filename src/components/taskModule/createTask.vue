@@ -118,9 +118,8 @@ export default {
         findExecutor(){
           let url="task/findExecutor";
           this.$axios.get(url).then(resp=>{
-            console.log(resp.data.data);
+            console.log("findExecutor:"+resp.data.data);
             this.options=resp.data.data;
-            
           }).catch((ex)=>{
             console.log(ex);
           });

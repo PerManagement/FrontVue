@@ -40,8 +40,8 @@
         <div class="block">
         <el-pagination
             layout="total, sizes, prev, pager, next, jumper"
-            :page-sizes="[3, 6, 8, 10]"
-            :page-size="6"
+            :page-sizes="[3, 5, 8, 10]"
+            :page-size="5"
             :total="pageInfo.total"
             @current-change="handleChangePage"
             @size-change="handleChangePageSize"
@@ -77,7 +77,7 @@ export default {
     },
     methods:{
         //分页
-        find(page=1,pageSize=6){
+        find(page=1,pageSize=5){
           let url="task/findTask?page="+page+"&pageSize="+pageSize+"&begindate="+this.begindate+"&enddate="+this.enddate;
           this.$axios.get(url).then(resp=>{
             console.log(resp.data.data);
