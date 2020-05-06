@@ -9,7 +9,7 @@
          <!-- 分页 -->
          <el-pagination
            layout="total, sizes, prev, pager, next, jumper"
-            :page-sizes="[2, 5, 8, 10]"
+            :page-sizes="[ 5, 8, 10]"
             :page-size="3"
             :total="pageInfo.total"
             @current-change="handleChangePage"
@@ -29,7 +29,6 @@ export default {
           {prop:"attendanceid",label:"编号",width:"100"},
           {prop:"userid",label:"员工编号",width:"100"},
           {prop:"deptid",label:"部门编号",width:"100"},
-          {prop:"department.deptname",label:"部门名称",width:"100"},
           {prop:"morninghours",label:"上班时间",width:"200"},
           {prop:"afternoonclosingtime",label:"下班时间",width:"200"},
           {prop:"recorddate",label:"记录时间",width:"200"},
@@ -42,7 +41,7 @@ export default {
     },
     methods:{
         //分页
-        find(page=1,pageSize=2){
+        find(page=1,pageSize=5){
           let url="attendance/pageInfo?page="+page+"&pageSize="+pageSize;
           this.$axios.get(url).then(resp=>{
             console.log(resp.data.data);

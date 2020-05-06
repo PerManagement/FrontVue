@@ -46,18 +46,17 @@
           <i class="el-icon-location"></i>
           <span>考勤管理</span>
         </template>
-        <!-- <el-menu-item-group> -->
-          <!-- <template slot="title">分组一</template> -->
-          <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
+        <el-menu-item index="/selectAttendance" @click="selectAttendance">查询考勤记录</el-menu-item>
+               <el-menu-item index="/creakAttendance" @click="creakAttendance">打卡</el-menu-item>
+           <el-menu-item index="1-2">请假审批</el-menu-item>
+          <el-menu-item index="1-3">加班详情</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
-        <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
-          <el-menu-item index="1-3">加班详情</el-menu-item>
           <el-menu-item index="1-4">出差信息</el-menu-item>
-          <el-menu-item index="1-5">出差详细信息</el-menu-item>  -->
         <!-- </el-menu-item-group> -->
         <!-- <el-submenu index="1-4"> -->
           <!-- <template slot="title">出差信息</template> -->
+          <el-menu-item index="1-5">出差详细信息</el-menu-item>
         <!-- </el-submenu>-->
       </el-submenu> 
 
@@ -129,6 +128,7 @@
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import creakAttendance from '@/components/attendanceModule/creakAttendance'
 import findTask from '@/components/taskModule/findTask'
 import findPlans from '@/components/planModule/findPlans'
 import findWage from '@/components/wageModule/findWage'
@@ -160,6 +160,7 @@ export default {
       welcome,
       findAffiches,
       saveAffiche,
+      creakAttendance,
     },
 
     methods: { 
@@ -183,6 +184,9 @@ export default {
       },
        createTask(){
        this.$store.dispatch("createTask");
+      },
+      creakAttendance(){
+       this.$store.dispatch("creakAttendance");
       },
       findPlans(){
         this.$store.dispatch("findPlans");
