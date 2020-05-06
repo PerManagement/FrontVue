@@ -41,7 +41,7 @@ export default {
   methods: {
       saveAffiche(){
         
-        this.affiche.userid=this.$store.state.login.users.userid;
+        this.affiche.userid=this.$store.state.login.users.userRoles[0].userid;
          console.log(this.affiche);
       let url ="affiche/saveAffiche";
       this.$axios.post(url,this.affiche).then(resp => {

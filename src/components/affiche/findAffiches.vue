@@ -50,7 +50,7 @@ export default {
     //分页查询
     findAffiches(page = 1, pageSize = 6) {
         
-      let url ="affiche/findAffiches?page=" +page +"&pageSize=" +pageSize +"&userid="+this.$store.state.login.users.userid;
+      let url ="affiche/findAffiches?page=" +page +"&pageSize=" +pageSize +"&userid="+this.$store.state.login.users.userRoles[0].userid;
       this.$axios
         .get(url)
         .then(resp => {
