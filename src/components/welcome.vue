@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        今日通告
+        欢迎登录
     </div>
 </template>
 
