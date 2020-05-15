@@ -24,7 +24,7 @@
     </el-submenu>
   </el-submenu>
   <el-menu-item index="3" disabled>消息中心</el-menu-item>
-  <el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>
+  <!--<el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
   <div style="float:right"><el-button type="danger" round style="line-height:0px;width:65px;font-size:10px;" @click="logOut">退出</el-button>
   </div>
 </el-menu>
@@ -48,15 +48,16 @@
         </template>
         <!-- <el-menu-item-group> -->
           <!-- <template slot="title">分组一</template> -->
-          <el-menu-item index="1-1">请假审批</el-menu-item>
-          <el-menu-item index="1-2">加班详情</el-menu-item>
+          <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
-          <el-menu-item index="1-3">考勤统计</el-menu-item>
+        <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
+          <el-menu-item index="1-3">加班详情</el-menu-item>
+          <el-menu-item index="1-4">出差信息</el-menu-item>
+          <el-menu-item index="1-5">出差详细信息</el-menu-item>  -->
         <!-- </el-menu-item-group> -->
         <!-- <el-submenu index="1-4"> -->
           <!-- <template slot="title">出差信息</template> -->
-          <el-menu-item index="1-4-1">出差信息</el-menu-item>
         <!-- </el-submenu>-->
       </el-submenu> 
 
@@ -65,22 +66,11 @@
           <i class="el-icon-location"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="2-1">发放工资</el-menu-item>
-          <el-menu-item index="2-2">员工福利</el-menu-item>
-          <el-menu-item index="2-3">工资图</el-menu-item>
-      </el-submenu> 
-
- <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>项目管理</span>
-        </template>
-          <el-menu-item index="3-1">项目立项申请</el-menu-item>
-          <el-menu-item index="3-2">项目立项审批</el-menu-item>
-          <el-menu-item index="3-3">查询项目</el-menu-item>
-          <el-menu-item index="3-4">项目跟踪</el-menu-item>
-          <el-menu-item index="3-5">项目奖金</el-menu-item>
-          <el-menu-item index="3-6">项目经费报表</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
+          <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
+          <!--<el-menu-item index="2-3">添加工资条</el-menu-item>-->
+          <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
+          <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
 
  <el-submenu index="4">
@@ -88,15 +78,13 @@
           <i class="el-icon-location"></i>
           <span>任务中心</span>
         </template>
-          <el-menu-item index="/saveTask" @click="createTask">创建任务</el-menu-item>
-          <el-menu-item index="4-2">分配任务</el-menu-item>
-          <el-menu-item index="4-3">查询任务</el-menu-item>
-          <el-menu-item index="4-4">任务交接</el-menu-item>
-          <el-menu-item index="4-5">进度跟踪</el-menu-item>
-          <el-menu-item index="4-6">任务奖金</el-menu-item>
+          <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
+          <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
+          <el-menu-item index="/createTask" @click="createTask">分配任务</el-menu-item>
+          <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
       </el-submenu> 
 
-       <el-submenu index="5">
+       <!--<el-submenu index="5">
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>人事管理</span>
@@ -104,7 +92,7 @@
           <el-menu-item index="5-1">员工部门</el-menu-item>
           <el-menu-item index="5-2">用户管理</el-menu-item>
           <el-menu-item index="5-3">权限管理</el-menu-item>
-      </el-submenu> 
+      </el-submenu> -->
            <el-submenu index="6">
         <template slot="title">
           <i class="el-icon-location"></i>
@@ -113,6 +101,15 @@
           <el-menu-item index="/saveAffiche" @click="saveAffiche">公告拟稿</el-menu-item>
           <el-menu-item index="/findAffiches" @click="findAffiches">查看公告</el-menu-item>
       </el-submenu> 
+
+      <el-submenu index="7">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>管理员操作</span>
+        </template>
+          <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
+      </el-submenu> 
+
     </el-menu>
      </el-aside>
  
@@ -129,8 +126,16 @@
 </template>
 
 <script>
+import selectAttendance from '@/components/attendanceModule/selectAttendance'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
+import findTask from '@/components/taskModule/findTask'
+import findPlans from '@/components/planModule/findPlans'
+import findWage from '@/components/wageModule/findWage'
+import issueWage from '@/components/wageModule/issueWage'
+import findWageState from '@/components/wageModule/findWageState'
+import findWageByUserId from '@/components/wageModule/findWageByUserId'
+import createUser from '@/components/adminModule/createUser'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
 import {mapActions,mapMutations} from 'vuex';
@@ -139,13 +144,37 @@ export default {
     data() {
         return {}
     },
+
     components: {
-      welcome
-    ,createTask,
-    findAffiches,
-    saveAffiche
+      welcome,
+      createTask,
+      findPlans,
+      findTask,
+      findWage
+      ,issueWage
+      ,findWageState
+      ,findWageByUserId
+      ,welcome
+      ,createUser
+      ,selectAttendance,
+      welcome,
+      findAffiches,
+      saveAffiche,
     },
+
     methods: { 
+       issueWage(){
+       this.$store.dispatch("issueWage");
+      },
+       findWage(){
+       this.$store.dispatch("findWage");
+      },
+       findWageState(){
+       this.$store.dispatch("findWageState");
+      },
+       findWageByUserId(){
+       this.$store.dispatch("findWageByUserId");
+       },
        saveAffiche(){
        this.$store.dispatch("saveAffiche");
       },
@@ -155,7 +184,20 @@ export default {
        createTask(){
        this.$store.dispatch("createTask");
       },
-        handleOpen(key, keyPath) {
+      findPlans(){
+        this.$store.dispatch("findPlans");
+      },
+      findTask(){
+        this.$store.dispatch("findTask");
+      },
+      createUser(){
+        //this.$store.state.elMain='createUser';
+        this.$store.dispatch("createUser");
+      },
+       selectAttendance(){
+       this.$store.dispatch("selectAttendance");
+      },
+      handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {

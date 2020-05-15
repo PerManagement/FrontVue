@@ -70,7 +70,7 @@ watch:{
   
 
   .el-main {
-    color: #333;
+    color: gray;
     text-align: center;
     line-height: 50px;
     position: absolute;

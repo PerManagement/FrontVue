@@ -1,0 +1,19 @@
+export default{
+    findWage({commit},obj){
+        this.state.elMain='findWage';  
+    },
+    issueWage({commit},obj){
+        this.state.elMain='issueWage';  
+    },
+    findWageState({commit},obj){
+        this.state.elMain='findWageState';  
+    },
+    findWageByUserId({commit},obj){
+        this.state.elMain='findWageByUserId';  
+    },
+    logOut({commit},obj){
+           this.state.app_view='login';
+           sessionStorage.clear();
+           commit('logOut',obj);
+    }
+}

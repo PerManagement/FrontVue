@@ -7,7 +7,7 @@
     height="220"
       stripe
       border
-    :default-sort = "{prop: 'releasetimeString', order: 'descending'}"
+    :default-sort = "{prop: 'date', order: 'ascending'}"
     >
       <el-table-column
         v-for="item in props"
@@ -34,8 +34,10 @@ export default {
     return {
       page: 1,
       pageInfo: {},
+      affiche: {},
       row: {},
       value: "",
+      afficheDto:{},
       props: [
         { prop: "afficheid", label:"编号", widht: "100" },
         { prop: "title", label: "标题", widht: "300" },
@@ -48,7 +50,7 @@ export default {
     //分页查询
     findAffiches(page = 1, pageSize = 6) {
         
-      let url ="affiche/findAffiches?page=" +page +"&pageSize=" +pageSize +"&userid="+this.$store.state.login.users.userid;
+      let url ="affiche/findAffiches?page=" +page +"&pageSize=" +pageSize +"&userid="+this.$store.state.login.users.userRoles[0].userid;
       this.$axios
         .get(url)
         .then(resp => {

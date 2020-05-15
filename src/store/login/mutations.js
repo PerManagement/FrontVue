@@ -6,4 +6,8 @@ export default{
     logOut(state,obj){
         state.users=obj;
     },
+    createUser(state,obj){
+        console.log("set");
+        state.users=obj;
+    },
 }

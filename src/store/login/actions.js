@@ -1,14 +1,13 @@
 export default{
     login({commit},obj){
-        let url="user/doLogin";
+        let url="login/doLogin";
         this.state.axios.post(url,obj).then((response)=>{
             if(response.data.data==null){
                 alert(response.data.message);
                 this.state.returnMessage=response.data.message;
-                console.log("1");           
             return this.state.app_view='login';
                
-            }
+            } 
             this.state.returnMessage="";
             commit('login',response.data.data);
             sessionStorage.setItem("users",JSON.stringify(response.data.data));
@@ -25,5 +24,10 @@ export default{
            this.state.app_view='login';
            sessionStorage.clear();
            commit('logOut',obj);
+    },
+
+    //切换管理员界面 let url="";
+    createUser({commit},obj){
+        this.state.elMain='createUser';
     }
 }
