@@ -7,7 +7,7 @@
     height="220"
       stripe
       border
-    :default-sort = "{prop: 'date', order: 'ascending'}"
+    :default-sort = "{prop: 'releasetimeString', order: 'descending'}"
     >
       <el-table-column
         v-for="item in props"
@@ -34,10 +34,8 @@ export default {
     return {
       page: 1,
       pageInfo: {},
-      affiche: {},
       row: {},
       value: "",
-      afficheDto:{},
       props: [
         { prop: "afficheid", label:"编号", widht: "100" },
         { prop: "title", label: "标题", widht: "300" },
