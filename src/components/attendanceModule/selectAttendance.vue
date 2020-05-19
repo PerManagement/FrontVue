@@ -26,16 +26,12 @@ export default {
         page:1,
         pageInfo:{},
         props:[
-          {prop:"attendanceid",label:"编号",width:"100"},
-          {prop:"userid",label:"员工编号",width:"100"},
-          {prop:"deptid",label:"部门编号",width:"100"},
-          {prop:"department.deptname",label:"部门名称",width:"100"},
+           {prop:"user.userid",label:"员工编号",width:"100"},
+           {prop:"user.username",label:"员工名称",width:"100"},
           {prop:"morninghours",label:"上班时间",width:"200"},
           {prop:"afternoonclosingtime",label:"下班时间",width:"200"},
-          {prop:"recorddate",label:"记录时间",width:"200"},
-          {prop:"remark",label:"备注",width:"100"},
-           {prop:"user.username",label:"员工名称",width:"200"},
-          {prop:"department.deptname",label:"部门名称",width:"100"},
+          {prop:"clockinstate",label:"上班打卡状态",width:"100"},
+          {prop:"clockoutstate",label:"下班打卡状态",width:"100"},
         ],
       };
         
@@ -45,6 +41,7 @@ export default {
         find(page=1,pageSize=2){
           let url="attendance/pageInfo?page="+page+"&pageSize="+pageSize;
           this.$axios.get(url).then(resp=>{
+            console.log(resp.data);
             console.log(resp.data.data);
             this.pageInfo=resp.data.data;
           }).catch((ex)=>{

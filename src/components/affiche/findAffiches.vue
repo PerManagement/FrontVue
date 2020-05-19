@@ -4,7 +4,6 @@
       ref="multipleTable"
       :data="pageInfo.list"
       style="width: 100%"      
-    height="220"
       stripe
       border
     :default-sort = "{prop: 'date', order: 'ascending'}"
@@ -22,8 +21,16 @@
           <el-button @click="findAfficheById(scope.row)" type="text" size="small">详细信息</el-button>
         </template>
       </el-table-column>
-    </el-table>
-    <el-pagination layout="prev, pager, next" :total="50"></el-pagination>
+    </el-table>    
+    <el-pagination
+            layout="prev, pager, next, jumper"
+            :page-sizes="[3, 5, 8, 10]"
+            :page-size="5"
+            :total="pageInfo.total"
+            @current-change="handleChangePage"
+            @size-change="handleChangePageSize"
+            >
+    </el-pagination>
   </div>
 </template>
 
@@ -60,7 +67,14 @@ export default {
         .catch(ex => {
           console.log(ex);
         });
-    }
+    },
+    
+        handleChangePage(page){
+             this.findAffiches(page,this.pageInfo.pageSize);
+        },
+        handleChangePageSize(pageSize){
+          this.findAffiches(this.pageInfo.pageNum,pageSize);
+        },
   },
   mounted() {
     this.findAffiches();

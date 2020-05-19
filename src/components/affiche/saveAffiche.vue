@@ -45,7 +45,6 @@ export default {
          console.log(this.affiche);
       let url ="affiche/saveAffiche";
       this.$axios.post(url,this.affiche).then(resp => {
-          this.$store.state.returnMessage = resp.data.data;
           this.$message.success(resp.data.message);
           this.affiche={};
         })

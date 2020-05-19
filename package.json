@@ -5,12 +5,13 @@
   "author": "",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --open --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --open --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
   "dependencies": {
     "axios": "^0.19.2",
+    "element-china-area-data": "^4.1.2",
     "element-ui": "^2.13.0",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
