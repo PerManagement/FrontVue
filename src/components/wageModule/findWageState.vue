@@ -9,12 +9,23 @@
           <!--操作列-->
           <el-table-column  label="操作" width="150px">
           <template slot-scope="scope">
-
               <el-button @click="update(scope.row)" type="text" size="small" width="190px">同意</el-button>
-              <el-button @click="update2(scope.row)" type="text" size="small" width="190px" >不同意</el-button>
+              <el-button @click="tagShow(scope.row)" type="text" size="small" width="190px" >不同意</el-button>
           </template>
           </el-table-column>
         </el-table>
+
+        <el-dialog
+          title="备注"
+          :visible.sync="tag"
+          width="30%"
+          :before-close="tagClose">
+          <el-input type="textarea" v-model="remark"></el-input>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="tag = false">取 消</el-button>
+            <el-button type="primary" @click="update2()">确 定</el-button>
+          </span>
+        </el-dialog>
 
         <!-- 分页 -->
         <el-pagination
@@ -33,14 +44,16 @@
 export default {
     data() {
       return {
-        tag:true,
+        id:null,
+        remark:"",
+        tag:false,
         page:1,
         pageInfo:{},
         props:[
           {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
-          {prop:"deptid",label:"部门",width:"100"},
-          {prop:"basewage",label:"基本工资",width:"100"},
+          {prop:"dept.deptname",label:"部门",width:"100"},
+          {prop:"user.basepay",label:"基本工资",width:"100"},
           {prop:"welfare.subsidy",label:"餐补",width:"100"},
           {prop:"welfare.carallwance",label:"车补",width:"100"},
           {prop:"welfare.housingsubsidy",label:"房补",width:"100"},
@@ -54,8 +67,11 @@ export default {
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
-          {prop:"wagedate",label:"发放时间",width:"180"},
-          {prop:"issuer",label:"发放人",width:"100"}
+          {prop:"wagedateString",label:"发放时间",width:"180"},
+          {prop:"issuer",label:"发放人",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionAccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
@@ -77,18 +93,30 @@ export default {
             let url="wage/updateState?wageid="+row.wageid;
             this.$axios.get(url).then(resp=>{
             console.log(row.wageid);
-           
+
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
             }).catch(ex=>{});
 
         },
-        update2(row){
-            console.log(row.wageid);
-            let url="wage/updateState2?wageid="+row.wageid;
+        tagClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
+        },
+        tagShow(row){
+            this.tag=true;
+            this.id=row.wageid;
+            console.log(this.id);
+        },
+        update2(){
+            this.tag=false;
+            //console.log(row.wageid);
+            console.log(this.remark);
+            let url="wage/updateState2?wageid="+this.id+"&remark="+this.remark;
             this.$axios.get(url).then(resp=>{
-            console.log(row.wageid);
-           
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
             }).catch(ex=>{});

@@ -1,7 +1,8 @@
 <template>
     <div>
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
-        :default-sort = "{prop:'wageId',order:'descending'}" ref="multipleTable">
+        :default-sort = "{prop: 'wageId', order: 'descending'}" ref="multipleTable">
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
           :width="item.width"> 
           </el-table-column>
@@ -23,12 +24,11 @@
 <script>
 export default {
     data() {
-      return {
-        tag:true,
-        page:1,
+      return {page:1,
         pageInfo:{},
+        beginDate:'',
+        endDate:'',
         props:[
-          {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
           {prop:"dept.deptname",label:"部门",width:"100"},
           {prop:"user.basepay",label:"基本工资",width:"100"},
@@ -44,7 +44,6 @@ export default {
           {prop:"taxes",label:"税金",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
-          {prop:"wagestate",label:"审核状态",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"userissuer.username",label:"发放人",width:"100"},
           {prop:"attendance.remark",label:"迟到",width:"100"},
@@ -55,18 +54,14 @@ export default {
         
     },
     methods:{
-      
-        //分页 this.$store.state.login.users.userid;
-         find(page=1,pageSize=5){
-          let userId=this.$store.state.login.users.userid;
-          console.log(this.$store.state.login.users);
-          console.log(userId);
-          let url="wage/findByUserId?page="+page+"&pageSize="+pageSize+"&userId="+userId;
+        //分页
+        find(page=1,pageSize=5){
+          let url="wage/pageInfoByDate?page="+page+"&pageSize="+pageSize+"&beginDate="+this.beginDate+"&endDate="+this.endDate;
           this.$axios.get(url).then(resp=>{
-            console.log(resp.data);
+           
             this.pageInfo=resp.data.data;
+            console.log(this.pageInfo);
           }).catch((ex)=>{
-            
             console.log(ex);
           });
         },
@@ -82,6 +77,7 @@ export default {
              console.log(prop);
              console.log(order); 
         },
+        
     },
     mounted(){
       this.find();
@@ -91,6 +87,7 @@ export default {
             return this.$axios.defaults.baseURL;
         }
     }
+
 }
 </script>
 

@@ -3,17 +3,15 @@
         <div class="block">
           <el-date-picker
             value-format="yyyy-MM-dd"  
-            v-model="beginDate"
-            align="right"
-            type="date"
+            v-model="beginDate" 
+            align="right" type="date" style="padding-bottom:10px"
             placeholder="选择日期">
           </el-date-picker>
           &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
           <el-date-picker
             value-format="yyyy-MM-dd"  
             v-model="endDate"
-            align="right"
-            type="date"
+            align="right" type="date" style="padding-bottom:10px"
             placeholder="选择日期">
           </el-date-picker>&nbsp;&nbsp;&nbsp;
           <el-button type="primary" icon="el-icon-search" @click="find()">搜索</el-button>
@@ -50,8 +48,8 @@ export default {
         props:[
           {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
-          {prop:"deptid",label:"部门",width:"100"},
-          {prop:"basewage",label:"基本工资",width:"100"},
+          {prop:"dept.deptname",label:"部门",width:"100"},
+          {prop:"user.basepay",label:"基本工资",width:"100"},
           {prop:"welfare.subsidy",label:"餐补",width:"100"},
           {prop:"welfare.carallwance",label:"车补",width:"100"},
           {prop:"welfare.housingsubsidy",label:"房补",width:"100"},
@@ -64,8 +62,11 @@ export default {
           {prop:"taxes",label:"税金",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
-          {prop:"wagedate",label:"发放时间",width:"180"},
-          {prop:"issuer",label:"发放人",width:"100"}
+          {prop:"wagedateString",label:"发放时间",width:"180"},
+          {prop:"userissuer.username",label:"发放人",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionAccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
@@ -73,8 +74,6 @@ export default {
     methods:{
         //分页
         find(page=1,pageSize=5){
-          console.log(this.beginDate);
-          console.log(this.endDate);
           let url="wage/pageInfoByDate?page="+page+"&pageSize="+pageSize+"&beginDate="+this.beginDate+"&endDate="+this.endDate;
           this.$axios.get(url).then(resp=>{
            
@@ -96,9 +95,7 @@ export default {
              console.log(prop);
              console.log(order); 
         },
-        search(){
-          console.log('搜索');
-        }
+        
     },
     mounted(){
       this.find();

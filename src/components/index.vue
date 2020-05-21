@@ -68,7 +68,7 @@
         </template>
           <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
           <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
-          <!--<el-menu-item index="2-3">添加工资条</el-menu-item>-->
+          <el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>
           <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
           <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
@@ -135,6 +135,7 @@ import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
+import saveWage from '@/components/wageModule/saveWage'
 import createUser from '@/components/adminModule/createUser'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
@@ -154,6 +155,7 @@ export default {
       ,issueWage
       ,findWageState
       ,findWageByUserId
+      ,saveWage
       ,welcome
       ,createUser
       ,selectAttendance,
@@ -175,6 +177,9 @@ export default {
        findWageByUserId(){
        this.$store.dispatch("findWageByUserId");
        },
+       saveWage(){
+       this.$store.dispatch("saveWage");
+      },
        saveAffiche(){
        this.$store.dispatch("saveAffiche");
       },
