@@ -5,7 +5,6 @@ import index from '@/components/index'
 import createUser from '@/components/adminModule/createUser'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
-import findPlans from '@/components/planModule/findPlans'
 import findTask from '@/components/taskModule/findTask'
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
@@ -14,6 +13,10 @@ import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
+import associateWith from '@/components/taskModule/associateWith'
+import createPlan from '@/components/taskModule/createPlan'
+import checkTask from '@/components/taskModule/checkTask'
 
 Vue.use(Router)
 
@@ -38,11 +41,6 @@ export default new Router({
       path: '/createTask',
       name: 'createTask',
       component: createTask
-    },
-    {
-      path: '/findPlans',
-      name: 'findPlans',
-      component: findPlans
     },
     {
       path: '/findTask',
@@ -89,7 +87,25 @@ export default new Router({
       name: 'findAffiches',
       component: findAffiches
     },
-    // {name:'saveTask',path:"/saveTask",component:saveTask},
-    // {name:'welcome',path:"/welcome",component:welcome},
+    {
+      path: '/findTaskByUserId',
+      name: 'findTaskByUserId',
+      component: findTaskByUserId
+    },
+    {
+      path: '/associateWith',
+      name: 'associateWith',
+      component: associateWith
+    },
+    {
+      path: '/createPlan',
+      name: 'createPlan',
+      component: createPlan
+    },
+    {
+      path: '/checkTask',
+      name: 'checkTask',
+      component: checkTask
+    },
   ]
 })

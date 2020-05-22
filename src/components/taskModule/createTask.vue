@@ -8,12 +8,6 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="font1">任务描述</el-col>
-          <el-col :span="10">
-            <el-input v-model="task.taskdesc" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
           <el-col :span="3" class="font1">开始时间</el-col>
           <el-col :span="10">
           <el-col :span="10">
@@ -58,6 +52,12 @@
             未实施
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">任务描述</el-col>
+          <el-col :span="10">
+            <el-input type="textarea" v-model="task.taskdesc"></el-input>
+          </el-col>
+        </el-row>
         </form>
         <el-row>
           <el-col :span="10" :offset="6">
@@ -75,7 +75,6 @@ export default {
         return {
             task:{},
             user:{},
-            imageUrl:'',
             options: [],
         }
     },
@@ -86,35 +85,6 @@ export default {
     },
     components: {},
     methods: {
-      //文件上传后的回调函数
-        handleSuccess(response,file,fileList){
-            //response 上传之后的返回值
-            this.imageUrl=this.host+response;
-
-            //将地址保存user属性中，数据库表中直接存储的是文件名，没有upload目录
-            //返回的是/upload/xxxx.xx
-            this.user.photo=response.substring(response.lastIndexOf("/")+1);
-
-            //校验的
-            this.ruleForm.photo=response.substring(response.lastIndexOf("/")+1);
-        },
-        //文件上传之前，调用该方法，如果返回false终止文件上传
-        handleBeforeUpload(file){
-            //只能上传png和jpg文件
-            let name=file.name;
-            let extList=['png','jpg'];
-            let ext=name.substring(name.lastIndexOf(".")+1);
-            if(!extList.includes(ext)){
-                this.$message.error("这个文件类型不能上传");
-                return false;
-            }
-
-            //上传文件大小不能大于50k
-            if(file.size>(1024*500)){
-                this.$message.error("文件不能大于50k");
-                return false;
-            }
-        },
         findExecutor(){
           let url="task/findExecutor";
           this.$axios.get(url).then(resp=>{

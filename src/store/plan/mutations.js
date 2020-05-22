@@ -1,6 +1,0 @@
-export default{
-    findPlans(state){
-        
-    },
-    
-}
