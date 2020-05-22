@@ -10,6 +10,7 @@ import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
+import saveWage from '@/components/wageModule/saveWage'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
@@ -66,6 +67,11 @@ export default new Router({
       path: '/findWageByUserId',
       name: 'findWageByUserId',
       component: findWageByUserId
+    },
+    {
+      path: '/saveWage',
+      name: 'saveWage',
+      component: saveWage
     },
     {
       path: '/createUser',

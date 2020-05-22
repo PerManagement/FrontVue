@@ -11,6 +11,9 @@ export default{
     findWageByUserId({commit},obj){
         this.state.elMain='findWageByUserId';  
     },
+    saveWage({commit},obj){
+        this.state.elMain='saveWage';  
+    },
     logOut({commit},obj){
            this.state.app_view='login';
            sessionStorage.clear();
