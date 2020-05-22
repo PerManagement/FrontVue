@@ -66,7 +66,7 @@
           <i class="el-icon-location"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage">查看任务</el-menu-item>
           <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
           <!--<el-menu-item index="2-3">添加工资条</el-menu-item>-->
           <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
@@ -79,9 +79,11 @@
           <span>任务中心</span>
         </template>
           <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
-          <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
           <el-menu-item index="/createTask" @click="createTask">分配任务</el-menu-item>
-          <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
+          <el-menu-item index="/associateWith" @click="associateWith">任务交接</el-menu-item>
+          <el-menu-item index="/checkTask" @click="checkTask">任务审核</el-menu-item>
+          <el-menu-item index="/findTaskByUserId" @click="findTaskByUserId">个人任务</el-menu-item>
+          <el-menu-item index="/createPlan" @click="createPlan">制定计划</el-menu-item>
       </el-submenu> 
 
        <!--<el-submenu index="5">
@@ -126,11 +128,11 @@
 </template>
 
 <script>
+import associateWith from '@/components/taskModule/associateWith'
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import findTask from '@/components/taskModule/findTask'
-import findPlans from '@/components/planModule/findPlans'
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
@@ -138,6 +140,9 @@ import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
+import createPlan from '@/components/taskModule/createPlan'
+import checkTask from '@/components/taskModule/checkTask'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -148,7 +153,6 @@ export default {
     components: {
       welcome,
       createTask,
-      findPlans,
       findTask,
       findWage
       ,issueWage
@@ -160,6 +164,10 @@ export default {
       welcome,
       findAffiches,
       saveAffiche,
+      findTaskByUserId,
+      associateWith,
+      createPlan,
+      checkTask,
     },
 
     methods: { 
@@ -184,9 +192,6 @@ export default {
        createTask(){
        this.$store.dispatch("createTask");
       },
-      findPlans(){
-        this.$store.dispatch("findPlans");
-      },
       findTask(){
         this.$store.dispatch("findTask");
       },
@@ -194,7 +199,7 @@ export default {
         //this.$store.state.elMain='createUser';
         this.$store.dispatch("createUser");
       },
-       selectAttendance(){
+      selectAttendance(){
        this.$store.dispatch("selectAttendance");
       },
       handleOpen(key, keyPath) {
@@ -202,6 +207,18 @@ export default {
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      findTaskByUserId(){
+       this.$store.dispatch("findTaskByUserId");
+      },
+      associateWith(){
+       this.$store.dispatch("associateWith");
+      },
+      createPlan(){
+       this.$store.dispatch("createPlan");
+      },
+      checkTask(){
+       this.$store.dispatch("checkTask");
       },
       logOut(){
         this.$confirm('您确定退出吗?', '提示', {
