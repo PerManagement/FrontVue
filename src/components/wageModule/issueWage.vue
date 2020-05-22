@@ -1,8 +1,13 @@
 <template>
-    <div>
-        <el-button type="success" icon="el-icon-document" @click="exportTable">导出</el-button>
+    <div> 
+        <el-button-group>       
+          <el-button type="primary" icon="el-icon-document" @click="exportTable">导出</el-button>
+          <el-button type="success" @click="payWages" icon="el-icon-money">一键发放</el-button>
+        </el-button-group>
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
         :default-sort = "{prop:'wageId',order:'descending'}" ref="multipleTable">
+          <!--复选框-->
+          <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
           :width="item.width"> 
           </el-table-column>
@@ -130,19 +135,39 @@ export default {
           {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
           {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionaccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
+          {prop:"leave.saltotal",label:"请假",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"issuer",label:"发放人",width:"100"},
-          {prop:"attendance.remark",label:"迟到",width:"100"},
-          {prop:"evectionaccount.total",label:"出差",width:"100"},
-          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
     },
     methods:{
+        tagShow(row){
+            console.log(row);           
+            this.wage=row;
+             this.tag=true;
+            console.log(this.wage);
+        },
+      //批量发放
+      payWages(){
+           var rows=this.$refs.multipleTable.selection;
+           rows.forEach(item=>{
+              console.log(item.wageid);
+              let userid=this.$store.state.login.users.userRoles[0].id;
+              let url="wage/updateWage?userid="+userid+"&wageid="+item.wageid;
+              this.$axios.get(url).then(resp=>{           
+                  this.$message.success(resp.data.message);
+                  this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
+              }).catch(ex=>{});
+           });
+      },
         //分页
         find(page=1,pageSize=5){
           let url="wage/pageInfo?page="+page+"&pageSize="+pageSize;
@@ -154,14 +179,6 @@ export default {
             console.log(ex);
           });
         },
-        // excel(){
-        //   let url="excel/export";
-        //   this.$axios.get(url).then(resp=>{
-        //       console.log("导出成功");
-        //   }).catch(ex=>{
-        //   this.$message.error('导出失败');
-        //   });
-        // },
         tagClose(done) {
           this.$confirm('确认关闭？')
             .then(_ => {
@@ -169,14 +186,6 @@ export default {
             })
             .catch(_ => {});
         },
-        tagShow(row){
-            console.log(row);
-           
-            this.wage=row;
-             this.tag=true;
-            console.log(this.wage);
-        },
-
         exportTable(){
           let url="excel/export";
           this.$axios({

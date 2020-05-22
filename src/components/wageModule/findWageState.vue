@@ -1,7 +1,10 @@
 <template>
     <div>
+        <el-button type="success" @click="approve" icon="el-icon-document-checked">一键审批</el-button>
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
         :default-sort = "{prop:'wageId',order:'descending'}" ref="multipleTable">
+          <!--复选框-->
+          <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
           :width="item.width"> 
           </el-table-column>
@@ -64,19 +67,33 @@ export default {
           {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
           {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionAccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
+          {prop:"leave.saltotal",label:"请假",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"issuer",label:"发放人",width:"100"},
-          {prop:"attendance.remark",label:"迟到",width:"100"},
-          {prop:"evectionAccount.total",label:"出差",width:"100"},
-          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
     },
     methods:{
+      //批量发放
+      approve(){
+           var rows=this.$refs.multipleTable.selection;
+           rows.forEach(item=>{
+              console.log("1 "+item.wageid);
+              let url="wage/updateState?wageid="+item.wageid;
+              this.$axios.get(url).then(resp=>{
+                  console.log("2 "+item.wageid);
+                  this.$message.success(resp.data.message);
+                  this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
+              }).catch(ex=>{});
+           });
+      },
         //分页
         find(page=1,pageSize=5){
           let url="wage/pageInfo2?page="+page+"&pageSize="+pageSize;
@@ -97,7 +114,6 @@ export default {
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
             }).catch(ex=>{});
-
         },
         tagClose(done) {
           this.$confirm('确认关闭？')

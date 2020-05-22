@@ -42,14 +42,15 @@ export default {
           {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
           {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionAccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
+          {prop:"leave.saltotal",label:"请假",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"userissuer.username",label:"发放人",width:"100"},
-          {prop:"attendance.remark",label:"迟到",width:"100"},
-          {prop:"evectionAccount.total",label:"出差",width:"100"},
-          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
