@@ -18,6 +18,8 @@ import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
 import associateWith from '@/components/taskModule/associateWith'
 import createPlan from '@/components/taskModule/createPlan'
 import checkTask from '@/components/taskModule/checkTask'
+import addDimission from '@/components/adminModule/addDimission'
+import showDimission from '@/components/adminModule/showDimission'
 
 Vue.use(Router)
 
@@ -112,6 +114,15 @@ export default new Router({
       path: '/checkTask',
       name: 'checkTask',
       component: checkTask
+    },
+    {path: '/addDimission',
+      name: 'addDimission',
+      component: addDimission
+    },
+    {
+      path: '/showDimission',
+      name: 'showDimission',
+      component: showDimission
     },
   ]
 })
