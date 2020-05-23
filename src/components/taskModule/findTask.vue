@@ -59,8 +59,8 @@
         top="10px"
         width="80%"
         :close-on-click-modal="false">
-          <span style="text-align:center">
-           <el-input v-model="taskName" readonly></el-input>
+          <span style="text-align:center;font-size:20px;padding-bottom:10px">
+          任务名称：{{taskName}}
           </span>
           <el-table :data="planList.list" border style="width: 100%" stripe 
            ref="multipleTable">
