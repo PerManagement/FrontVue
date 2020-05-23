@@ -14,6 +14,8 @@ import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import addDimission from '@/components/adminModule/addDimission'
+import showDimission from '@/components/adminModule/showDimission'
 
 Vue.use(Router)
 
@@ -88,6 +90,16 @@ export default new Router({
       path: '/findAffiches',
       name: 'findAffiches',
       component: findAffiches
+    },
+    {
+      path: '/addDimission',
+      name: 'addDimission',
+      component: addDimission
+    },
+    {
+      path: '/showDimission',
+      name: 'showDimission',
+      component: showDimission
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},

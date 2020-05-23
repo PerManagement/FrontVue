@@ -65,6 +65,23 @@
   </el-select>
 </el-form-item>
 
+<el-tree
+  :data="data"
+  show-checkbox
+  default-expand-all
+  node-key="id"
+  ref="tree"
+  highlight-current
+  :props="defaultProps">
+</el-tree>
+
+<div class="buttons">
+  <el-button @click="getCheckedNodes">通过 node 获取</el-button>
+  <el-button @click="getCheckedKeys">通过 key 获取</el-button>
+  <el-button @click="setCheckedNodes">通过 node 设置</el-button>
+  <el-button @click="setCheckedKeys">通过 key 设置</el-button>
+  <el-button @click="resetChecked">清空</el-button>
+</div>
 
    <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -120,7 +137,7 @@ export default {
             this.$refs.ruleForm.validateField('checkPass');
           }
           callback();
-        }
+        };
       };
       
       var validateEducation = (rule, value, callback) => {
@@ -153,6 +170,7 @@ export default {
         }
       };
       return {
+        
         ruleForm: {
            username:'',
             password:'',
@@ -209,12 +227,71 @@ export default {
           address: [
               { validator: validateAddress, trigger: 'blur' }
           ],
+        },
+        msg:{},
+         data: [
+        //    {
+        //   id: 3,
+        //   label: '一级 3',
+        //   children: [{
+        //     id: 7,
+        //     label: '二级 3-1'
+        //   }, {
+        //     id: 8,
+        //     label: '二级 3-2'
+        //   }]
+        // }
+        ],
+        defaultProps: {
+          children: 'children',
+          label: 'label'
         }
       };
 
     },
     components: {},
     methods: {
+      tree(){
+        let url="admin/tree";
+        this.$axios.get(url).then(resp=>{
+          console.log(resp.data.data);
+         for(let i=0;i<resp.data.data.length;i++){
+           if(resp.data.data[i].pid==null){
+             continue;
+           }
+            if(resp.data.data[i].pid==1){
+              let msg={id:resp.data.data[i].id,label:resp.data.data[i].name,children:[]}
+          this.data.push(msg);
+            }else{
+              let msg={id:resp.data.data[i].id,label:resp.data.data[i].name}
+              this.data[this.data.length-1].children.push(msg);
+            }
+          }
+        }).catch(ex => {
+          console.log(ex);
+        });
+      },
+      getCheckedNodes() {
+        console.log(this.$refs.tree.getCheckedNodes());
+      },
+      getCheckedKeys() {
+        console.log(this.$refs.tree.getCheckedKeys());
+      },
+      setCheckedNodes() {
+        this.$refs.tree.setCheckedNodes([{
+          id: 5,
+          label: '二级 2-1'
+        }, {
+          id: 9,
+          label: '三级 1-1-1'
+        }]);
+      },
+      setCheckedKeys() {
+        this.$refs.tree.setCheckedKeys([3]);
+      },
+      resetChecked() {
+        this.$refs.tree.setCheckedKeys([]);
+      },
         //三级联动
         handleChange (value) {
         this.province=CodeToText[value[0]];
@@ -234,8 +311,12 @@ export default {
       resetForm(formName) {
         this.$refs[formName].resetFields();
       }
-    }
-  }
+    },
+    mounted() {
+    this.tree();
+  },
+  };
+  
 </script>
 
 <style  scoped>

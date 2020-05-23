@@ -110,6 +110,15 @@
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
       </el-submenu> 
 
+      <el-submenu index="8">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>人事操作</span>
+        </template>
+          <el-menu-item index="/createUser" @click="addDimission">离职申请</el-menu-item>
+          <el-menu-item index="/createUser" @click="showDimission">离职审批</el-menu-item>
+      </el-submenu> 
+
     </el-menu>
      </el-aside>
  
@@ -136,6 +145,8 @@ import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
+import showDimission from '@/components/adminModule/showDimission'
+import addDimission from '@/components/adminModule/addDimission'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
 import {mapActions,mapMutations} from 'vuex';
@@ -160,9 +171,17 @@ export default {
       welcome,
       findAffiches,
       saveAffiche,
+      addDimission,
+      showDimission,
     },
 
     methods: { 
+      showDimission(){
+        this.$store.dispatch("showDimission");
+      },
+      addDimission(){
+        this.$store.dispatch("addDimission");
+      },
        issueWage(){
        this.$store.dispatch("issueWage");
       },
