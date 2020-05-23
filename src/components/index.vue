@@ -49,6 +49,7 @@
         <!-- <el-menu-item-group> -->
           <!-- <template slot="title">分组一</template> -->
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
+          <el-menu-item index="/saveOvertim" @click="saveOvertim">加班申请</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
         <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
@@ -127,6 +128,7 @@
 
 <script>
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
+import saveOvertim from '@/components/attendanceModule/saveOvertim'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import findTask from '@/components/taskModule/findTask'
@@ -160,6 +162,7 @@ export default {
       welcome,
       findAffiches,
       saveAffiche,
+      saveOvertim,
     },
 
     methods: { 
@@ -196,6 +199,9 @@ export default {
       },
        selectAttendance(){
        this.$store.dispatch("selectAttendance");
+      },
+       saveOvertim(){
+       this.$store.dispatch("saveOvertim");
       },
       handleOpen(key, keyPath) {
         console.log(key, keyPath);

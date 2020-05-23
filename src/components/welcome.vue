@@ -114,12 +114,24 @@ export default {
           console.log(ex);
         });
       },
-      clockinstatepage(){
-        this.clockinstate=true;
+      findAttendanceByUserId(){
+      let url ="attendance/findAttendanceByUserId?userid="+this.$store.state.login.users.userRoles[0].userid;
+      
+      this.$axios.get(url).then(resp => {
+          // this.$message.success(resp.data.message);
+          if(resp.data.data!=null){
+            this.clockinstate = false;
+          }else{
+            this.clockinstate = true;
+          }
+        })
+        .catch(ex => {
+          console.log(ex);
+        });
       }
   },
   mounted() {
-    this.clockinstatepage();
+    this.findAttendanceByUserId();
     this.findAfficheByDate();
   }
 }
