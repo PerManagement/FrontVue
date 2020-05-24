@@ -5,5 +5,8 @@ export default{
     saveOvertim({commit},obj){
         this.state.elMain='saveOvertim';  
     },
+    findOvertimByUpno({commit},obj){
+        this.state.elMain='findOvertimByUpno';  
+    },
     
 }

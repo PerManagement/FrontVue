@@ -13,6 +13,7 @@ import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 import saveOvertim from '@/components/attendanceModule/saveOvertim'
+import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
 
@@ -84,6 +85,11 @@ export default new Router({
       path: '/saveOvertim',
       name: 'saveOvertim',
       component: saveOvertim
+    },
+    {
+      path: '/findOvertimByUpno',
+      name: 'findOvertimByUpno',
+      component: findOvertimByUpno
     },
     {
       path: '/saveAffiche',

@@ -24,7 +24,6 @@
     </el-table>    
     <el-pagination
             layout="prev, pager, next, jumper"
-            :page-sizes="[3, 5, 8, 10]"
             :page-size="5"
             :total="pageInfo.total"
             @current-change="handleChangePage"
