@@ -69,7 +69,7 @@
         </template>
           <el-menu-item index="/findWage" @click="findWage">查看任务</el-menu-item>
           <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
-          <el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>
+          <!--<el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>-->
           <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
           <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
