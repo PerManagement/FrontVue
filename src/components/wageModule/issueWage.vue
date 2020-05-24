@@ -19,6 +19,20 @@
               <el-tag v-else-if="scope.row.wagestate=='未审核'"  type="danger">{{scope.row.wagestate}}</el-tag>
               <el-button v-if="scope.row.wagestate=='驳回'"  type="info" @click="tagShow(scope.row)">再次申请</el-button>
           </template>
+          </el-table-column>
+
+          <el-table-column
+            prop="tag"
+            label="标签"
+            width="100"
+            :filters="[{text:'已审核',value:'已审核'}, {text:'未审核',value:'未审核'}, {text:'驳回',value:'驳回'}]"
+            :filter-method="filterTag"
+            filter-placement="bottom-end">
+            <template slot-scope="scope">
+              <el-tag
+                :type="scope.row.wagestate === '已审核' ? 'primary' : 'success'"
+                disable-transitions>{{scope.row.wagestate}}</el-tag>
+            </template>
           </el-table-column> 
         </el-table>
 
@@ -26,70 +40,10 @@
           <el-form ref="ruleForm" label-width="100px" class="demo-ruleForm">
           <span>驳回原因：{{wage.remark}}</span>
           <div style="margin: 20px;"></div>
-          <el-row>
-          <el-col :span="3" class="font1">姓名</el-col>
-          <el-col :span="16">
-            <el-input name="name" v-model="wage.user.username" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">部门</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.dept.deptname" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">基本工资</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.user.basepay" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">餐补</el-col>
-          <el-col :span="16">
-            <el-input name="email" v-model="wage.welfare.subsidy" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">车补</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.welfare.carallwance" ></el-input>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">房补</el-col>
-          <el-col :span="16">
-            <el-input name="email" v-model="wage.welfare.housingsubsidy" ></el-input>
-          </el-col>
-        </el-row> 
-        <el-row>
-          <el-col :span="3" class="font1">加班</el-col>
-          <el-col :span="16">
-            <el-input name="email" v-model="wage.overtim.countsal" ></el-input>
-          </el-col>
-        </el-row>
-        <!-- <el-row>
-          <el-col :span="3" class="font1">迟到</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.attendance.remark" ></el-input>
-          </el-col>
-        </el-row> -->
-        <el-row>
-          <el-col :span="3" class="font1">出差</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.evectionaccount.total" ></el-input>
-          </el-col>
-        </el-row> 
-        <el-row>
-          <el-col :span="3" class="font1">应发工资</el-col>
-          <el-col :span="16">
-            <el-input name="pwd" v-model="wage.netpay" ></el-input>
-          </el-col>
-        </el-row>
         <el-row>
           <el-col :span="3" class="font1">实发工资</el-col>
           <el-col :span="16">
-            <el-input name="pwd" v-model="wage.netpayroll" ></el-input>
+            <el-input name="netpayroll" v-model="wage.netpayroll" ></el-input>
           </el-col>
         </el-row>
           </el-form>
@@ -117,7 +71,7 @@ export default {
     data() {
       return {
         tag:false,
-        wage:{user:{},dept:{},welfare:{},attendance:{},evectionaccount:{},overtim:{}},
+        wage:{},
         page:1,
         pageInfo:{},
         props:[
@@ -142,6 +96,7 @@ export default {
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
+          {prop:"approrver",label:"审核人",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"issuer",label:"发放人",width:"100"},
         ],
@@ -149,8 +104,15 @@ export default {
         
     },
     methods:{
+      filterTag(value, row){
+        return row.wagestate === value;
+      },
+      filterHandler(value, row, column) {
+        const property = column['property'];
+        return row[property] === value;
+      },
         tagShow(row){
-            console.log(row);           
+            console.log(row);     
             this.wage=row;
              this.tag=true;
             console.log(this.wage);
@@ -223,11 +185,11 @@ export default {
 
         },
         update3(){
-            console.log(this.wage.wageid);
-            let url="wage/updateState3?wageid="+this.wage.wageid+"&netPayroll="+this.wage.netPayroll;
+            console.log('wageid'+this.wage.wageid);
+            console.log('netpayroll'+this.wage.netpayroll);
+            let url="wage/updateState3?wageid="+this.wage.wageid+"&netpayroll="+this.wage.netpayroll;
             this.$axios.get(url).then(resp=>{
-            console.log(222);
-            this.tag=false;
+                this.tag=false;
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
             }).catch(ex=>{});

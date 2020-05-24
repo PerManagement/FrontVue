@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-button type="success" @click="approve" icon="el-icon-document-checked">一键审批</el-button>
+        <el-button type="success" @click="approver" font-size="14px" icon="el-icon-document-checked">一键审批</el-button>
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
         :default-sort = "{prop:'wageId',order:'descending'}" ref="multipleTable">
           <!--复选框-->
@@ -74,6 +74,7 @@ export default {
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagestate",label:"审核状态",width:"100"},
+          {prop:"appover",label:"审核人",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"issuer",label:"发放人",width:"100"},
         ],
@@ -82,7 +83,7 @@ export default {
     },
     methods:{
       //批量发放
-      approve(){
+      approver(){
            var rows=this.$refs.multipleTable.selection;
            rows.forEach(item=>{
               console.log("1 "+item.wageid);
@@ -107,10 +108,11 @@ export default {
         },
         update(row){
             console.log(row.wageid);
-            let url="wage/updateState?wageid="+row.wageid;
+            let approver=this.$store.state.login.users.userRoles[0].id;
+            console.log(approver);
+            let url="wage/updateState?wageid="+row.wageid+"&approver="+approver;
             this.$axios.get(url).then(resp=>{
             console.log(row.wageid);
-
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
             }).catch(ex=>{});
@@ -129,9 +131,10 @@ export default {
         },
         update2(){
             this.tag=false;
-            //console.log(row.wageid);
             console.log(this.remark);
-            let url="wage/updateState2?wageid="+this.id+"&remark="+this.remark;
+            let approver=this.$store.state.login.users.userRoles[0].id;
+            console.log("发放人："+approver);
+            let url="wage/updateState2?wageid="+this.id+"&remark="+this.remark+"&approver="+approver;
             this.$axios.get(url).then(resp=>{
                 this.$message.success(resp.data.message);
                 this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);

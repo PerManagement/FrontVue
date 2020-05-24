@@ -4,7 +4,7 @@
       <el-menu
   class="el-menu-demo"
   mode="horizontal"
-  background-color="#545c64"
+  background-color="#303133"
   text-color="#fff"
   active-text-color="#ffd04b">
   <!-- <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
@@ -43,7 +43,7 @@
 
       <el-submenu index="1">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-menu"></i>
           <span>考勤管理</span>
         </template>
         <!-- <el-menu-item-group> -->
@@ -63,7 +63,7 @@
 
        <el-submenu index="2">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-menu"></i>
           <span>薪资管理</span>
         </template>
           <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
@@ -75,7 +75,7 @@
 
  <el-submenu index="4">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-menu"></i>
           <span>任务中心</span>
         </template>
           <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
@@ -95,7 +95,7 @@
       </el-submenu> -->
            <el-submenu index="6">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-menu"></i>
           <span>公告通知</span>
         </template>
           <el-menu-item index="/saveAffiche" @click="saveAffiche">公告拟稿</el-menu-item>
@@ -104,7 +104,7 @@
 
       <el-submenu index="7">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-setting"></i>
           <span>管理员操作</span>
         </template>
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
@@ -232,26 +232,28 @@ export default {
 
 <style  scoped>
 .el-header {
-    background-color:  rgb(84, 92, 100);
+    background-color:  #303133;
     color: #333;
     text-align: center;
     line-height: 50px;
+    
   }
   .el-footer {
-    background-color:  rgb(84, 92, 100);
+    background-color:  #303133;
     color: #333;
     text-align: center;
     height: 20px;
   }
   .el-menu-item{
-    color: slateblue;
+    color: rgb(75, 67, 124);
     text-align: center;
   }
   
   .el-aside {
-    background-color:#D3D3D3;
+    background-color:#C0C4CC;
     color: #333;
     min-height: 450px;
+    background-color: #C0C4CC;
   }
   
   .el-main {
