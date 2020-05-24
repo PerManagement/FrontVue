@@ -11,8 +11,11 @@ import plan from './plan'
 import wage from './wage'
 //周怡珊 考勤管理
 import attendance from './attendance'
+import evection from './evection'
+import leave from './leave'
+import overtim from './overtim'
 //陈良吉 公告管理
-
+import evectionaccount from './evectionaccount'
 
 
 import getters from './getters'
@@ -38,7 +41,11 @@ modules:{
 'wage':wage,
 'attendance':attendance,
 //陈良吉 2020-05-04
-'affiche':affiche
+'affiche':affiche,
+'evection':evection,
+'leave':leave,
+'overtim':overtim,
+'evectionaccount':evectionaccount,
 },
 
 })

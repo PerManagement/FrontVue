@@ -48,15 +48,20 @@
         </template>
         <el-menu-item index="/selectAttendance" @click="selectAttendance">查询考勤记录</el-menu-item>
                <el-menu-item index="/creakAttendance" @click="creakAttendance">打卡</el-menu-item>
-           <el-menu-item index="1-2">请假审批</el-menu-item>
-          <el-menu-item index="1-3">加班详情</el-menu-item>
+           <el-menu-item index="/selectLeave" @click="selectLeave">请假记录</el-menu-item>
+                <el-menu-item index="/createLeave" @click="createLeave">添加请假记录</el-menu-item>
+                 <el-menu-item index="/updateLeave" @click="updateLeave">待审批请假记录</el-menu-item>
+               <el-menu-item index="/updateLeave2" @click="updateLeave2">待审批请假记录</el-menu-item>
+          <el-menu-item index="/selectOvertim"  @click="selectOvertim">加班记录</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
-          <el-menu-item index="1-4">出差信息</el-menu-item>
+          <el-menu-item index="/selectEvection" @click="selectEvection">出差记录</el-menu-item>
+           <el-menu-item index="/createEvection" @click="createEvection">添加出差记录</el-menu-item>
+         <el-menu-item index="/updateEvection" @click="updateEvection">出差审批</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-submenu index="1-4"> -->
           <!-- <template slot="title">出差信息</template> -->
-          <el-menu-item index="1-5">出差详细信息</el-menu-item>
+          <el-menu-item index="/selectEvectionaccount" @click="selectEvectionaccount">出差详细信息</el-menu-item>
         <!-- </el-submenu>-->
       </el-submenu> 
 
@@ -125,6 +130,7 @@
 </template>
 
 <script>
+
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
@@ -137,7 +143,16 @@ import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
 import findAffiches from '@/components/affiche/findAffiches'
+import selectOvertim from '@/components/overtimModule/selectOvertim'
+import selectLeave from '@/components/leaveModule/selectLeave'
+import selectEvection from '@/components/evectionModule/selectEvection'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import createLeave from '@/components/leaveModule/createLeave'
+import updateLeave from '@/components/leaveModule/updateLeave'
+import updateLeave2 from '@/components/leaveModule/updateLeave2'
+import createEvection from '@/components/EvectionModule/createEvection'
+import updateEvection from '@/components/evectionModule/updateEvection'
+import selectEvectionaccount from '@/components/evectionAccountModule/selectEvectionaccount'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -161,6 +176,15 @@ export default {
       findAffiches,
       saveAffiche,
       creakAttendance,
+      selectOvertim,
+      selectEvection,
+      selectLeave,
+      createLeave,
+      updateLeave,
+      updateLeave2,
+      createEvection,
+      updateEvection,
+      selectEvectionaccount,
     },
 
     methods: { 
@@ -200,6 +224,34 @@ export default {
       },
        selectAttendance(){
        this.$store.dispatch("selectAttendance");
+      },
+       selectLeave(){
+       this.$store.dispatch("selectLeave");
+      },
+       createLeave(){
+       this.$store.dispatch("createLeave");
+      },
+       updateLeave(){
+       this.$store.dispatch("updateLeave");
+      },
+       updateLeave2(){
+       this.$store.dispatch("updateLeave2");
+      },
+       selectOvertim(){
+       this.$store.dispatch("updateLeave");
+      },
+      
+       selectEvection(){
+       this.$store.dispatch("selectEvection");
+      },
+       createEvection(){
+       this.$store.dispatch("createEvection");
+      },
+      updateEvection(){
+       this.$store.dispatch("updateEvection");
+      },
+ selectEvectionaccount(){
+       this.$store.dispatch("selectEvectionaccount");
       },
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
