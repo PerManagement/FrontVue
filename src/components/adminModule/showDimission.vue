@@ -30,6 +30,10 @@
       label="职位"
       prop="position">
     </el-table-column>
+    <el-table-column
+      label="用户编号"
+      prop="userid" disabled>
+    </el-table-column>
 
 
      <el-table-column
@@ -48,9 +52,22 @@
    
      <el-table-column label="操作">
      <template slot-scope="scope">
-      <el-button size="mini" type="danger">驳回</el-button>
+      <el-button size="mini" type="danger" @click.native.prevent="openNo(scope.$index,tableData)">驳回</el-button>
       <el-button size="mini" type="primary" v-if="scope.row.existTask === '是'" disabled>同意</el-button>
-      <el-button size="mini" type="primary" v-else >同意</el-button>
+      <el-popover v-else
+  placement="top"
+  width="160"
+  v-model="visible">
+  <p>确定批准离职吗？</p>
+  <div style="text-align: right; margin: 0">
+    <el-button size="mini" type="text" @click="visible = false">取消</el-button>
+    <el-button type="primary" size="mini" @click="yes(scope.$index,tableData)">确定</el-button>
+  </div>
+  <el-button size="mini" type="primary"  slot="reference">同意</el-button>
+</el-popover>
+
+     <!-- <el-button size="mini" type="primary" v-else @click.native.prevent="yes(scope.$index,tableData)">同意</el-button>-->
+
       </template>
     </el-table-column>
   </el-table>
@@ -72,11 +89,82 @@ export default {
         //   shop: '王小虎夫妻店',
         //   shopId: '10333'
         // }, 
-        ]
+        ],
+        dimission:{},
+        visible: false,
         }
     },
     components: {},
     methods: {
+         openNo(index, rows) {
+        this.$prompt('请输入驳回理由', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputType: 'textarea',
+        }).then(({ value }) => {
+            this.dimission.rejectReason=value;
+          this.no(index, rows);
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消操作',
+            duration: 1000,
+          });       
+        });
+      },
+        no(index, rows){
+            this.dimission.dmissionId=rows[index].dmissionId;
+             this.dimission.userid=rows[index].userid;
+            let url="admin/reject";
+            this.$axios.post(url,this.dimission).then(resp=>{
+                if(resp.data.message=='操作成功'){
+             this.$notify.success({
+          title: '成功',
+          message: '操作成功',
+          showClose: false,
+          duration: 1000,
+        });
+            rows.splice(index,1);
+                }else{
+                      this.$notify.error({
+          title: '未知错误。。。',
+          message: resp.data.message,
+          showClose: false,
+          duration: 1000,
+        });
+                }
+            }).catch(ex => {
+            console.log(ex);
+            });
+            
+            
+        },
+        yes(index, rows){
+            this.visible = false;
+            this.dimission.dmissionId=rows[index].dmissionId;
+             this.dimission.userid=rows[index].userid;
+            let url="admin/ratify";
+            this.$axios.post(url,this.dimission).then(resp=>{
+                if(resp.data.message=='操作成功'){
+             this.$notify.success({
+          title: '成功',
+          message: '操作成功',
+          showClose: false,
+          duration: 1000,
+        });
+            rows.splice(index,1);
+                }else{
+                      this.$notify.error({
+          title: '未知错误。。。',
+          message: resp.data.message,
+          showClose: false,
+          duration: 1000,
+        });
+                }
+            }).catch(ex => {
+            console.log(ex);
+            });
+        },
       filterTag(value,row) {
         return row.existTask === value;
       },
@@ -85,7 +173,13 @@ export default {
             this.$axios.get(url).then(resp=>{
                 console.log(resp.data);
                 for(let i=0;i<resp.data.data.list.length;i++){
-                     this.tableData.push({dmissionId:resp.data.data.list[i].dmissionId,dimDate:resp.data.data.list[i].dimDate,username:resp.data.data.list[i].user.username,feedback:resp.data.data.list[i].feedback,position:resp.data.data.list[i].position,existTask:resp.data.data.list[i].existTask});
+                     this.tableData.push({dmissionId:resp.data.data.list[i].dmissionId,
+                     dimDate:resp.data.data.list[i].dimDateString,
+                     username:resp.data.data.list[i].user.username,
+                     feedback:resp.data.data.list[i].feedback,
+                     position:resp.data.data.list[i].position,
+                     existTask:resp.data.data.list[i].existTask,
+                     userid:resp.data.data.list[i].userid});
                 }
             }).catch(ex =>{
 

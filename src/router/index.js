@@ -16,6 +16,7 @@ import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
 import addDimission from '@/components/adminModule/addDimission'
 import showDimission from '@/components/adminModule/showDimission'
+import showUser from '@/components/adminModule/showUser'
 
 Vue.use(Router)
 
@@ -100,6 +101,11 @@ export default new Router({
       path: '/showDimission',
       name: 'showDimission',
       component: showDimission
+    },
+    {
+      path: '/showUser',
+      name: 'showUser',
+      component: showUser
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},

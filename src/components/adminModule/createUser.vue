@@ -4,7 +4,7 @@
 
 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
- <el-form-item label="用户名：" prop="username">
+ <!--<el-form-item label="用户名：" prop="username">
     <el-input type="text"  maxlength="10" show-word-limit  v-model="ruleForm.username" autocomplete="on"></el-input>
   </el-form-item>
   <el-form-item label="密码：" prop="password">
@@ -63,7 +63,7 @@
       :value="item.value">
     </el-option>
   </el-select>
-</el-form-item>
+</el-form-item>-->
 
 <el-tree
   :data="data"
@@ -287,7 +287,7 @@ export default {
         }]);
       },
       setCheckedKeys() {
-        this.$refs.tree.setCheckedKeys([3]);
+        this.$refs.tree.setCheckedKeys([3,4]);
       },
       resetChecked() {
         this.$refs.tree.setCheckedKeys([]);

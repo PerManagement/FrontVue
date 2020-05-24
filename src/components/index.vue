@@ -107,6 +107,7 @@
           <i class="el-icon-location"></i>
           <span>管理员操作</span>
         </template>
+          <el-menu-item index="/showUser" @click="showUser">查看员工</el-menu-item>
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
       </el-submenu> 
 
@@ -145,6 +146,7 @@ import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
+import showUser from '@/components/adminModule/showUser'
 import showDimission from '@/components/adminModule/showDimission'
 import addDimission from '@/components/adminModule/addDimission'
 import findAffiches from '@/components/affiche/findAffiches'
@@ -155,7 +157,6 @@ export default {
     data() {
         return {}
     },
-
     components: {
       welcome,
       createTask,
@@ -173,9 +174,13 @@ export default {
       saveAffiche,
       addDimission,
       showDimission,
+      showUser,
     },
 
     methods: { 
+      showUser(){
+this.$store.dispatch("showUser");
+      },
       showDimission(){
         this.$store.dispatch("showDimission");
       },
