@@ -20,6 +20,8 @@ import createPlan from '@/components/taskModule/createPlan'
 import checkTask from '@/components/taskModule/checkTask'
 import addDimission from '@/components/adminModule/addDimission'
 import showDimission from '@/components/adminModule/showDimission'
+import saveOvertim from '@/components/attendanceModule/saveOvertim'
+import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 
 Vue.use(Router)
 
@@ -123,6 +125,16 @@ export default new Router({
       path: '/showDimission',
       name: 'showDimission',
       component: showDimission
+    },
+    {
+      path: '/saveOvertim',
+      name: 'saveOvertim',
+      component: saveOvertim
+    },
+    {
+      path: '/findOvertimByUpno',
+      name: 'findOvertimByUpno',
+      component: findOvertimByUpno
     },
   ]
 })

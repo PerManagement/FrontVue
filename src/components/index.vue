@@ -50,6 +50,8 @@
         <!-- <el-menu-item-group> -->
           <!-- <template slot="title">分组一</template> -->
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
+          <el-menu-item index="/saveOvertim" @click="saveOvertim">加班申请</el-menu-item>
+          <el-menu-item index="/findOvertimByUpno" @click="findOvertimByUpno">加班申请处理</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
         <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
@@ -140,6 +142,8 @@
 <script>
 import associateWith from '@/components/taskModule/associateWith'
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
+import saveOvertim from '@/components/attendanceModule/saveOvertim'
+import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import findTask from '@/components/taskModule/findTask'
@@ -184,6 +188,8 @@ export default {
       checkTask,
       addDimission,
       showDimission,
+      saveOvertim,
+      findOvertimByUpno,
     },
 
     methods: { 
@@ -244,6 +250,12 @@ export default {
       },
       checkTask(){
        this.$store.dispatch("checkTask");
+      },
+       saveOvertim(){
+       this.$store.dispatch("saveOvertim");
+      },
+       findOvertimByUpno(){
+       this.$store.dispatch("findOvertimByUpno");
       },
       logOut(){
         this.$confirm('您确定退出吗?', '提示', {
