@@ -13,7 +13,7 @@
         :key="item.prop"
         :prop="item.prop"
         :label="item.label"
-        :width="item.widht"
+        :width="item.width"
       ></el-table-column>
     </el-table>
 
@@ -54,12 +54,13 @@ export default {
         return {
           clockinstate: false,
           clockoutstate: false,
+          affiche: [],
             attendance: {},
             props: [
-                { prop: "title", label: "标题", widht: "300" },
-                { prop: "affichecontent", label: "内容", widht: "300" },
-                { prop: "user.description", label: "发布人职位", widht: "218" },
-                { prop: "user.realname", label: "发布人名字", widht: "210" },
+                { prop: "title", label: "标题", width: "300" },
+                { prop: "affichecontent", label: "内容", width: "300" },
+                { prop: "user.description", label: "发布人职位", width: "218" },
+                { prop: "user.realname", label: "发布人名字", width: "210" },
             ]
             }
     },
@@ -115,23 +116,21 @@ export default {
         });
       },
       findAttendanceByUserId(){
-        // console.log("aaaaaaaaaaaaaaaaaaaaa");
-      let url ="attendance/findAttendanceByUserId?userid="+this.$store.state.login.users.userRoles[0].userid;
-              
+        let userid=this.$store.state.login.users.userRoles[0].userid;
+      let url ="attendance/findAttendanceByUserId?userid="+userid;
+      
       this.$axios.get(url).then(resp => {
           // this.$message.success(resp.data.message);
           if(resp.data.data!=null){
             this.clockinstate = false;
-            console.log("bbbbbbbbbbbbbbbbb");
           }else{
             this.clockinstate = true;
-            console.log("ccccccccccccccccccc");
           }
         })
         .catch(ex => {
           console.log(ex);
         });
-      }
+      },
   },
   mounted() {
     this.findAttendanceByUserId();
