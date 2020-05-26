@@ -67,7 +67,6 @@ export default {
     methods: {
     //分页查询
     findAfficheByDate() {
-        // console.log("aaaaaaaaaaaaaaaaaaaaa");
         
       let url ="affiche/findAfficheByDate";
       this.$axios

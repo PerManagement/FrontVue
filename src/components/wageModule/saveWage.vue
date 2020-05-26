@@ -1,22 +1,6 @@
 <template>
     <div>
-        <div class="block">
-          <el-date-picker
-            value-format="yyyy-MM-dd"  
-            v-model="beginDate" 
-            align="right" type="date" style="padding-bottom:10px"
-            placeholder="选择日期">
-          </el-date-picker>
-          &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;
-          <el-date-picker
-            value-format="yyyy-MM-dd"  
-            v-model="endDate"
-            align="right" type="date" style="padding-bottom:10px"
-            placeholder="选择日期">
-          </el-date-picker>&nbsp;&nbsp;&nbsp;
-          <el-button type="primary" icon="el-icon-search" @click="find()">搜索</el-button>
-        </div>
-
+        <el-table-column type="selection" width="55"> </el-table-column>
         <el-table :data="pageInfo.list" border style="width: 100%" stripe @sort-change="changeSort"
         :default-sort = "{prop: 'wageId', order: 'descending'}" ref="multipleTable">
           <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
@@ -40,13 +24,11 @@
 <script>
 export default {
     data() {
-      return {
-        page:1,
+      return {page:1,
         pageInfo:{},
         beginDate:'',
         endDate:'',
         props:[
-          {prop:"wageid",label:"编号",width:"100"},
           {prop:"user.username",label:"姓名",width:"100"},
           {prop:"dept.deptname",label:"部门",width:"100"},
           {prop:"user.basepay",label:"基本工资",width:"100"},
@@ -60,14 +42,13 @@ export default {
           {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
           {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
-          {prop:"attendance.remark",label:"迟到",width:"100"},
-          {prop:"evectionAccount.total",label:"出差",width:"100"},
-          {prop:"overtim.countsal",label:"加班",width:"100"},
-          {prop:"leave.saltotal",label:"请假",width:"100"},
           {prop:"netpay",label:"应发工资",width:"100"},
           {prop:"netpayroll",label:"实发工资",width:"100"},
           {prop:"wagedateString",label:"发放时间",width:"180"},
           {prop:"userissuer.username",label:"发放人",width:"100"},
+          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"evectionAccount.total",label:"出差",width:"100"},
+          {prop:"overtim.countsal",label:"加班",width:"100"},
         ],
       };
         
@@ -106,15 +87,10 @@ export default {
             return this.$axios.defaults.baseURL;
         }
     }
+
 }
 </script>
 
 <style scoped>
-.el-table .warning-row {
-    background: oldlace;
-  }
 
-  .el-table .success-row {
-    background: #f0f9eb;
-  }
 </style>

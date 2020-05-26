@@ -3,8 +3,21 @@
         <form>
         <el-row>
           <el-col :span="3" class="font1">任务名称</el-col>
+            <el-col :span="10" style="text-align:left;padding-top:10px;">
+            <el-select v-model="plan.taskid" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.taskid"
+                :label="item.taskname"
+                :value="item.taskid">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">计划名称</el-col>
           <el-col :span="10">
-            <el-input v-model="task.taskname" ></el-input>
+            <el-input v-model="plan.planname" ></el-input>
           </el-col>
         </el-row>
         <el-row>
@@ -12,7 +25,7 @@
           <el-col :span="10">
           <el-col :span="10">
             <el-date-picker
-            v-model="task.begindate"
+            v-model="plan.begintime"
             type="date"
             placeholder="选择日期"
             value-format="yyyy-MM-dd">
@@ -25,7 +38,7 @@
           <el-col :span="10">
           <el-col :span="10">
             <el-date-picker
-            v-model="task.enddate"
+            v-model="plan.endtime"
             type="date"
             placeholder="选择日期"
             value-format="yyyy-MM-dd">
@@ -34,28 +47,15 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="font1">实施人</el-col>
+          <el-col :span="3" class="font1">计划状态</el-col>
           <el-col :span="10" style="text-align:left;padding-top:10px;">
-            <el-select v-model="task.userid" placeholder="请选择">
-              <el-option
-                v-for="item in options"
-                :key="item.userid"
-                :label="item.realname"
-                :value="item.userid">
-              </el-option>
-            </el-select>
+            未完成
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="3" class="font1">任务状态</el-col>
-          <el-col :span="10" style="text-align:left;padding-top:10px;">
-            未实施
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="3" class="font1">任务描述</el-col>
+          <el-col :span="3" class="font1">计划描述</el-col>
           <el-col :span="10">
-            <el-input type="textarea" v-model="task.taskdesc"></el-input>
+            <el-input type="textarea" v-model="plan.plandesc"></el-input>
           </el-col>
         </el-row>
         </form>
@@ -73,7 +73,7 @@ export default {
     name: "",
     data() {
         return {
-            task:{},
+            plan:{},
             user:{},
             options: [],
         }
@@ -85,25 +85,27 @@ export default {
     },
     components: {},
     methods: {
-        findExecutor(){
-          let url="task/findExecutor";
+        findTaskByUserid(){
+          let userid=this.$store.state.login.users.userRoles[0].userid;
+          let url="task/findTaskByUserid?userid="+userid;
           this.$axios.get(url).then(resp=>{
-            console.log("findExecutor:"+resp.data.data);
+            console.log(resp.data.data);
             this.options=resp.data.data;
+            
           }).catch((ex)=>{
             console.log(ex);
           });
         },
         save(){
-          let url="task/save";
-            this.$axios.post(url,this.task).then(resp=>{
+          let url="plan/save";
+            this.$axios.post(url,this.plan).then(resp=>{
                 this.$message.success(resp.data.message);
-                this.task={};
+                this.plan={};
             }).catch(ex=>{console.log(ex);});
         },
     },
     mounted() {
-      this.findExecutor();
+      this.findTaskByUserid();
     },
 }
 </script>

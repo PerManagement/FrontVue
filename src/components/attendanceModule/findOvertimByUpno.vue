@@ -47,7 +47,6 @@
 
       
         <el-table-column label=""></el-table-column>
-      </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button @click="findOvertimById = false">退 出</el-button>
         <el-button type="primary" @click="findOvertimById = false">审 批</el-button>
@@ -81,11 +80,12 @@ export default {
       this.overtimDto.upno = this.$store.state.login.users.userRoles[0].userid;
       this.overtimDto.page = page;
       this.overtimDto.pageSize = pageSize;
+
       this.$axios
         .post(url, this.overtimDto)
         .then(resp => {
           this.pageInfo = resp.data.data;
-          console.log("pageInfo:" + resp.data.data);
+          console.log( resp.data.data);
         })
         .catch(ex => {
           console.log(ex);
@@ -104,18 +104,6 @@ export default {
       this.findOvertimById=true;
       this.overtim=row;
 
-      // let url="overtim/findOvertimByKey?overtimid="+row.overtimid;
-      // this.$axios.get(url).then(resp => {
-      //     if(resp.data.data!=null){
-      //         this.findOvertimByKey=true;
-      //         this.overtim=resp.data.data;
-      //     }else{
-      //         this.$message.success(resp.data.message);
-      //     }
-
-      // }).catch(ex => {
-      //   console.log(ex);
-      // });
     },
   },
   mounted() {

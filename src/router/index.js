@@ -5,17 +5,23 @@ import index from '@/components/index'
 import createUser from '@/components/adminModule/createUser'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
-import findPlans from '@/components/planModule/findPlans'
 import findTask from '@/components/taskModule/findTask'
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
+import saveWage from '@/components/wageModule/saveWage'
 import seleteAttendance from '@/components/attendanceModule/selectAttendance'
-import saveOvertim from '@/components/attendanceModule/saveOvertim'
-import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
+import associateWith from '@/components/taskModule/associateWith'
+import createPlan from '@/components/taskModule/createPlan'
+import checkTask from '@/components/taskModule/checkTask'
+import addDimission from '@/components/adminModule/addDimission'
+import showDimission from '@/components/adminModule/showDimission'
+import saveOvertim from '@/components/attendanceModule/saveOvertim'
+import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 
 Vue.use(Router)
 
@@ -40,11 +46,6 @@ export default new Router({
       path: '/createTask',
       name: 'createTask',
       component: createTask
-    },
-    {
-      path: '/findPlans',
-      name: 'findPlans',
-      component: findPlans
     },
     {
       path: '/findTask',
@@ -72,6 +73,11 @@ export default new Router({
       component: findWageByUserId
     },
     {
+      path: '/saveWage',
+      name: 'saveWage',
+      component: saveWage
+    },
+    {
       path: '/createUser',
       name: 'createUser',
       component: createUser
@@ -80,16 +86,6 @@ export default new Router({
       path: '/seleteAttendance',
       name: 'seleteAttendance',
       component: seleteAttendance
-    },
-    {
-      path: '/saveOvertim',
-      name: 'saveOvertim',
-      component: saveOvertim
-    },
-    {
-      path: '/findOvertimByUpno',
-      name: 'findOvertimByUpno',
-      component: findOvertimByUpno
     },
     {
       path: '/saveAffiche',
@@ -101,7 +97,44 @@ export default new Router({
       name: 'findAffiches',
       component: findAffiches
     },
-    // {name:'saveTask',path:"/saveTask",component:saveTask},
-    // {name:'welcome',path:"/welcome",component:welcome},
+    {
+      path: '/findTaskByUserId',
+      name: 'findTaskByUserId',
+      component: findTaskByUserId
+    },
+    {
+      path: '/associateWith',
+      name: 'associateWith',
+      component: associateWith
+    },
+    {
+      path: '/createPlan',
+      name: 'createPlan',
+      component: createPlan
+    },
+    {
+      path: '/checkTask',
+      name: 'checkTask',
+      component: checkTask
+    },
+    {path: '/addDimission',
+      name: 'addDimission',
+      component: addDimission
+    },
+    {
+      path: '/showDimission',
+      name: 'showDimission',
+      component: showDimission
+    },
+    {
+      path: '/saveOvertim',
+      name: 'saveOvertim',
+      component: saveOvertim
+    },
+    {
+      path: '/findOvertimByUpno',
+      name: 'findOvertimByUpno',
+      component: findOvertimByUpno
+    },
   ]
 })

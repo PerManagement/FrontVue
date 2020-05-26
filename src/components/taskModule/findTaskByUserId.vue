@@ -32,10 +32,10 @@
             type="button" size="small">
                 查看计划
             </el-button>
-            <!--<el-button  @click="associateWith(scope.row)"
+            <el-button  @click="associateWith(scope.row)"
             type="button" size="small">
-                任务交接
-            </el-button>-->
+                任务反馈
+            </el-button>
         </template>
         </el-table-column>
         </el-table>
@@ -59,7 +59,7 @@
         top="10px"
         width="80%"
         :close-on-click-modal="false">
-          <span style="text-align:center;font-size:20px;padding-bottom:10px">
+           <span style="text-align:center;font-size:20px;padding-bottom:10px">
           任务名称：{{taskName}}
           </span>
           <el-table :data="planList.list" border style="width: 100%" stripe 
@@ -68,15 +68,15 @@
             :width="item.width"> 
             </el-table-column>
             <!--操作列-->
-          <!--<el-table-column
+          <el-table-column
           label="操作">
           <template slot-scope="scope">
               <el-button  @click="update(scope.row)"
               type="button" size="small">
-                  反馈信息
+                  计划反馈
               </el-button>
           </template>
-          </el-table-column>-->
+          </el-table-column>
           </el-table>
 
           <!-- 分页 -->
@@ -135,6 +135,12 @@
           </el-col>
           </el-col>
         </el-row>
+        <el-row>
+          <el-col :span="3" class="font1">计划描述</el-col>
+          <el-col :span="10">
+            <el-input type="textarea" v-model="row.plandesc"></el-input>
+          </el-col>
+        </el-row>
         <span slot="footer" class="dialog-footer">
             <el-button @click="updateTag = false">取 消</el-button>
             <el-button type="primary" @click="doUpdate">确 定</el-button>
@@ -142,8 +148,8 @@
         </el-dialog>
         </el-dialog>
 
-        <!--<el-dialog
-        title="任务交接"
+        <el-dialog
+        title="任务反馈"
         :visible.sync="associateWithTag"
         top="10px"
         width="50%"
@@ -180,11 +186,17 @@
             </el-col>
             </el-col>
           </el-row>
+          <el-row>
+          <el-col :span="3" class="font1">任务描述</el-col>
+          <el-col :span="10">
+            <el-input type="textarea" v-model="rowassociate.taskdesc"></el-input>
+          </el-col>
+        </el-row>
           <span slot="footer" class="dialog-footer">
             <el-button @click="associateWithTag = false">取 消</el-button>
             <el-button type="primary" @click="doUpdateTask">确 定</el-button>
         </span>
-        </el-dialog>-->
+        </el-dialog>
     </div>
      
 </template>
@@ -204,6 +216,7 @@ export default {
           {prop:"begindateString",label:"开始日期",width:"170"},
           {prop:"enddateString",label:"结束日期",width:"170"},
           {prop:"status",label:"状态",width:"80"},
+          {prop:"reason",label:"意见",width:"100"},
         ],
 
         pagePlan:1,
@@ -211,11 +224,11 @@ export default {
         plan:{},
         row:{},
         propsPlan:[
-          {prop:"planid",label:"编号",width:"180"},
-          {prop:"planname",label:"计划名称",width:"185"},
-          {prop:"state",label:"计划状态",width:"185"},
-          {prop:"begintimeString",label:"开始日期",width:"250"},
-          {prop:"endtimeString",label:"结束日期",width:"250"},
+          {prop:"planid",label:"编号",width:"100"},
+          {prop:"planname",label:"计划名称",width:"120"},
+          {prop:"state",label:"计划状态",width:"100"},
+          {prop:"begintimeString",label:"开始日期",width:"200"},
+          {prop:"endtimeString",label:"结束日期",width:"200"},
         ],
         
         options: [
@@ -248,7 +261,8 @@ export default {
     methods:{
         //分页
         find(page=1,pageSize=5){
-          let url="task/findTask?page="+page+"&pageSize="+pageSize+"&begindate="+this.begindate+"&enddate="+this.enddate;
+          let userid=this.$store.state.login.users.userRoles[0].userid;
+          let url="task/findTaskByUserId?page="+page+"&pageSize="+pageSize+"&userid="+userid;
           this.$axios.get(url).then(resp=>{
             this.pageInfo=resp.data.data;
           }).catch((ex)=>{
@@ -286,42 +300,42 @@ export default {
         handleChangePageSize2(pageSize){
           this.doFindPlan(this.planList.pageNum,pageSize);
         },
-        // update(row){
-        //   if("已完成"==row.state){
-        //         this.updateTag=false;
-        //         this.$message.error("此计划已完成，不能再进行修改了哦");
-        //         this.doFindPlan(this.planList.pageNum,this.planList.pageSize);
-        //       }else{
-        //         this.updateTag=true;
-        //         this.row=row;
-        //       }
-        // },
-        // doUpdate(){
-        //     let url="plan/update";
-        //     this.$axios.post(url,this.row).then(resp=>{
-        //         this.updateTag=false;
-        //         this.doFindPlan(this.planList.pageNum,this.planList.pageSize);
-        //         this.$message.success(resp.data.message);
-        //     }).catch(ex=>{console.log(ex);});
-        // },
-        // associateWith(rowassociate){
-        //   if("已完成"==rowassociate.status){
-        //         this.associateWithTag=false;
-        //         this.$message.error("此计划已完成，不能再进行交接了哦");
-        //         this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
-        //       }else{
-        //         this.associateWithTag=true;
-        //         this.rowassociate=rowassociate;
-        //       }
-        // },
-        // doUpdateTask(){
-        //   let url="task/update";
-        //     this.$axios.post(url,this.rowassociate).then(resp=>{
-        //         this.associateWithTag=false;
-        //         this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
-        //         this.$message.success(resp.data.message);
-        //     }).catch(ex=>{console.log(ex);});
-        // },
+        update(row){
+          if("已完成"==row.state){
+                this.updateTag=false;
+                this.$message.error("此计划已完成，不能再进行修改了哦");
+                this.doFindPlan(this.planList.pageNum,this.planList.pageSize);
+              }else{
+                this.updateTag=true;
+                this.row=row;
+              }
+        },
+        doUpdate(){
+            let url="plan/update";
+            this.$axios.post(url,this.row).then(resp=>{
+                this.updateTag=false;
+                this.doFindPlan(this.planList.pageNum,this.planList.pageSize);
+                this.$message.success(resp.data.message);
+            }).catch(ex=>{console.log(ex);});
+        },
+        associateWith(rowassociate){
+          if("已完成"==rowassociate.status){
+                this.associateWithTag=false;
+                this.$message.error("此计划已完成，不能再进行交接了哦");
+                this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
+              }else{
+                this.associateWithTag=true;
+                this.rowassociate=rowassociate;
+              }
+        },
+        doUpdateTask(){
+          let url="task/update";
+            this.$axios.post(url,this.rowassociate).then(resp=>{
+                this.associateWithTag=false;
+                this.find(this.pageInfo.pageNum,this.pageInfo.pageSize);
+                this.$message.success(resp.data.message);
+            }).catch(ex=>{console.log(ex);});
+        },
     },
     mounted(){
       this.find();
