@@ -4,7 +4,8 @@
      <el-table
     :data="tableData"
     ref="filterTable"
-    style="width: 100%">
+    style="width: 100%"
+    highlight-current-row="true">
     <el-table-column type="expand">
       <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
@@ -30,6 +31,7 @@
       label="职位"
       prop="position">
     </el-table-column>
+    
 
 
      <el-table-column
@@ -40,7 +42,8 @@
     :filter-method="filterTag" 
     filter-placement="bottom-end" >
         <template slot-scope="scope">
-        <el-link v-if="scope.row.existTask === '是' " type="primary">需要交接</el-link>
+        <el-link v-if="scope.row.existTask === '是' " @click="handover(scope.row)" type="primary">需要交接</el-link>
+        
         <span v-else type="info">否</span>
         
       </template>
@@ -54,6 +57,92 @@
       </template>
     </el-table-column>
   </el-table>
+
+  <el-dialog
+        title="未交接任务"
+        :visible.sync="dimHandover"
+        top="10px"
+        width="80%"
+        :close-on-click-modal="false"
+        @close="closeDialog">
+        <el-table :data="task" border style="width: 100%" stripe 
+        :default-sort = "{prop:'taskid',order:'descending'}" ref="multipleTable">
+          <el-table-column v-for="item in props" :key="item.prop" :prop="item.prop" :label="item.label" 
+            :width="item.width"> 
+            </el-table-column>
+            <!--操作列-->
+          <el-table-column
+          label="操作">
+          <template slot-scope="scope">
+              <el-button  @click="withs(scope.row)"
+              type="button" size="small">
+                  任务交接
+              </el-button>
+          </template>
+          </el-table-column>
+          </el-table>
+        <div class="block">
+          <el-button @click="dimHandover=false" type="primary">关 闭</el-button>
+        </div>
+
+    <el-dialog
+        title="任务交接"
+        :visible.sync="taskTag"
+        top="10px"
+        width="50%"
+        append-to-body
+        :close-on-click-modal="false">
+          <el-row>
+            <el-col :span="3" class="font1">任务名称</el-col>
+            <el-col :span="10">
+              <el-input v-model="rowassociate.taskname" readonly ></el-input>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="3" class="font1">状态</el-col>
+            <el-col :span="10" style="text-align:left;">
+              <el-select v-model="rowassociate.status" placeholder="请选择">
+                <el-option
+                  v-for="item in optionsTask"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-col>
+          </el-row>
+          <el-row>
+          <el-col :span="3" class="font1">实施人</el-col>
+          <el-col :span="10" style="text-align:left;padding-top:10px;">
+            <el-select v-model="rowassociate.userid" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.userid"
+                :label="item.realname"
+                :value="item.userid">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
+          <el-row>
+            <el-col :span="3" class="font1">结束日期</el-col>
+            <el-col :span="10">
+            <el-col :span="10">
+              <el-date-picker
+              v-model="rowassociate.enddateString"
+              type="date"
+              placeholder="选择日期"
+              value-format="yyyy-MM-dd">
+              </el-date-picker>
+            </el-col>
+            </el-col>
+          </el-row>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="taskTag = false">取 消</el-button>
+            <el-button type="primary" @click="doHandover">确 定</el-button>
+        </span>
+        </el-dialog>
+        </el-dialog>
     </div>
 </template>
 
@@ -72,7 +161,26 @@ export default {
         //   shop: '王小虎夫妻店',
         //   shopId: '10333'
         // }, 
-        ]
+        ],
+        taskTag:false,
+        dimHandover:false,
+        options: [],
+        props:[
+          {prop:"taskid",label:"编号",width:"50"},
+          {prop:"taskname",label:"任务名称",width:"120"},
+          {prop:"user.realname",label:"实施人",width:"120"},
+          {prop:"begindateString",label:"开始日期",width:"170"},
+          {prop:"enddateString",label:"结束日期",width:"170"},
+          {prop:"status",label:"状态",width:"80"},
+        ],
+        optionsTask: [
+           {value: '未交接',label: '未交接'},
+           {value: '已交接',label: '已交接'},
+         ], 
+        task:{},
+        row:{},
+        rowassociate:{},
+        dmissionId:null,
         }
     },
     components: {},
@@ -85,11 +193,57 @@ export default {
             this.$axios.get(url).then(resp=>{
                 console.log(resp.data);
                 for(let i=0;i<resp.data.data.list.length;i++){
-                     this.tableData.push({dmissionId:resp.data.data.list[i].dmissionId,dimDate:resp.data.data.list[i].dimDate,username:resp.data.data.list[i].user.username,feedback:resp.data.data.list[i].feedback,position:resp.data.data.list[i].position,existTask:resp.data.data.list[i].existTask});
+                     this.tableData.push({dmissionId:resp.data.data.list[i].dmissionId,dimDate:resp.data.data.list[i].dimDate,username:resp.data.data.list[i].user.username,feedback:resp.data.data.list[i].feedback,position:resp.data.data.list[i].position,existTask:resp.data.data.list[i].existTask,userid:resp.data.data.list[i].user.userid});
                 }
             }).catch(ex =>{
 
             });
+        },
+        handover(row){
+          this.dimHandover=true;
+          this.row=row;
+          this.dmissionId=row.dmissionId;
+          console.log(row.dmissionId);
+          console.log(this.rowassociate.dmissionId);
+          this.findTask();
+        },
+        findTask(){
+          let userid=this.row.userid;
+          let url="task/dimHandover?userid="+userid;
+          this.$axios.get(url).then(resp=>{
+            this.task=resp.data.data;
+          }).catch((ex)=>{
+            console.log(ex);
+          });
+        },
+        withs(row){
+          this.taskTag=true;
+          this.rowassociate=row;
+          this.findUsers();
+        },
+        findUsers(){
+          let url="task/findUsers?userid="+this.row.userid;
+          this.$axios.get(url).then(resp=>{
+            this.rowassociate.executant=this.rowassociate.userid;
+            this.rowassociate.userid=null;
+            this.options=resp.data.data;
+          }).catch((ex)=>{
+            console.log(ex);
+          });
+        },
+        doHandover(){
+          let url="task/handover1";
+          this.rowassociate.dmissionId=this.dmissionId;
+            this.$axios.post(url,this.rowassociate).then(resp=>{
+                this.taskTag=false;
+                this.findTask();
+                this.$message.success(resp.data.message);
+            }).catch(ex=>{console.log(ex);});
+        },
+        //关闭弹框的事件
+        closeDialog(){
+           this.tableData=[];
+        　this.find();
         }
     },
     mounted() {

@@ -110,11 +110,6 @@ export default {
             console.log(ex);
           });
         },
-        withs(row){
-          this.associateWithTag=true;
-          this.rowassociate=row;
-          this.findUsers();
-        },
         findUsers(){
           let url="task/findUsers?userid="+this.rowassociate.userid;
           this.$axios.get(url).then(resp=>{
@@ -124,6 +119,11 @@ export default {
           }).catch((ex)=>{
             console.log(ex);
           });
+        },
+        withs(row){
+          this.associateWithTag=true;
+          this.rowassociate=row;
+          this.findUsers();
         },
         handover(){
           let url="task/handover";
