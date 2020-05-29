@@ -2,7 +2,7 @@
         <el-container>
             <el-main :style="note">
                 <div id="div">
-            <h1 style="color:red;font-size:40px;">欢 迎 光 临</h1>
+            <h1 style="color:white;font-size:40px;">后 台 系 统</h1>
                <i class="el-icon-s-custom" style="font-size:30px;"></i>：<el-input v-model="username" placeholder="请输入账号" clearable style="width:250px;"></el-input>
                 <br/>
                 <i class="el-icon-lock" style="font-size:30px;"></i>：<el-input v-model="password" clearable placeholder="请输入密码" show-password style="width:250px;"></el-input>

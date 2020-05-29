@@ -16,6 +16,10 @@
   <el-form-item label="年龄：" prop="age">
     <el-input v-model.number="ruleForm.age"></el-input>
   </el-form-item>
+  <el-form-item label="联系方式：" prop="telephone">
+    <el-input type="text"  maxlength="11"
+    onkeyup="this.value=this.value.replace(/[^\d.]/g,'');" show-word-limit  v-model="ruleForm.telephone" autocomplete="on"></el-input>
+  </el-form-item>
   <el-form-item label="学历：" prop="education">
  <el-select v-model="ruleForm.education" placeholder="请选择" autocomplete="off">
     <el-option
@@ -41,10 +45,29 @@
   >
     <el-input v-model="ruleForm.email"></el-input>
   </el-form-item>
-
+<el-form-item label="部门" prop="deptid">
+ <el-select v-model="ruleForm.deptid" @change="cli" placeholder="请选择" autocomplete="off">
+    <el-option
+      v-for="item in deptOptions"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+</el-form-item>
+<el-form-item label="上级" prop="upno">
+ <el-select v-model="ruleForm.upno" placeholder="请选择" autocomplete="off">
+    <el-option
+      v-for="item in higherLevel"
+      :key="item.userid"
+      :label="item.realname"
+      :value="item.userid">
+    </el-option>
+  </el-select>
+</el-form-item>
 <el-form-item label="地址：" prop="address" style="width: 630px;">
  <el-cascader
- style="margin-left: 0px;"
+ style="margin-left: 0px;text-align:left;"
       size="large"
       :options="ruleForm.optionsChina"
       v-model="ruleForm.selectedOptions"
@@ -53,19 +76,7 @@
     <el-input maxlength="30" v-model="ruleForm.address" style="width: 250px;" placeholder="请填写具体位置"></el-input>
 </el-form-item>
 
-
-<el-form-item label="部门" prop="deptid">
- <el-select v-model="ruleForm.education" placeholder="请选择" autocomplete="off">
-    <el-option
-      v-for="item in options"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value">
-    </el-option>
-  </el-select>
-</el-form-item>
-
-<el-tree
+<!--<el-tree
   :data="data"
   show-checkbox
   default-expand-all
@@ -81,7 +92,7 @@
   <el-button @click="setCheckedNodes">通过 node 设置</el-button>
   <el-button @click="setCheckedKeys">通过 key 设置</el-button>
   <el-button @click="resetChecked">清空</el-button>
-</div>
+</div>-->
 
    <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -140,9 +151,21 @@ export default {
         };
       };
       
+      var validateUpno = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请选择上级'));
+        } 
+         callback();
+      };
       var validateEducation = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请选择学历'));
+        } 
+         callback();
+      };
+      var validateDeptid = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请选择部门'));
         } 
          callback();
       };
@@ -157,6 +180,12 @@ export default {
       var validateUserName = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入用户名'));
+        } 
+         callback();
+      };
+      var validateTelephone = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请输入手机号码'));
         } 
          callback();
       };
@@ -176,7 +205,10 @@ export default {
             password:'',
           checkPass: '',
           age: '',
+          telephone:'',
           education: '',
+          upno:'',
+          deptid:'',
           sex:'男',
            email: '',
            optionsChina: regionDataPlus,
@@ -186,6 +218,8 @@ export default {
         area:'',
         address:'',
         },
+        higherLevel:[],
+        deptid:null,
         options: [{
           value: '中专',
           label: '中专'
@@ -196,8 +230,8 @@ export default {
           value: '大专',
           label: '大专'
         }, {
-          value: '大学',
-          label: '大学'
+          value: '本科',
+          label: '本科'
         }, {
           value: '研究生',
           label: '研究生'
@@ -208,12 +242,34 @@ export default {
           value: '博士',
           label: '博士'
         }],
+        deptOptions: [{
+          value: 1,
+          label: '人事部'
+        }, {
+          value: 2,
+          label: '财务部'
+        }, {
+          value: 3,
+          label: '开发部'
+        }, {
+          value: 4,
+          label: '运维部'
+        }],
         rules: {
+          upno:[
+                { validator: validateUpno, trigger: 'blur' }
+            ],
+            deptid:[
+                { validator: validateDeptid, trigger: 'blur' }
+            ],
             education:[
                 { validator: validateEducation, trigger: 'blur' }
             ],
             username: [
                 { validator: validateUserName, trigger: 'blur' }
+            ],
+            telephone: [
+                { validator: validateTelephone, trigger: 'blur' }
             ],
           password: [
             { validator: validatePass, trigger: 'blur' }
@@ -294,14 +350,18 @@ export default {
       },
         //三级联动
         handleChange (value) {
-        this.province=CodeToText[value[0]];
-        this.city=CodeToText[value[1]];
-        this.area=CodeToText[value[2]];
+        this.ruleForm.province=CodeToText[value[0]];
+        this.ruleForm.city=CodeToText[value[1]];
+        this.ruleForm.area=CodeToText[value[2]];
       },
          submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            let url="user/save";
+              this.$axios.post(url,this.ruleForm).then(resp=>{
+                this.ruleForm={};
+                this.$message.success(resp.data.message);
+            }).catch(ex=>{console.log(ex);});
           } else {
             console.log('error submit!!');
             return false;
@@ -310,7 +370,20 @@ export default {
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      },
+      cli(){
+        this.findDeptMager();
+      },
+      findDeptMager(){
+        let url="user/findDeptMager?deptid="+this.ruleForm.deptid;
+          this.$axios.get(url).then(resp=>{
+            console.log("---------");
+            console.log(resp.data.data);
+            this.higherLevel=resp.data.data;
+          }).catch((ex)=>{
+            console.log(ex);
+          });
+      },
     },
     mounted() {
     this.tree();
