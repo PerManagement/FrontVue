@@ -24,6 +24,7 @@ import showDimission from '@/components/adminModule/showDimission'
 import saveOvertim from '@/components/attendanceModule/saveOvertim'
 import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 import showUser from '@/components/adminModule/showUser'
+import saveUser from '@/components/adminModule/saveUser'
 
 Vue.use(Router)
 
@@ -146,6 +147,11 @@ export default new Router({
       path: '/PersonnelAdjustment',
       name: 'PersonnelAdjustment',
       component: PersonnelAdjustment
+    },
+    {
+      path: '/saveUser',
+      name: 'saveUser',
+      component: saveUser
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},

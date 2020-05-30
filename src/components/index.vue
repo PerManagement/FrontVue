@@ -107,20 +107,21 @@
           <el-menu-item index="/findAffiches" @click="findAffiches">查看公告</el-menu-item>
       </el-submenu> 
 
-      <el-submenu index="7">
+      <!--<el-submenu index="7">
         <template slot="title">
           <i class="el-icon-setting"></i>
           <span>管理员操作</span>
         </template>
           <el-menu-item index="/showUser" @click="showUser">查看员工</el-menu-item>
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
-      </el-submenu> 
+      </el-submenu> -->
 
       <el-submenu index="8">
         <template slot="title">
           <i class="el-icon-menu"></i>
           <span>人事操作</span>
         </template>
+        <el-menu-item index="/saveUser" @click="saveUser">添加员工</el-menu-item>
           <el-menu-item index="/createUser" @click="addDimission">离职申请</el-menu-item>
           <el-menu-item index="/createUser" @click="showDimission">离职审批</el-menu-item>
           <el-menu-item index="/createUser" @click="PersonnelAdjustment">人事调整</el-menu-item>
@@ -173,6 +174,7 @@ import saveAffiche from '@/components/affiche/saveAffiche'
 import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
 import createPlan from '@/components/taskModule/createPlan'
 import checkTask from '@/components/taskModule/checkTask'
+import saveUser from '@/components/adminModule/saveUser'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
@@ -208,73 +210,74 @@ export default {
       showDimission,
       saveOvertim,
       findOvertimByUpno,
+      saveUser,
     },
 
-    methods: { 
-      removeTab(targetName) {
-        let tabs = this.editableTabs;
-        let activeName = this.editableTabsValue;
-        if (activeName === targetName) {
-          tabs.forEach((tab, index) => {
-            if (tab.name === targetName) {
-              let nextTab = tabs[index + 1] || tabs[index - 1];
-              if (nextTab) {
-                activeName = nextTab.name;
-              }
-            }
-          });
-        }
+    // methods: { 
+    //   removeTab(targetName) {
+    //     let tabs = this.editableTabs;
+    //     let activeName = this.editableTabsValue;
+    //     if (activeName === targetName) {
+    //       tabs.forEach((tab, index) => {
+    //         if (tab.name === targetName) {
+    //           let nextTab = tabs[index + 1] || tabs[index - 1];
+    //           if (nextTab) {
+    //             activeName = nextTab.name;
+    //           }
+    //         }
+    //       });
+    //     }
         
-        this.editableTabsValue = activeName;
-        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
-      },
-       issueWage(targetName){
-        let newTabName = ++this.tabIndex + '';
-        console.log(newTabName);
-        this.editableTabs.push({
-          title: '发放工资',
-          name: newTabName,
-          path:issueWage
-        });
-        this.editableTabsValue = newTabName;
-          console.log(this.editableTabsValue);
-      },
-       findWage(targetName){
-        console.log("添加标签页");
-        let newTabName = ++this.tabIndex + '';
-        console.log(newTabName);
-        this.editableTabs.push({
-          title: '查询记录',
-          name: newTabName,
-          path:findWage
-        });
-        this.editableTabsValue = newTabName;
-          console.log(this.editableTabsValue);
-      },
-       findWageState(targetName){
-        console.log("添加标签页");
-        let newTabName = ++this.tabIndex + '';
-        this.editableTabs.push({
-          title: '待审批薪资',
-          name: newTabName,
-          path:findWageState
-        });
-        this.editableTabsValue = newTabName;
-      },
-       findWageByUserId(targetName){
-        console.log("添加标签页");
-        let newTabName = ++this.tabIndex + '';
-        this.editableTabs.push({
-          title: '待审批薪资',
-          name: newTabName,
-          content: this.$store.dispatch("findWageByUserId"),
-          path:findWageByUserId
-        });
-        this.editableTabsValue = newTabName;
-       },
-      showUser,
-      PersonnelAdjustment,
-    },
+    //     this.editableTabsValue = activeName;
+    //     this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+    //   },
+    //    issueWage(targetName){
+    //     let newTabName = ++this.tabIndex + '';
+    //     console.log(newTabName);
+    //     this.editableTabs.push({
+    //       title: '发放工资',
+    //       name: newTabName,
+    //       path:issueWage
+    //     });
+    //     this.editableTabsValue = newTabName;
+    //       console.log(this.editableTabsValue);
+    //   },
+    //    findWage(targetName){
+    //     console.log("添加标签页");
+    //     let newTabName = ++this.tabIndex + '';
+    //     console.log(newTabName);
+    //     this.editableTabs.push({
+    //       title: '查询记录',
+    //       name: newTabName,
+    //       path:findWage
+    //     });
+    //     this.editableTabsValue = newTabName;
+    //       console.log(this.editableTabsValue);
+    //   },
+    //    findWageState(targetName){
+    //     console.log("添加标签页");
+    //     let newTabName = ++this.tabIndex + '';
+    //     this.editableTabs.push({
+    //       title: '待审批薪资',
+    //       name: newTabName,
+    //       path:findWageState
+    //     });
+    //     this.editableTabsValue = newTabName;
+    //   },
+    //    findWageByUserId(targetName){
+    //     console.log("添加标签页");
+    //     let newTabName = ++this.tabIndex + '';
+    //     this.editableTabs.push({
+    //       title: '待审批薪资',
+    //       name: newTabName,
+    //       content: this.$store.dispatch("findWageByUserId"),
+    //       path:findWageByUserId
+    //     });
+    //     this.editableTabsValue = newTabName;
+    //    },
+    //   showUser,
+    //   PersonnelAdjustment,
+    // },
 
     methods: { 
       PersonnelAdjustment(){
@@ -336,6 +339,21 @@ this.$store.dispatch("showUser");
        findOvertimByUpno(){
        this.$store.dispatch("findOvertimByUpno");
       },
+      saveUser(){
+       this.$store.dispatch("saveUser");
+      },
+       issueWage(){
+       this.$store.dispatch("issueWage");
+      },
+       findWage(){
+       this.$store.dispatch("findWage");
+      },
+       findWageState(){
+       this.$store.dispatch("findWageState");
+      },
+       findWageByUserId(){
+       this.$store.dispatch("findWageByUserId");
+       },
       logOut(){
         this.$confirm('您确定退出吗?', '提示', {
           confirmButtonText: '确定',

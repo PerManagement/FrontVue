@@ -135,7 +135,7 @@ export default {
           {prop:"welfare.employmentinjuryinsurance",label:"失业保险",width:"100"},
           {prop:"welfare.reservedfunds",label:"公积金",width:"100"},
           {prop:"taxes",label:"税金",width:"100"},
-          {prop:"attendance.remark",label:"迟到",width:"100"},
+          {prop:"attendance.clockinstate",label:"是否迟到",width:"100"},
           {prop:"evectionaccount.total",label:"出差",width:"100"},
           {prop:"overtim.countsal",label:"加班",width:"100"},
           {prop:"leave.saltotal",label:"请假",width:"100"},
@@ -160,7 +160,7 @@ export default {
            var rows=this.$refs.multipleTable.selection;
            rows.forEach(item=>{
               console.log(item.wageid);
-              let userid=this.$store.state.login.users.userRoles[0].id;
+              let userid=this.$store.state.login.users.userRoles[0].userid;
               let url="wage/updateWage?userid="+userid+"&wageid="+item.wageid;
               this.$axios.get(url).then(resp=>{           
                   this.$message.success(resp.data.message);

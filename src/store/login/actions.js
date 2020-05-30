@@ -57,4 +57,7 @@ export default{
     PersonnelAdjustment({commit},obj){
         this.state.elMain='PersonnelAdjustment';
     },
+    saveUser({commit},obj){
+        this.state.elMain='saveUser';
+    },
 }
