@@ -25,7 +25,7 @@
   :visible.sync="clockinstate"
   width="30%"
   :before-close="handleClose">
-  <h1>2020年5月15日/星期五，上班打卡</h1>
+  <h1>{{currentTime}}，上班打卡</h1>
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="saveAttendance">打 卡</el-button>
   </span>
@@ -52,6 +52,7 @@ export default {
     name: "",
     data() {
         return {
+          currentTime:'',
           clockinstate: false,
           clockoutstate: false,
             attendance: {},
@@ -67,6 +68,7 @@ export default {
     methods: {
     //分页查询
     findAfficheByDate() {
+            this.currentTime=new Date();
         
       let url ="affiche/findAfficheByDate";
       this.$axios
@@ -122,6 +124,7 @@ export default {
             this.clockinstate = false;
           }else{
             this.clockinstate = true;
+            this.currentTime=new Date();
           }
         })
         .catch(ex => {

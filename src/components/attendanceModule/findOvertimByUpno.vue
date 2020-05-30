@@ -38,7 +38,7 @@
             {{overtim.overtimid}}
           </el-col>
         </el-row>
-        <el-row>          
+        <el-row>
           <el-col :span="4" class="font1">申请人：</el-col>
           <el-col :span="10">
             
@@ -92,7 +92,8 @@ export default {
       updateOvertimByUpnoPage:false,
       props: [
         { prop: "user.realname", label: "申请人", widht: "100" },
-        { prop: "overtimedatedString", label: "申请时间", widht: "200" }
+        { prop: "overtimedatedString", label: "申请时间", widht: "200" },
+        { prop: "overtimtype", label: "申请状态", widht: "100" },
       ],
       form: {
         },
