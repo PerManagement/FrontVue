@@ -170,9 +170,13 @@ export default {
     name: "",
     data() {
         return {
-        editableTabsValue: '2',
-        editableTabs: [],
-        tabIndex: 2
+        editableTabsValue: '1',
+        editableTabs: [{
+          path:'welcome',
+          title:'',
+          name:'1',
+        }],
+        tabIndex: 1
         }
     },
 
@@ -185,10 +189,8 @@ export default {
       ,findWageState
       ,findWageByUserId
       ,saveWage
-      ,welcome
       ,createUser
       ,selectAttendance,
-      welcome,
       findAffiches,
       saveAffiche,
       findTaskByUserId,

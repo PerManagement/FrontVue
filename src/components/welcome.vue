@@ -21,18 +21,18 @@
 <el-button type="text" @click="clockoutstate = true">下班打卡</el-button>
 
 <el-dialog
-  title="欢迎登录陈氏集团公司内部系统"
+  title="欢迎登录皇帝诏曰内部系统"
   :visible.sync="clockinstate"
   width="30%"
   :before-close="handleClose">
-  <h1>2020年5月15日/星期五，上班打卡</h1>
+  <h1>2020年5月30日，上班打卡</h1>
   <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="saveAttendance">打 卡</el-button>
   </span>
 </el-dialog>
 
 <el-dialog
-  title="欢迎登录陈氏集团公司内部系统"
+  title="欢迎登录皇帝诏曰内部系统"
   :visible.sync="clockoutstate"
   width="30%"
   :before-close="handleClose2">
