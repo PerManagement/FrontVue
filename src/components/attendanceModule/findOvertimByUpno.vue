@@ -99,23 +99,10 @@ export default {
     },
 
     findOvertimByKey(row) {
-      // console.log(row);
 
       this.findOvertimById=true;
       this.overtim=row;
 
-      // let url="overtim/findOvertimByKey?overtimid="+row.overtimid;
-      // this.$axios.get(url).then(resp => {
-      //     if(resp.data.data!=null){
-      //         this.findOvertimByKey=true;
-      //         this.overtim=resp.data.data;
-      //     }else{
-      //         this.$message.success(resp.data.message);
-      //     }
-
-      // }).catch(ex => {
-      //   console.log(ex);
-      // });
     },
   },
   mounted() {
