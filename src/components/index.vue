@@ -167,6 +167,7 @@ import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import createUser from '@/components/adminModule/createUser'
 import showUser from '@/components/adminModule/showUser'
 import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
+import saveWage from '@/components/wageModule/saveWage'
 import showDimission from '@/components/adminModule/showDimission'
 import addDimission from '@/components/adminModule/addDimission'
 import findAffiches from '@/components/affiche/findAffiches'
@@ -189,6 +190,7 @@ export default {
         tabIndex: 1
         }
     },
+
     components: {
       welcome,
       createTask,
@@ -210,9 +212,8 @@ export default {
       showDimission,
       saveOvertim,
       findOvertimByUpno,
-      saveUser,
-    },
-
+      showUser,
+      PersonnelAdjustment,
     // methods: { 
     //   removeTab(targetName) {
     //     let tabs = this.editableTabs;
@@ -275,9 +276,7 @@ export default {
     //     });
     //     this.editableTabsValue = newTabName;
     //    },
-    //   showUser,
-    //   PersonnelAdjustment,
-    // },
+    },
 
     methods: { 
       PersonnelAdjustment(){
