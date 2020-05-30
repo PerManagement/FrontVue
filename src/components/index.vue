@@ -112,6 +112,7 @@
           <i class="el-icon-setting"></i>
           <span>管理员操作</span>
         </template>
+          <el-menu-item index="/showUser" @click="showUser">查看员工</el-menu-item>
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
       </el-submenu> 
 
@@ -122,6 +123,7 @@
         </template>
           <el-menu-item index="/createUser" @click="addDimission">离职申请</el-menu-item>
           <el-menu-item index="/createUser" @click="showDimission">离职审批</el-menu-item>
+          <el-menu-item index="/createUser" @click="PersonnelAdjustment">人事调整</el-menu-item>
       </el-submenu> 
 
     </el-menu>
@@ -158,6 +160,8 @@ import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import saveWage from '@/components/wageModule/saveWage'
 import createUser from '@/components/adminModule/createUser'
+import showUser from '@/components/adminModule/showUser'
+import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
 import showDimission from '@/components/adminModule/showDimission'
 import addDimission from '@/components/adminModule/addDimission'
 import findAffiches from '@/components/affiche/findAffiches'
@@ -179,7 +183,6 @@ export default {
         tabIndex: 1
         }
     },
-
     components: {
       welcome,
       createTask,
@@ -265,6 +268,17 @@ export default {
         });
         this.editableTabsValue = newTabName;
        },
+      showUser,
+      PersonnelAdjustment,
+    },
+
+    methods: { 
+      PersonnelAdjustment(){
+this.$store.dispatch("PersonnelAdjustment");
+      },
+      showUser(){
+this.$store.dispatch("showUser");
+      },
       showDimission(){
         this.$store.dispatch("showDimission");
       },

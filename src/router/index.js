@@ -19,9 +19,11 @@ import associateWith from '@/components/taskModule/associateWith'
 import createPlan from '@/components/taskModule/createPlan'
 import checkTask from '@/components/taskModule/checkTask'
 import addDimission from '@/components/adminModule/addDimission'
+import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
 import showDimission from '@/components/adminModule/showDimission'
 import saveOvertim from '@/components/attendanceModule/saveOvertim'
 import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
+import showUser from '@/components/adminModule/showUser'
 
 Vue.use(Router)
 
@@ -136,5 +138,16 @@ export default new Router({
       name: 'findOvertimByUpno',
       component: findOvertimByUpno
     },
+    { path: '/showUser',
+      name: 'showUser',
+      component: showUser
+    },
+    {
+      path: '/PersonnelAdjustment',
+      name: 'PersonnelAdjustment',
+      component: PersonnelAdjustment
+    },
+    // {name:'saveTask',path:"/saveTask",component:saveTask},
+    // {name:'welcome',path:"/welcome",component:welcome},
   ]
 })

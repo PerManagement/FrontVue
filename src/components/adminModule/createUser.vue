@@ -4,7 +4,7 @@
 
 <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
- <el-form-item label="用户名：" prop="username">
+ <!--<el-form-item label="用户名：" prop="username">
     <el-input type="text"  maxlength="10" show-word-limit  v-model="ruleForm.username" autocomplete="on"></el-input>
   </el-form-item>
   <el-form-item label="密码：" prop="password">
@@ -76,7 +76,23 @@
     <el-input maxlength="30" v-model="ruleForm.address" style="width: 250px;" placeholder="请填写具体位置"></el-input>
 </el-form-item>
 
+<<<<<<< HEAD
 <!--<el-tree
+=======
+
+<el-form-item label="部门" prop="deptid">
+ <el-select v-model="ruleForm.education" placeholder="请选择" autocomplete="off">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+</el-form-item>-->
+
+<el-tree
+>>>>>>> hehui
   :data="data"
   show-checkbox
   default-expand-all
@@ -199,7 +215,6 @@ export default {
         }
       };
       return {
-        
         ruleForm: {
            username:'',
             password:'',
@@ -292,7 +307,7 @@ export default {
         //   children: [{
         //     id: 7,
         //     label: '二级 3-1'
-        //   }, {
+        //   },{
         //     id: 8,
         //     label: '二级 3-2'
         //   }]
@@ -310,40 +325,62 @@ export default {
       tree(){
         let url="admin/tree";
         this.$axios.get(url).then(resp=>{
-          console.log(resp.data.data);
          for(let i=0;i<resp.data.data.length;i++){
-           if(resp.data.data[i].pid==null){
-             continue;
-           }
-            if(resp.data.data[i].pid==1){
+            if(resp.data.data[i].pid==null){
               let msg={id:resp.data.data[i].id,label:resp.data.data[i].name,children:[]}
-          this.data.push(msg);
+            this.data.push(msg);
             }else{
-              let msg={id:resp.data.data[i].id,label:resp.data.data[i].name}
-              this.data[this.data.length-1].children.push(msg);
+              for(let j=0;j<this.data.length;j++){
+              if(this.data[j].id == resp.data.data[i].pid){
+              let msg={id:resp.data.data[i].id,label:resp.data.data[i].description,children:[]}
+               this.data[j].children.push(msg);
+              }else{
+                 for(let k=0;k<this.data[j].children.length;k++){
+               if(this.data[j].children[k].id == resp.data.data[i].pid){
+                let msg={id:resp.data.data[i].id,label:resp.data.data[i].description,children:[]}
+                this.data[j].children[k].children.push(msg);
+               }
+              }
             }
           }
+        }
+      };
         }).catch(ex => {
           console.log(ex);
         });
       },
-      getCheckedNodes() {
-        console.log(this.$refs.tree.getCheckedNodes());
-      },
+      // getCheckedNodes() {
+      //   console.log(this.$refs.tree.getCheckedNodes());
+      // },
       getCheckedKeys() {
-        console.log(this.$refs.tree.getCheckedKeys());
+        let url="admin/updatePower";
+        let integers=this.$refs.tree.getCheckedKeys();
+                     let userid= this.$store.state.userId;
+        let updatePowerDto={integers,userid};
+        console.log(updatePowerDto);
+        // let str=JSON.stringify(integers);
+        // console.log(str);
+        this.$axios.post(url,updatePowerDto).then(resp=>{
+          console.log(resp.data.data);
+        }).catch(ex=>{
+          console.log(ex);
+        });
       },
-      setCheckedNodes() {
-        this.$refs.tree.setCheckedNodes([{
-          id: 5,
-          label: '二级 2-1'
-        }, {
-          id: 9,
-          label: '三级 1-1-1'
-        }]);
-      },
+      // setCheckedNodes() {
+      //   this.$refs.tree.setCheckedNodes([{
+      //     id: 5,
+      //     label: '二级 2-1'
+      //   }, {
+      //     id: 9,
+      //     label: '三级 1-1-1'
+      //   }]);
+      // },
       setCheckedKeys() {
-        this.$refs.tree.setCheckedKeys([3]);
+        let set=[];
+        for(let a=0;a<this.$store.state.set.length;a++){
+        set[a]=this.$store.state.set[a];
+        }
+        this.$refs.tree.setCheckedKeys(set);
       },
       resetChecked() {
         this.$refs.tree.setCheckedKeys([]);
@@ -354,7 +391,7 @@ export default {
         this.ruleForm.city=CodeToText[value[1]];
         this.ruleForm.area=CodeToText[value[2]];
       },
-         submitForm(formName) {
+         submitForm(formName){
         this.$refs[formName].validate((valid) => {
           if (valid) {
             let url="user/save";
