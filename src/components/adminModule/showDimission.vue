@@ -136,8 +136,6 @@ export default {
             }).catch(ex => {
             console.log(ex);
             });
-            
-            
         },
         yes(index, rows){
             this.visible = false;
@@ -171,7 +169,6 @@ export default {
         find(){
             let url="admin/showDimission";
             this.$axios.get(url).then(resp=>{
-                console.log(resp.data);
                 for(let i=0;i<resp.data.data.list.length;i++){
                      this.tableData.push({dmissionId:resp.data.data.list[i].dmissionId,
                      dimDate:resp.data.data.list[i].dimDateString,
@@ -182,7 +179,7 @@ export default {
                      userid:resp.data.data.list[i].userid});
                 }
             }).catch(ex =>{
-
+              console.log(ex);
             });
         }
     },
@@ -191,7 +188,6 @@ export default {
     },
 }
 </script>
-
 <style  scoped>
  .demo-table-expand {
     font-size: 0;

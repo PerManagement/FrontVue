@@ -15,6 +15,7 @@ import seleteAttendance from '@/components/attendanceModule/selectAttendance'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
 import addDimission from '@/components/adminModule/addDimission'
+import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
 import showDimission from '@/components/adminModule/showDimission'
 import showUser from '@/components/adminModule/showUser'
 
@@ -106,6 +107,11 @@ export default new Router({
       path: '/showUser',
       name: 'showUser',
       component: showUser
+    },
+    {
+      path: '/PersonnelAdjustment',
+      name: 'PersonnelAdjustment',
+      component: PersonnelAdjustment
     },
     // {name:'saveTask',path:"/saveTask",component:saveTask},
     // {name:'welcome',path:"/welcome",component:welcome},

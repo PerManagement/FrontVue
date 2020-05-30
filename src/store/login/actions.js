@@ -47,5 +47,14 @@ export default{
     },
     showUser({commit},obj){
         this.state.elMain='showUser';
-    }
+    },
+    set({commit},obj){
+        this.state.set=obj.a;
+        console.log(this.state.set);
+        this.state.userId=obj.b;
+        this.state.elMain='createUser';
+    },
+    PersonnelAdjustment({commit},obj){
+        this.state.elMain='PersonnelAdjustment';
+    },
 }
