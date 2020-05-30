@@ -69,10 +69,10 @@
           <i class="el-icon-menu"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="/findWage" @click="findWage">查看任务</el-menu-item>
-          <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
-          <!--<el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>-->
-          <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage(editableTabsValue)">查询记录</el-menu-item>
+          <el-menu-item index="/issueWage" @click="issueWage(editableTabsValue)">发放工资</el-menu-item>
+          <el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>
+          <el-menu-item index="/findWageState" @click="findWageState(editableTabsValue)">待审批薪资</el-menu-item>
           <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
 
@@ -128,9 +128,14 @@
      </el-aside>
  
     <el-main>
-    
-     <component :is="$store.getters.getElmain"></component>
-      <!-- <h1 style="font-size:75px;color:red;">欢迎登录</h1> -->
+      <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
+        <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name">
+          <component :is="item.path"></component>
+        </el-tab-pane>
+      </el-tabs>
+     <div class="test test-5">
+      <div class="scrollbar"></div>
+    </div>
     </el-main>
   </el-container>
   <el-footer>
@@ -164,7 +169,11 @@ import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
     data() {
-        return {}
+        return {
+        editableTabsValue: '2',
+        editableTabs: [],
+        tabIndex: 2
+        }
     },
 
     components: {
@@ -193,26 +202,76 @@ export default {
     },
 
     methods: { 
+      removeTab(targetName) {
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+        
+        this.editableTabsValue = activeName;
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      },
+       issueWage(targetName){
+        let newTabName = ++this.tabIndex + '';
+        console.log(newTabName);
+        this.editableTabs.push({
+          title: '发放工资',
+          name: newTabName,
+          path:issueWage
+        });
+        this.editableTabsValue = newTabName;
+          console.log(this.editableTabsValue);
+      },
+       findWage(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        console.log(newTabName);
+        this.editableTabs.push({
+          title: '查询记录',
+          name: newTabName,
+          path:findWage
+        });
+        this.editableTabsValue = newTabName;
+          console.log(this.editableTabsValue);
+      },
+       findWageState(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: '待审批薪资',
+          name: newTabName,
+          path:findWageState
+        });
+        this.editableTabsValue = newTabName;
+      },
+       findWageByUserId(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: '待审批薪资',
+          name: newTabName,
+          content: this.$store.dispatch("findWageByUserId"),
+          path:findWageByUserId
+        });
+        this.editableTabsValue = newTabName;
+       },
       showDimission(){
         this.$store.dispatch("showDimission");
       },
       addDimission(){
         this.$store.dispatch("addDimission");
       },
-       issueWage(){
-       this.$store.dispatch("issueWage");
-      },
-       findWage(){
-       this.$store.dispatch("findWage");
-      },
+       
        findWageState(){
        this.$store.dispatch("findWageState");
-      },
-       findWageByUserId(){
-       this.$store.dispatch("findWageByUserId");
-       },
-       saveWage(){
-       this.$store.dispatch("saveWage");
       },
        saveAffiche(){
        this.$store.dispatch("saveAffiche");
