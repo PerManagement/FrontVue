@@ -71,7 +71,7 @@
         </template>
           <el-menu-item index="/findWage" @click="findWage(editableTabsValue)">查询记录</el-menu-item>
           <el-menu-item index="/issueWage" @click="issueWage(editableTabsValue)">发放工资</el-menu-item>
-          <el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>
+          <!--<el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>-->
           <el-menu-item index="/findWageState" @click="findWageState(editableTabsValue)">待审批薪资</el-menu-item>
           <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
@@ -118,7 +118,7 @@
 
       <el-submenu index="8">
         <template slot="title">
-          <i class="el-icon-location"></i>
+          <i class="el-icon-menu"></i>
           <span>人事操作</span>
         </template>
           <el-menu-item index="/createUser" @click="addDimission">离职申请</el-menu-item>
@@ -129,7 +129,7 @@
     </el-menu>
      </el-aside>
  
-    <el-main>
+    <!--<el-main>
       <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
         <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name">
           <component :is="item.path"></component>
@@ -138,6 +138,10 @@
      <div class="test test-5">
       <div class="scrollbar"></div>
     </div>
+    </el-main>-->
+    <el-main>
+     <component :is="$store.getters.getElmain"></component>
+      <!-- <h1 style="font-size:75px;color:red;">欢迎登录</h1> -->
     </el-main>
   </el-container>
   <el-footer>
@@ -158,7 +162,7 @@ import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
-import saveWage from '@/components/wageModule/saveWage'
+// import saveWage from '@/components/wageModule/saveWage'
 import createUser from '@/components/adminModule/createUser'
 import showUser from '@/components/adminModule/showUser'
 import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
@@ -191,7 +195,7 @@ export default {
       ,issueWage
       ,findWageState
       ,findWageByUserId
-      ,saveWage
+      // ,saveWage
       ,createUser
       ,selectAttendance,
       findAffiches,

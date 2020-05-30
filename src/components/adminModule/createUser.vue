@@ -76,9 +76,7 @@
     <el-input maxlength="30" v-model="ruleForm.address" style="width: 250px;" placeholder="请填写具体位置"></el-input>
 </el-form-item>
 
-<<<<<<< HEAD
 <!--<el-tree
-=======
 
 <el-form-item label="部门" prop="deptid">
  <el-select v-model="ruleForm.education" placeholder="请选择" autocomplete="off">
@@ -92,7 +90,6 @@
 </el-form-item>-->
 
 <el-tree
->>>>>>> hehui
   :data="data"
   show-checkbox
   default-expand-all
