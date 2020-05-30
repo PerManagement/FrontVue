@@ -126,7 +126,6 @@ export default {
       this.$axios
         .post(url, this.overtimDto)
         .then(resp => {
-          this.pageInfo = resp.data.data;
           console.log(resp.data.data);
           for (let i = 0; i < resp.data.data.list.length; i++) {
             this.tableData.push(resp.data.data.list[i]);
@@ -171,6 +170,7 @@ export default {
         this.$axios.post(url,this.overtim).then(resp => {
             this.overtim={};
             this.findOvertimByUserId(1,6);
+            this.tableData=[];
             this.$message.success(resp.data.message);
         }).catch(ex => {            
             this.$message.success(resp.data.message);
