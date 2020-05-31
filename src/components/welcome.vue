@@ -1,7 +1,7 @@
 <template>
   <div class>
-    <h1>今日通告</h1><!--:data="affiche"-->
-    <el-table ref="multipleTable"  style="width: 100%" stripe border>
+    <h1>今日通告</h1>
+    <el-table ref="multipleTable" :data="affiche" style="width: 100%" stripe border>
       <el-table-column
         v-for="item in props"
         :key="item.prop"
