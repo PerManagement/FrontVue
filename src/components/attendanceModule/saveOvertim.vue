@@ -115,7 +115,7 @@
         </el-row>
         <el-row>
           <el-col :span="8">
-            <el-button type="success" round @click="updateOvertimByOvertimId">提交申请</el-button>
+            <el-button type="success" round @click="updateOvertimByOvertimId">提交修改</el-button>
           </el-col>
         </el-row>
       </form>
@@ -144,21 +144,22 @@ export default {
   methods: {
 
 
-    updateOvertimByOvertimId() {
-      this.overtimUpdate.userid = this.$store.state.login.users.userRoles[0].userid;
-      let url = "overtim/updateOvertimByOvertimId";
-      console.log(this.overtimUpdate);
-      this.$axios
-        .post(url, this.overtimUpdate)
-        .then(resp => {
-            this.dialogInsertVisible=false;
-          this.$message.success(resp.data.message);
-          this.overtimUpdate = {};
-        })
-        .catch(ex => {
-          console.log(ex);
+
+    updateOvertimByOvertimId(){
+        let url="overtim/updateOvertimByOvertimId";
+        this.$axios.post(url,this.overtimUpdate).then(resp => {
+          if(resp.data.data!=null){            
+            this.overtimUpdate={};
+            this.findOvertimByUserId(1,6);
+            this.tableData=[];
+            this.dialogUpdateVisible=false;
+          }
+            this.$message.success(resp.data.message);
+        }).catch(ex => {
+          this.message.success(resp.data.message);
         });
     },
+
 
     saveOvertim() {
       this.overtim.userid = this.$store.state.login.users.userRoles[0].userid;
@@ -205,7 +206,7 @@ export default {
       this.dialogFindByIdVisible = true;
       this.overtim = row;
     },
-    updateOvertimByOvertimIdPage(){
+    updateOvertimByOvertimIdPage(row){
       this.dialogUpdateVisible = true;
       this.overtimUpdate = row;
     },

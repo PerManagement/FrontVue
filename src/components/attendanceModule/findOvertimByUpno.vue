@@ -151,6 +151,9 @@ export default {
       this.$axios.post(url,this.form).then(resp => {
         if(resp.data.data!=null){
           this.form={};
+          
+            this.findOvertimByUserId(1,6);
+            this.pageInfo={};
           this.updateOvertimByUpnoPage=false;
           this.$message.success(resp.data.message);
         }else{          
