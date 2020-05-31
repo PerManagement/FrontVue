@@ -34,6 +34,7 @@ state:{
     elMain:"welcome",
     set:[], //何辉---》查看权限时的显示用户所具有的权限
     userId:"",//何辉---》查看是什么人
+    show:{},//何辉 ---》
 },
 modules:{
 'login':login,

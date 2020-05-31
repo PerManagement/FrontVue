@@ -34,7 +34,6 @@ import updateLeave2 from '@/components/leaveModule/updateLeave2'
 import selectEvectionaccount from '@/components/evectionAccountModule/selectEvectionaccount'
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
 
-
 Vue.use(Router)
 
 export default new Router({
@@ -182,20 +181,13 @@ export default new Router({
       name: 'saveUser',
       component: saveUser
     },
-    { path: '/selectOvertim',
-      name: 'selectOvertim',
-      component: selectOvertim
-    },
+    
     {
       path: '/createLeave',
       name: 'createLeave',
       component: createLeave
     },
-    {
-      path: '/selectEvection',
-      name: 'selectEvection',
-      component: selectEvection
-    },
+    
     {
       path: '/updateEvection',
       name: 'updateEvection',
