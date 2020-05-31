@@ -13,7 +13,7 @@
       <el-table-column prop="overtimtype" label="操作">
         <template slot-scope="scope">
           <el-button @click="findOvertimByKey(scope.row)" type="text" size="small">详细信息</el-button>
-          <el-button @click="findOvertimByKey(scope.row)" size="small" type="text" v-if="scope.row.overtimtype == '待修改'" >修改</el-button>
+          <el-button @click="updateOvertimByOvertimIdPage(scope.row)" size="small" type="text" v-if="scope.row.overtimtype == '待修改'" >修改</el-button>
           <el-button @click="updateOvertimByOvertimtype(scope.row)" size="small" type="text"  v-else-if="scope.row.overtimtype == '待确认'">确认</el-button>
         </template>
       </el-table-column>
@@ -81,6 +81,46 @@
         <el-button type="primary" @click="updateOvertimByUpnoPage = true">审批处理</el-button>
       </span>
     </el-dialog>
+
+
+    <el-dialog
+      title="修改申请"
+      :visible.sync="dialogUpdateVisible"
+      width="40%"
+      :before-close="handleUpdateClose"
+    >
+      <form>
+        <el-row>
+          <el-col :span="4" class="font1">开始时间：</el-col>
+          <el-col :span="5">
+            <el-date-picker v-model="overtimUpdate.overtimedate" type="datetime" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4" class="font1">结束时间：</el-col>
+          <el-col :span="5">
+            <el-date-picker v-model="overtimUpdate.stopovertime" type="datetime" placeholder="选择日期时间"></el-date-picker>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4" class="font1">加班原因：</el-col>
+          <el-col :span="20">
+            <el-input
+              type="textarea"
+              placeholder="请输入内容"
+              v-model="overtimUpdate.overtimreason"
+              :autosize="{ minRows: 2, maxRows: 4}"
+            ></el-input>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="8">
+            <el-button type="success" round @click="updateOvertimByOvertimId">提交申请</el-button>
+          </el-col>
+        </el-row>
+      </form>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -93,13 +133,33 @@ export default {
       pageInfo: {},
       overtimDto: {},
       overtim: {},
+      overtimUpdate: {},
       dialogInsertVisible: false,
       dialogFindByIdVisible: false,
+      dialogUpdateVisible: false,
       tableData: [],
     };
   },
   components: {},
   methods: {
+
+
+    updateOvertimByOvertimId() {
+      this.overtimUpdate.userid = this.$store.state.login.users.userRoles[0].userid;
+      let url = "overtim/updateOvertimByOvertimId";
+      console.log(this.overtimUpdate);
+      this.$axios
+        .post(url, this.overtimUpdate)
+        .then(resp => {
+            this.dialogInsertVisible=false;
+          this.$message.success(resp.data.message);
+          this.overtimUpdate = {};
+        })
+        .catch(ex => {
+          console.log(ex);
+        });
+    },
+
     saveOvertim() {
       this.overtim.userid = this.$store.state.login.users.userRoles[0].userid;
       let url = "overtim/saveOvertim";
@@ -144,6 +204,10 @@ export default {
     findOvertimByKey(row) {
       this.dialogFindByIdVisible = true;
       this.overtim = row;
+    },
+    updateOvertimByOvertimIdPage(){
+      this.dialogUpdateVisible = true;
+      this.overtimUpdate = row;
     },
     handleInsertClose() {
       this.$confirm("您确定要取消本次审批吗?", "提示", {
