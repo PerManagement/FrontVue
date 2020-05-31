@@ -44,5 +44,8 @@ export default{
     },
     showDimission({commit},obj){
         this.state.elMain='showDimission';
+    },
+    isMe({commit},obj){
+        this.state.elMain='isMe';
     }
 }
