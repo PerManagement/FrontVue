@@ -52,7 +52,7 @@
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
           <el-menu-item index="/saveOvertim" @click="saveOvertim">加班申请</el-menu-item>
           <el-menu-item index="/findOvertimByUpno" @click="findOvertimByUpno">加班申请处理</el-menu-item>
-               <el-menu-item index="/creakAttendance" @click="creakAttendance">打卡</el-menu-item>
+               <!--<el-menu-item index="/creakAttendance" @click="creakAttendance">打卡</el-menu-item>-->
            <el-menu-item index="/selectLeave" @click="selectLeave">请假记录</el-menu-item>
                 <el-menu-item index="/createLeave" @click="createLeave">添加请假记录</el-menu-item>
                  <el-menu-item index="/updateLeave" @click="updateLeave">待审批请假记录</el-menu-item>
