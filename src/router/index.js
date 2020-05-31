@@ -24,6 +24,7 @@ import createPlan from '@/components/taskModule/createPlan'
 import checkTask from '@/components/taskModule/checkTask'
 import addDimission from '@/components/adminModule/addDimission'
 import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
+import isMe from '@/components/adminModule/isMe'
 import showDimission from '@/components/adminModule/showDimission'
 import saveOvertim from '@/components/attendanceModule/saveOvertim'
 import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
@@ -167,6 +168,10 @@ export default new Router({
       path: '/findOvertimByUpno',
       name: 'findOvertimByUpno',
       component: findOvertimByUpno
+    }, {
+      path: '/isMe',
+      name: 'isMe',
+      component: isMe
     },
     { path: '/showUser',
       name: 'showUser',

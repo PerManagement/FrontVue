@@ -60,4 +60,7 @@ export default{
     saveUser({commit},obj){
         this.state.elMain='saveUser';
     },
+    isMe({commit},obj){
+        this.state.elMain='isMe';
+    }
 }

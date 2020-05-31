@@ -1,34 +1,47 @@
 <template>
     <el-container v-if="$store.getters.getUsers!=null">
   <el-header>
-      <el-menu
+  <el-popover
+    placement="top-start"
+    width="200"
+    trigger="hover">
+    <el-upload action="http://localhost:8088/admin/userFileUrl"
+  list-type="picture-card"
+  name="img"
+  :show-file-list="false"
+  :on-success="handleSuccess"
+  >
+  &nbsp;&nbsp;&nbsp;
+  <i class="el-icon-plus"></i>
+</el-upload>
+  &nbsp;&nbsp;&nbsp;&nbsp;<ElButton type="primary" @click="isMe">修改个人信息</ElButton>
+
+      <el-menu slot="reference"
   class="el-menu-demo"
   mode="horizontal"
   background-color="#303133"
   text-color="#fff"
   active-text-color="#ffd04b">
-  <el-menu-item index="1">
-  <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
+<el-menu-item index="1">
+
+
+
+   
+
+
+
+  <el-avatar style="margin:0px auto;" :src="imgUrl"
+  :key="imgUrl"
+  ></el-avatar >
+ 
     {{$store.state.login.users.username}} {{$store.state.login.users.description}}
   </el-menu-item>
-  <!--<el-menu-item index="1">处理中心</el-menu-item>
-  <el-submenu index="2">
-    <template slot="title">我的工作台</template>
-    <el-menu-item index="2-1">选项1</el-menu-item>
-    <el-menu-item index="2-2">选项2</el-menu-item>
-    <el-menu-item index="2-3">选项3</el-menu-item>
-    <el-submenu index="2-4">
-      <template slot="title">选项4</template>
-      <el-menu-item index="2-4-1">选项1</el-menu-item>
-      <el-menu-item index="2-4-2">选项2</el-menu-item>
-      <el-menu-item index="2-4-3">选项3</el-menu-item>
-    </el-submenu>
-  </el-submenu>
-  <el-menu-item index="3" disabled>消息中心</el-menu-item>-->
-  <!--<el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
+  
+
   <div style="float:right"><el-button type="danger" round style="line-height:0px;width:65px;font-size:10px;" @click="logOut">退出</el-button>
   </div>
 </el-menu>
+ </el-popover>
   </el-header>
 
   
@@ -154,6 +167,7 @@
           <a target="_blank" href="https://element.eleme.cn/#/zh-CN">Element-UI</a>
       </el-footer>
 </el-container>
+
 </template>
 
 <script>
@@ -177,6 +191,7 @@ import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
 import saveWage from '@/components/wageModule/saveWage'
 import showDimission from '@/components/adminModule/showDimission'
 import addDimission from '@/components/adminModule/addDimission'
+import isMe from '@/components/adminModule/isMe'
 import findAffiches from '@/components/affiche/findAffiches'
 import selectOvertim from '@/components/overtimModule/selectOvertim'
 import selectLeave from '@/components/leaveModule/selectLeave'
@@ -203,7 +218,8 @@ export default {
           title:'',
           name:'1',
         }],
-        tabIndex: 1
+        tabIndex: 1,
+          imgUrl: '',
         }
     },
 
@@ -241,6 +257,7 @@ export default {
       createEvection,
       updateEvection,
       selectEvectionaccount,
+      isMe,
     // methods: { 
     //   removeTab(targetName) {
     //     let tabs = this.editableTabs;
@@ -304,13 +321,34 @@ export default {
     //     this.editableTabsValue = newTabName;
     //    },
     },
-
+computed: {
+  host(){
+            return this.$axios.defaults.baseURL;
+        }
+},
+mounted() {
+  this.imgUrl=this.host+this.$store.state.login.users.title;
+},
     methods: { 
       PersonnelAdjustment(){
 this.$store.dispatch("PersonnelAdjustment");
       },
       showUser(){
 this.$store.dispatch("showUser");
+      },
+      //文件上传后的回调函数
+        handleSuccess(response, file, fileList){
+            //response 上传之后的返回值
+            file.url=this.host+response; 
+            //第二个例子
+            this.imgUrl=this.host+response;
+            this.$message({
+          message: '修改成功！！！',
+          type: 'success'
+        });
+        },
+      isMe(){
+        this.$store.dispatch("isMe");
       },
       showDimission(){
         this.$store.dispatch("showDimission");
@@ -465,8 +503,6 @@ this.$store.dispatch("showUser");
     color: #333;
     text-align: center;
   }
-  
-  
   body > .el-container {
     
     margin-bottom: 40px;
