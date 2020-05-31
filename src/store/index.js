@@ -11,6 +11,12 @@ import wage from './wage'
 import attendance from './attendance'
 //陈良吉 公告管理 2020-05-03
 import affiche from './affiche'
+import evection from './evection'
+import leave from './leave'
+import overtim from './overtim'
+//陈良吉 公告管理
+import evectionaccount from './evectionaccount'
+
 
 import getters from './getters'
 import axios from 'axios'
@@ -35,7 +41,11 @@ modules:{
 'wage':wage,
 'attendance':attendance,
 //陈良吉 2020-05-04
-'affiche':affiche
+'affiche':affiche,
+'evection':evection,
+'leave':leave,
+'overtim':overtim,
+'evectionaccount':evectionaccount,
 },
 
 })

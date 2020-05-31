@@ -9,4 +9,7 @@ export default{
         this.state.elMain='findOvertimByUpno';  
     },
     
+    creakAttendance({commit},obj){
+        this.state.elMain='creakAttendance';  
+    },
 }
