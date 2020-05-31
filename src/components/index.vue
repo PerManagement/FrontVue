@@ -9,7 +9,6 @@
   active-text-color="#ffd04b">
   <!-- <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
   ：{{$store.state.login.users.username}} -->
-  
   <el-menu-item index="1">处理中心</el-menu-item>
   <el-submenu index="2">
     <template slot="title">我的工作台</template>
@@ -30,9 +29,8 @@
 </el-menu>
   </el-header>
 
-  
   <el-container>
-       <el-aside width="280px">
+       <el-aside  width="280px">
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
@@ -40,25 +38,12 @@
       @close="handleClose"
       background-color="#D3D3D3"
       >
-
-      <el-submenu index="1">
+      <el-submenu  index="1" >
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>考勤管理</span>
         </template>
-        <!-- <el-menu-item-group> -->
-          <!-- <template slot="title">分组一</template> -->
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
-        <!-- </el-menu-item-group> -->
-        <!-- <el-menu-item-group title="分组2"> -->
-        <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
-          <el-menu-item index="1-3">加班详情</el-menu-item>
-          <el-menu-item index="1-4">出差信息</el-menu-item>
-          <el-menu-item index="1-5">出差详细信息</el-menu-item>  -->
-        <!-- </el-menu-item-group> -->
-        <!-- <el-submenu index="1-4"> -->
-          <!-- <template slot="title">出差信息</template> -->
-        <!-- </el-submenu>-->
       </el-submenu> 
 
        <el-submenu index="2">
@@ -157,7 +142,9 @@ import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
     data() {
-        return {}
+        return {
+          show:{},
+        }
     },
     components: {
       welcome,

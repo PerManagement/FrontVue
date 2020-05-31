@@ -76,16 +76,14 @@
 </el-tree>
 
 <div class="buttons">
-  <el-button @click="getCheckedNodes">通过 node 获取</el-button>
-  <el-button @click="getCheckedKeys">通过 key 获取</el-button>
-  <el-button @click="setCheckedNodes">通过 node 设置</el-button>
-  <el-button @click="setCheckedKeys">通过 key 设置</el-button>
+  <el-button @click="getCheckedKeys">确定权限</el-button>
+  <el-button @click="setCheckedKeys">查看权限</el-button>
   <el-button @click="resetChecked">清空</el-button>
+  
+  <el-button @click="fanhui">返回</el-button>
 </div>
 
    <el-form-item>
-    <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-    <el-button @click="resetForm('ruleForm')">重置</el-button>
   </el-form-item>
 </el-form>
 
@@ -250,6 +248,9 @@ export default {
     },
     components: {},
     methods: {
+      fanhui(){
+this.$store.state.elMain="showUser";
+      },
       tree(){
         let url="admin/tree";
         this.$axios.get(url).then(resp=>{
@@ -289,9 +290,19 @@ export default {
         // let str=JSON.stringify(integers);
         // console.log(str);
         this.$axios.post(url,updatePowerDto).then(resp=>{
+          if(resp.data.message=='操作成功'){
+            this.$store.state.set=[];
+            this.$message({
+          message: '操作成功',
+          type: 'success'
+        });
+        this.$store.state.elMain="showUser";
+          }else{
+             this.$message.error('操作失败，稍后再试！！！');
+          }
           console.log(resp.data.data);
         }).catch(ex=>{
-          console.log(ex);
+          this.$message.error('发生未知错误，请稍后再试。。。');
         });
       },
       // setCheckedNodes() {
