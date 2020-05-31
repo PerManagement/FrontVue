@@ -7,11 +7,9 @@
   background-color="#303133"
   text-color="#fff"
   active-text-color="#ffd04b">
-  <el-menu-item index="1">
-  <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
-    {{$store.state.login.users.username}} {{$store.state.login.users.description}}
-  </el-menu-item>
-  <!--<el-menu-item index="1">处理中心</el-menu-item>
+  <!-- <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
+  ：{{$store.state.login.users.username}} -->
+  <el-menu-item index="1">处理中心</el-menu-item>
   <el-submenu index="2">
     <template slot="title">我的工作台</template>
     <el-menu-item index="2-1">选项1</el-menu-item>
@@ -31,9 +29,8 @@
 </el-menu>
   </el-header>
 
-  
   <el-container>
-       <el-aside width="280px">
+       <el-aside  width="280px">
     <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
@@ -41,14 +38,11 @@
       @close="handleClose"
       background-color="#D3D3D3"
       >
-
-      <el-submenu index="1">
+      <el-submenu  index="1" >
         <template slot="title">
           <i class="el-icon-menu"></i>
           <span>考勤管理</span>
         </template>
-        <!-- <el-menu-item-group> -->
-          <!-- <template slot="title">分组一</template> -->
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
           <el-menu-item index="/saveOvertim" @click="saveOvertim">加班申请</el-menu-item>
           <el-menu-item index="/findOvertimByUpno" @click="findOvertimByUpno">加班申请处理</el-menu-item>
@@ -203,7 +197,8 @@ export default {
           title:'',
           name:'1',
         }],
-        tabIndex: 1
+        tabIndex: 1,
+          show:{},
         }
     },
 
