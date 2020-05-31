@@ -7,10 +7,11 @@
   background-color="#303133"
   text-color="#fff"
   active-text-color="#ffd04b">
-  <!-- <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
-  ：{{$store.state.login.users.username}} -->
-  
-  <el-menu-item index="1">处理中心</el-menu-item>
+  <el-menu-item index="1">
+  <el-avatar style="margin:0px auto;" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar >
+    {{$store.state.login.users.username}} {{$store.state.login.users.description}}
+  </el-menu-item>
+  <!--<el-menu-item index="1">处理中心</el-menu-item>
   <el-submenu index="2">
     <template slot="title">我的工作台</template>
     <el-menu-item index="2-1">选项1</el-menu-item>
@@ -23,7 +24,7 @@
       <el-menu-item index="2-4-3">选项3</el-menu-item>
     </el-submenu>
   </el-submenu>
-  <el-menu-item index="3" disabled>消息中心</el-menu-item>
+  <el-menu-item index="3" disabled>消息中心</el-menu-item>-->
   <!--<el-menu-item index="4"><a href="https://www.ele.me" target="_blank">订单管理</a></el-menu-item>-->
   <div style="float:right"><el-button type="danger" round style="line-height:0px;width:65px;font-size:10px;" @click="logOut">退出</el-button>
   </div>
@@ -49,6 +50,8 @@
         <!-- <el-menu-item-group> -->
           <!-- <template slot="title">分组一</template> -->
           <el-menu-item index="/selectAttendance" @click="selectAttendance">考勤登记</el-menu-item>
+          <el-menu-item index="/saveOvertim" @click="saveOvertim">加班申请</el-menu-item>
+          <el-menu-item index="/findOvertimByUpno" @click="findOvertimByUpno">加班申请处理</el-menu-item>
         <!-- </el-menu-item-group> -->
         <!-- <el-menu-item-group title="分组2"> -->
         <!-- <el-menu-item index="1-2">请假审批</el-menu-item>
@@ -66,10 +69,10 @@
           <i class="el-icon-menu"></i>
           <span>薪资管理</span>
         </template>
-          <el-menu-item index="/findWage" @click="findWage">查询记录</el-menu-item>
-          <el-menu-item index="/issueWage" @click="issueWage">发放工资</el-menu-item>
+          <el-menu-item index="/findWage" @click="findWage(editableTabsValue)">查询记录</el-menu-item>
+          <el-menu-item index="/issueWage" @click="issueWage(editableTabsValue)">发放工资</el-menu-item>
           <el-menu-item index="/saveWage" @click="saveWage">添加工资条</el-menu-item>
-          <el-menu-item index="/findWageState" @click="findWageState">待审批薪资</el-menu-item>
+          <el-menu-item index="/findWageState" @click="findWageState(editableTabsValue)">待审批薪资</el-menu-item>
           <el-menu-item index="/findWageByUserId" @click="findWageByUserId">工资条</el-menu-item>
       </el-submenu> 
 
@@ -79,9 +82,11 @@
           <span>任务中心</span>
         </template>
           <el-menu-item index="/findTask" @click="findTask">查询任务</el-menu-item>
-          <el-menu-item index="/findPlans" @click="findPlans">查看计划</el-menu-item>
           <el-menu-item index="/createTask" @click="createTask">分配任务</el-menu-item>
-          <!--<el-menu-item index="4-4">任务交接</el-menu-item>-->
+          <el-menu-item index="/associateWith" @click="associateWith">任务交接</el-menu-item>
+          <el-menu-item index="/checkTask" @click="checkTask">任务审核</el-menu-item>
+          <el-menu-item index="/findTaskByUserId" @click="findTaskByUserId">个人任务</el-menu-item>
+          <el-menu-item index="/createPlan" @click="createPlan">制定计划</el-menu-item>
       </el-submenu> 
 
        <!--<el-submenu index="5">
@@ -110,13 +115,27 @@
           <el-menu-item index="/createUser" @click="createUser">添加员工</el-menu-item>
       </el-submenu> 
 
+      <el-submenu index="8">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>人事操作</span>
+        </template>
+          <el-menu-item index="/createUser" @click="addDimission">离职申请</el-menu-item>
+          <el-menu-item index="/createUser" @click="showDimission">离职审批</el-menu-item>
+      </el-submenu> 
+
     </el-menu>
      </el-aside>
  
     <el-main>
-    
-     <component :is="$store.getters.getElmain"></component>
-      <!-- <h1 style="font-size:75px;color:red;">欢迎登录</h1> -->
+      <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab">
+        <el-tab-pane v-for="item in editableTabs" :key="item.name" :label="item.title" :name="item.name">
+          <component :is="item.path"></component>
+        </el-tab-pane>
+      </el-tabs>
+     <div class="test test-5">
+      <div class="scrollbar"></div>
+    </div>
     </el-main>
   </el-container>
   <el-footer>
@@ -126,30 +145,40 @@
 </template>
 
 <script>
+import associateWith from '@/components/taskModule/associateWith'
 import selectAttendance from '@/components/attendanceModule/selectAttendance'
+import saveOvertim from '@/components/attendanceModule/saveOvertim'
+import findOvertimByUpno from '@/components/attendanceModule/findOvertimByUpno'
 import welcome from '@/components/welcome'
 import createTask from '@/components/taskModule/createTask'
 import findTask from '@/components/taskModule/findTask'
-import findPlans from '@/components/planModule/findPlans'
 import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
 import saveWage from '@/components/wageModule/saveWage'
 import createUser from '@/components/adminModule/createUser'
+import showDimission from '@/components/adminModule/showDimission'
+import addDimission from '@/components/adminModule/addDimission'
 import findAffiches from '@/components/affiche/findAffiches'
 import saveAffiche from '@/components/affiche/saveAffiche'
+import findTaskByUserId from '@/components/taskModule/findTaskByUserId'
+import createPlan from '@/components/taskModule/createPlan'
+import checkTask from '@/components/taskModule/checkTask'
 import {mapActions,mapMutations} from 'vuex';
 export default {
     name: "",
     data() {
-        return {}
+        return {
+        editableTabsValue: '2',
+        editableTabs: [],
+        tabIndex: 2
+        }
     },
 
     components: {
       welcome,
       createTask,
-      findPlans,
       findTask,
       findWage
       ,issueWage
@@ -162,23 +191,87 @@ export default {
       welcome,
       findAffiches,
       saveAffiche,
+      findTaskByUserId,
+      associateWith,
+      createPlan,
+      checkTask,
+      addDimission,
+      showDimission,
+      saveOvertim,
+      findOvertimByUpno,
     },
 
     methods: { 
-       issueWage(){
-       this.$store.dispatch("issueWage");
+      removeTab(targetName) {
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+        
+        this.editableTabsValue = activeName;
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
       },
-       findWage(){
-       this.$store.dispatch("findWage");
+       issueWage(targetName){
+        let newTabName = ++this.tabIndex + '';
+        console.log(newTabName);
+        this.editableTabs.push({
+          title: '发放工资',
+          name: newTabName,
+          path:issueWage
+        });
+        this.editableTabsValue = newTabName;
+          console.log(this.editableTabsValue);
       },
+       findWage(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        console.log(newTabName);
+        this.editableTabs.push({
+          title: '查询记录',
+          name: newTabName,
+          path:findWage
+        });
+        this.editableTabsValue = newTabName;
+          console.log(this.editableTabsValue);
+      },
+       findWageState(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: '待审批薪资',
+          name: newTabName,
+          path:findWageState
+        });
+        this.editableTabsValue = newTabName;
+      },
+       findWageByUserId(targetName){
+        console.log("添加标签页");
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: '待审批薪资',
+          name: newTabName,
+          content: this.$store.dispatch("findWageByUserId"),
+          path:findWageByUserId
+        });
+        this.editableTabsValue = newTabName;
+       },
+      showDimission(){
+        this.$store.dispatch("showDimission");
+      },
+      addDimission(){
+        this.$store.dispatch("addDimission");
+      },
+       
        findWageState(){
        this.$store.dispatch("findWageState");
-      },
-       findWageByUserId(){
-       this.$store.dispatch("findWageByUserId");
-       },
-       saveWage(){
-       this.$store.dispatch("saveWage");
       },
        saveAffiche(){
        this.$store.dispatch("saveAffiche");
@@ -189,9 +282,6 @@ export default {
        createTask(){
        this.$store.dispatch("createTask");
       },
-      findPlans(){
-        this.$store.dispatch("findPlans");
-      },
       findTask(){
         this.$store.dispatch("findTask");
       },
@@ -199,7 +289,7 @@ export default {
         //this.$store.state.elMain='createUser';
         this.$store.dispatch("createUser");
       },
-       selectAttendance(){
+      selectAttendance(){
        this.$store.dispatch("selectAttendance");
       },
       handleOpen(key, keyPath) {
@@ -207,6 +297,24 @@ export default {
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      },
+      findTaskByUserId(){
+       this.$store.dispatch("findTaskByUserId");
+      },
+      associateWith(){
+       this.$store.dispatch("associateWith");
+      },
+      createPlan(){
+       this.$store.dispatch("createPlan");
+      },
+      checkTask(){
+       this.$store.dispatch("checkTask");
+      },
+       saveOvertim(){
+       this.$store.dispatch("saveOvertim");
+      },
+       findOvertimByUpno(){
+       this.$store.dispatch("findOvertimByUpno");
       },
       logOut(){
         this.$confirm('您确定退出吗?', '提示', {
@@ -232,11 +340,10 @@ export default {
 
 <style  scoped>
 .el-header {
-    background-color:  #303133;
+    background-color: #303133;
     color: #333;
     text-align: center;
     line-height: 50px;
-    
   }
   .el-footer {
     background-color:  #303133;
@@ -245,15 +352,14 @@ export default {
     height: 20px;
   }
   .el-menu-item{
-    color: rgb(75, 67, 124);
+    color: slateblue;
     text-align: center;
   }
   
   .el-aside {
-    background-color:#C0C4CC;
+    background-color:#D3D3D3;
     color: #333;
     min-height: 450px;
-    background-color: #C0C4CC;
   }
   
   .el-main {

@@ -1,6 +1,5 @@
 export default{
-    findWage(state,obj){
-        state.findWage=obj;
+    findWage(state){
     },
     issueWage(state,obj){
         state.issueWage=obj;
