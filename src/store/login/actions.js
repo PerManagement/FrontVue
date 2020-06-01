@@ -2,18 +2,19 @@ export default{
     login({commit},obj){
         let url="login/doLogin";
         this.state.axios.post(url,obj).then((response)=>{
-            if(response.data.data==null){
+            if(response.data.data[0]==null){
                 alert(response.data.message);
                 this.state.returnMessage=response.data.message;
             return this.state.app_view='login';
                
             } 
             this.state.returnMessage="";
-            commit('login',response.data.data);
-            sessionStorage.setItem("users",JSON.stringify(response.data.data));
+            commit('login',response.data.data[0]);
+            this.state.show=response.data.data[1];
+            sessionStorage.setItem("users",JSON.stringify(response.data.data[0]));
             sessionStorage.setItem("app_view","index");
             this.state.app_view='index';
-            console.log(response.data.data);
+            console.log(response.data.data[0]);
             
         }).catch((ex)=>{
             console.log(ex);

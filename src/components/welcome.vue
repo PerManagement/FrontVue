@@ -152,11 +152,11 @@ export default {
     }
   },
   mounted() {
-    this.nowTimes();
+    // this.nowTimes();
     if (this.$store.state.login.users.userRoles[0].userid != 1) {
       this.findAttendanceByUserId();
     }
-    this.findAfficheByDate();
+    // this.findAfficheByDate();
   }
 };
 </script>
