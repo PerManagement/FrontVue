@@ -1,4 +1,75 @@
-<template>         <el-container  v-if="$store.getters.getUsers!=null">     <el-header>             <el-menu      class="el-menu-demo"     mode="horizontal"     background-color="#303133"     text-color="#fff"     active-text-color="#ffd04b"> <el-menu-item  index="1">     <el-popover         placement="top-start"         width="200"         trigger="hover">         <el-upload  action="http://localhost:8088/admin/userFileUrl"     list-type="picture-card"     name="img"     :show-file-list="false"     :on-success="handleSuccess"     >     &nbsp;&nbsp;&nbsp;     <i  class="el-icon-plus"></i> </el-upload>     &nbsp;&nbsp;&nbsp;&nbsp;<ElButton  type="primary"  @click="isMe">修改个人信息</ElButton>     <el-avatar  slot="reference"  style="margin:0px  auto;"  :src="imgUrl"     :key="imgUrl"     ></el-avatar  >   </el-popover>         {{$store.state.login.users.username}}  {{$store.state.login.users.description}}     </el-menu-item>         <div  style="float:right"><el-button  type="danger"  round  style="line-height:0px;width:65px;font-size:10px;"  @click="logOut">退出</el-button>     </div> </el-menu>       </el-header>         <el-container>               <el-aside  width="280px">         <el-menu             default-active="2"             class="el-menu-vertical-demo"             @open="handleOpen"             @close="handleClose"             background-color="#D3D3D3"             >             <el-submenu  index="1"  v-show="show.考勤管理  =='考勤管理'">                 <template  slot="title">                     <i  class="el-icon-menu"></i>                     <span>考勤管理</span>                 </template>                 <!--  <el-menu-item-group>  -->                     <!--  <template  slot="title">分组一</template>  -->                     <el-menu-item  index="/selectAttendance"  @click="selectAttendance"  v-show="show.考勤登记  =='考勤登记'">考勤登记</el-menu-item>                     <el-menu-item  index="/saveOvertim"  @click="saveOvertim"  v-show="show.加班申请  =='加班申请'">加班申请</el-menu-item>                     <el-menu-item  index="/findOvertimByUpno"  @click="findOvertimByUpno"  v-show="show.加班申请处理  =='加班申请处理'">加班申请处理</el-menu-item>                               <el-menu-item  index="/creakAttendance"  @click="creakAttendance"  v-show="show.打卡  =='打卡'">打卡</el-menu-item>                       <el-menu-item  index="/selectLeave"  @click="selectLeave"  v-show="show.请假记录  =='请假记录'">请假记录</el-menu-item>                                 <el-menu-item  index="/createLeave"  @click="createLeave"  v-show="show.添加请假记录  =='添加请假记录'">添加请假记录</el-menu-item>                                 <!--  <el-menu-item  index="/updateLeave"  @click="updateLeave"  v-show="show.待审批请假记录  =='待审批请假记录'">待审批请假记录</el-menu-item>-->                               <el-menu-item  index="/updateLeave2"  @click="updateLeave2"  v-show="show.待审批请假记录  =='待审批请假记录'">待审批请假记录</el-menu-item>                 <!--  </el-menu-item-group>  -->                 <!--  <el-menu-item-group  title="分组2">  -->                     <el-menu-item  index="/selectEvection"  @click="selectEvection"  v-show="show.出差记录  =='出差记录'">出差记录</el-menu-item>                       <el-menu-item  index="/createEvection"  @click="createEvection"  v-show="show.添加出差记录  =='添加出差记录'">添加出差记录</el-menu-item>                   <el-menu-item  index="/updateEvection"  @click="updateEvection"  v-show="show.出差审批  =='出差审批'">出差审批</el-menu-item>                 <!--  </el- menu-item-group> -->
+<template>
+    <el-container v-if="$store.getters.getUsers!=null">
+  <el-header>
+
+      <el-menu 
+  class="el-menu-demo"
+  mode="horizontal"
+  background-color="#303133"
+  text-color="#fff"
+  active-text-color="#ffd04b">
+<el-menu-item index="1">
+
+  <el-popover
+    placement="top-start"
+    width="200"
+    trigger="hover">
+    <el-upload action="http://localhost:8088/admin/userFileUrl"
+  list-type="picture-card"
+  name="img"
+  :show-file-list="false"
+  :on-success="handleSuccess"
+  >
+  &nbsp;&nbsp;&nbsp;
+  <i class="el-icon-plus"></i>
+</el-upload>
+  &nbsp;&nbsp;&nbsp;&nbsp;<ElButton type="primary" @click="isMe">修改个人信息</ElButton>
+
+  <el-avatar slot="reference" style="margin:0px auto;" :src="imgUrl" :key="imgUrl" >
+  </el-avatar>
+ </el-popover>
+    {{$store.state.login.users.username}} {{$store.state.login.users.description}}
+  </el-menu-item>
+  
+
+  <div style="float:right"><el-button type="danger" round style="line-height:0px;width:65px;font-size:10px;" @click="logOut">退出</el-button>
+  </div>
+</el-menu>
+ 
+  </el-header>
+
+  
+  <el-container>
+       <el-aside width="280px">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      background-color="#D3D3D3"
+      >
+
+      <el-submenu index="1" v-show="show.考勤管理 =='考勤管理'">
+        <template slot="title">
+          <i class="el-icon-menu"></i>
+          <span>考勤管理</span>
+        </template>
+        <!-- <el-menu-item-group> -->
+          <!-- <template slot="title">分组一</template> -->
+          <el-menu-item index="/selectAttendance" @click="selectAttendance" v-show="show.考勤登记 =='考勤登记'">考勤登记</el-menu-item>
+          <el-menu-item index="/saveOvertim" @click="saveOvertim" v-show="show.加班申请 =='加班申请'">加班申请</el-menu-item>
+          <el-menu-item index="/findOvertimByUpno" @click="findOvertimByUpno" v-show="show.加班申请处理 =='加班申请处理'">加班申请处理</el-menu-item>
+               <el-menu-item index="/creakAttendance" @click="creakAttendance" v-show="show.打卡 =='打卡'">打卡</el-menu-item>
+           <el-menu-item index="/selectLeave" @click="selectLeave" v-show="show.请假记录 =='请假记录'">请假记录</el-menu-item>
+                <el-menu-item index="/createLeave" @click="createLeave" v-show="show.添加请假记录 =='添加请假记录'">添加请假记录</el-menu-item>
+                <!-- <el-menu-item index="/updateLeave" @click="updateLeave" v-show="show.待审批请假记录 =='待审批请假记录'">待审批请假记录</el-menu-item>-->
+               <el-menu-item index="/updateLeave2" @click="updateLeave2" v-show="show.待审批请假记录 =='待审批请假记录'">待审批请假记录</el-menu-item>
+        <!-- </el-menu-item-group> -->
+        <!-- <el-menu-item-group title="分组2"> -->
+          <el-menu-item index="/selectEvection" @click="selectEvection" v-show="show.出差记录 =='出差记录'">出差记录</el-menu-item>
+           <el-menu-item index="/createEvection" @click="createEvection" v-show="show.添加出差记录 =='添加出差记录'">添加出差记录</el-menu-item>
+         <el-menu-item index="/updateEvection" @click="updateEvection" v-show="show.出差审批 =='出差审批'">出差审批</el-menu-item>
+        <!-- </el-menu-item-group> -->
         <!-- <el-submenu index="1-4"> -->
           <!-- <template slot="title">出差信息</template> -->
           <el-menu-item index="/selectEvectionaccount" @click="selectEvectionaccount" v-show="show.出差详细信息 =='出差详细信息'">出差详细信息</el-menu-item>
@@ -248,7 +319,7 @@ mounted(){
    showa(){
      this.imgUrl=this.host+this.$store.state.login.users.title;
      this.show=this.$store.state.show;
-      console.log(this.show);
+      console.log(this.imgUrl);
    },
       PersonnelAdjustment(){
 this.$store.dispatch("PersonnelAdjustment");

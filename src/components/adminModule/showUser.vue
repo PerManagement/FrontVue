@@ -58,7 +58,8 @@
       width="200">
         <template slot-scope="scope">
  <div class="right">
-    <el-tooltip v-if="scope.row.locked === 0" class="item" effect="dark" content="限制用户登录" placement="right-start">
+    <el-tag v-if="scope.row.description === '董事长'" type="warning" >无法修改</el-tag>
+    <el-tooltip v-else-if="scope.row.locked === 0" class="item" effect="dark" content="限制用户登录" placement="right-start">
       <el-button type="primary" plain size="mini" @click="xianzhi(scope.row)">登录正常</el-button>
     </el-tooltip>
 
@@ -73,7 +74,8 @@
       label="操作"
       width="200">
       <template slot-scope="scope">
-  <el-button icon="el-icon-search" type="success" size="mini" @click="showRoleResource(scope.row)" round>权限</el-button>
+       <el-tag v-if="scope.row.description === '董事长'" type="warning" >无法修改</el-tag>
+  <el-button v-else icon="el-icon-search" type="success" size="mini" @click="showRoleResource(scope.row)" round>权限</el-button>
   </template>
     </el-table-column>
   </el-table>
