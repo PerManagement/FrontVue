@@ -45,6 +45,7 @@ export default {
   name: "",
   data() {
     return {
+      affiche:{},
       nowTime: "",
       tag:false,
       clockinstate: false,
@@ -62,8 +63,10 @@ export default {
   methods: {
     //分页查询
     findAfficheByDate() {
+       if (this.$store.state.login.users.userRoles[0].userid != 1) {
+      this.findAttendanceByUserId();
+    }
       this.currentTime = new Date();
-
       let url = "affiche/findAfficheByDate";
       this.$axios
         .get(url)
@@ -133,8 +136,8 @@ export default {
         });
     },
     nowTimes() {
-      this.timeFormate(new Date());
-      setInterval(this.nowTimes, 1000);
+      //this.timeFormate(new Date());
+      //setInterval(this.nowTimes, 1000);
       //this.clear()
     },
     //显示当前时间（年月日时分秒）
@@ -152,10 +155,8 @@ export default {
     }
   },
   mounted() {
-    this.nowTimes();
-    if (this.$store.state.login.users.userRoles[0].userid != 1) {
-      this.findAttendanceByUserId();
-    }
+    // this.nowTimes();
+   
     this.findAfficheByDate();
   }
 };

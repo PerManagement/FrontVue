@@ -9,6 +9,7 @@
   text-color="#fff"
   active-text-color="#ffd04b">
 <el-menu-item index="1">
+
   <el-popover
     placement="top-start"
     width="200"
@@ -24,9 +25,8 @@
 </el-upload>
   &nbsp;&nbsp;&nbsp;&nbsp;<ElButton type="primary" @click="isMe">修改个人信息</ElButton>
 
-  <el-avatar slot="reference" style="margin:0px auto;" :src="imgUrl"
-  :key="imgUrl"
-  ></el-avatar >
+  <el-avatar slot="reference" style="margin:0px auto;" :src="imgUrl" :key="imgUrl" >
+  </el-avatar>
  </el-popover>
     {{$store.state.login.users.username}} {{$store.state.login.users.description}}
   </el-menu-item>
@@ -169,7 +169,7 @@ import findWage from '@/components/wageModule/findWage'
 import issueWage from '@/components/wageModule/issueWage'
 import findWageState from '@/components/wageModule/findWageState'
 import findWageByUserId from '@/components/wageModule/findWageByUserId'
- import saveWage from '@/components/wageModule/saveWage'
+import saveWage from '@/components/wageModule/saveWage'
 import createUser from '@/components/adminModule/createUser'
 import showUser from '@/components/adminModule/showUser'
 import PersonnelAdjustment from '@/components/adminModule/PersonnelAdjustment'
@@ -318,7 +318,7 @@ mounted(){
    showa(){
      this.imgUrl=this.host+this.$store.state.login.users.title;
      this.show=this.$store.state.show;
-      console.log(this.show);
+      console.log(this.imgUrl);
    },
       PersonnelAdjustment(){
 this.$store.dispatch("PersonnelAdjustment");

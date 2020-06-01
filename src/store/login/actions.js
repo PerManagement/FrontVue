@@ -15,7 +15,6 @@ export default{
             sessionStorage.setItem("app_view","index");
             this.state.app_view='index';
             console.log(response.data.data[0]);
-            
         }).catch((ex)=>{
             console.log(ex);
         });
@@ -26,6 +25,7 @@ export default{
         this.state.axios.post(url).then((response)=>{
             console.log(response.data.data);
             if(response.data.data.message=='注销成功'){
+                this.state.elMain='welcome';
                 this.state.app_view='login';
                 sessionStorage.clear();
                 commit('logOut',obj);
